@@ -1058,6 +1058,161 @@
     .sidebar-logo { justify-content: center; padding: 16px 0; }
   }
   @media (max-width: 900px) { .middle-row { flex-direction: column; } }
+
+  /* ===== PROJECTS PAGE ===== */
+  #page-projects { display: flex; flex-direction: column; gap: 14px; }
+
+  .proj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  .proj-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform var(--duration-fast), box-shadow var(--duration-fast), border-color var(--duration-fast), background var(--duration-normal) var(--ease-out);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .proj-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px hsla(230,80%,50%,0.15); border-color: var(--border-default); }
+    .proj-card { opacity: 0; animation: fadeUp 400ms var(--ease-out) forwards; }
+    .proj-card:nth-child(1){animation-delay:60ms} .proj-card:nth-child(2){animation-delay:120ms}
+    .proj-card:nth-child(3){animation-delay:180ms} .proj-card:nth-child(4){animation-delay:240ms}
+    .proj-card:nth-child(5){animation-delay:300ms} .proj-card:nth-child(6){animation-delay:360ms}
+    .proj-card:nth-child(7){animation-delay:420ms} .proj-card:nth-child(8){animation-delay:480ms}
+    .proj-card:nth-child(9){animation-delay:540ms} .proj-card:nth-child(10){animation-delay:600ms}
+  }
+
+  .proj-card-accent { height: 3px; width: 100%; flex-shrink: 0; }
+  .proj-card-body { padding: 14px 16px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+  .proj-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .proj-card-name { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600; color: var(--text-primary); line-height: 1.35; flex: 1; }
+  .proj-card-menu { width: 26px; height: 26px; border-radius: 6px; background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity var(--duration-fast), background var(--duration-fast), color var(--duration-fast); flex-shrink: 0; margin-top: -2px; }
+  .proj-card:hover .proj-card-menu { opacity: 1; }
+  .proj-card-menu:hover { background: var(--border-default); color: var(--text-primary); }
+  .proj-card-menu svg { width: 14px; height: 14px; }
+
+  .proj-card-client { display: flex; align-items: center; gap: 6px; }
+  .proj-client-text { font-size: 11px; color: var(--accent-blue); cursor: pointer; }
+  .proj-client-text:hover { text-decoration: underline; }
+  .proj-category-tag { font-size: 9px; font-weight: 600; letter-spacing: 0.06em; padding: 2px 7px; border-radius: 4px; background: var(--bg-input); border: 1px solid var(--border-subtle); color: var(--text-muted); text-transform: uppercase; }
+
+  .proj-badges { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+  .proj-status-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 5px; font-size: 10px; font-weight: 600; white-space: nowrap; }
+  .proj-status-badge.active    { background: rgba(74,144,255,0.12); color: var(--accent-blue);   border: 1px solid rgba(74,144,255,0.2); }
+  .proj-status-badge.completed { background: rgba(34,197,94,0.12);  color: var(--accent-green);  border: 1px solid rgba(34,197,94,0.2); }
+  .proj-status-badge.overdue   { background: rgba(255,77,77,0.12);  color: var(--accent-red);    border: 1px solid rgba(255,77,77,0.2); }
+  .proj-status-badge.on-hold   { background: rgba(234,179,8,0.12);  color: var(--accent-yellow); border: 1px solid rgba(234,179,8,0.2); }
+  .proj-status-badge.in-progress { background: rgba(168,85,247,0.12); color: var(--accent-purple); border: 1px solid rgba(168,85,247,0.2); }
+  .proj-status-badge svg { width: 10px; height: 10px; }
+
+  .proj-priority-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 5px; font-size: 10px; font-weight: 600; }
+  .proj-priority-badge.high   { background: rgba(255,77,77,0.1);  color: var(--accent-red); }
+  .proj-priority-badge.medium { background: rgba(234,179,8,0.1);  color: var(--accent-yellow); }
+  .proj-priority-badge.low    { background: rgba(34,197,94,0.1);  color: var(--accent-green); }
+
+  .proj-progress-section { display: flex; flex-direction: column; gap: 6px; }
+  .proj-progress-label { display: flex; align-items: center; justify-content: space-between; }
+  .proj-progress-tasks { font-size: 11px; color: var(--text-secondary); }
+  .proj-progress-pct { font-size: 12px; font-weight: 700; color: var(--text-primary); font-family: 'DM Mono', monospace; }
+  .proj-progress-track { height: 5px; background: var(--border-subtle); border-radius: 3px; overflow: hidden; }
+  .proj-progress-fill { height: 100%; border-radius: 3px; transition: width 700ms var(--ease-out); }
+
+  .proj-card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+  .proj-due-label { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-muted); }
+  .proj-due-label svg { width: 11px; height: 11px; }
+  .proj-due-label.overdue { color: var(--accent-red); }
+  .proj-due-label.soon    { color: var(--accent-yellow); }
+
+  .proj-avatars { display: flex; align-items: center; }
+  .proj-avatar { width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--bg-card); display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .proj-avatar:not(:first-child) { margin-left: -6px; }
+  .proj-avatar-more { background: var(--bg-input); border: 1.5px solid var(--border-default); color: var(--text-muted); }
+
+  /* LIST VIEW */
+  .proj-list { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 10px; overflow: hidden; transition: background var(--duration-normal) var(--ease-out); }
+  .proj-list-head { display: grid; grid-template-columns: 2fr 1fr 1.1fr 0.9fr 1.6fr 1.2fr 1fr; gap: 12px; align-items: center; padding: 10px 16px; border-bottom: 1px solid var(--border-subtle); }
+  .proj-list-col { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; user-select: none; display: flex; align-items: center; gap: 4px; cursor: pointer; }
+  .proj-list-col:hover { color: var(--text-secondary); }
+  .proj-list-col svg { width: 10px; height: 10px; }
+  .proj-list-row { display: grid; grid-template-columns: 2fr 1fr 1.1fr 0.9fr 1.6fr 1.2fr 1fr; gap: 12px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border-subtle); cursor: pointer; transition: background var(--duration-fast); }
+  .proj-list-row:last-child { border-bottom: none; }
+  .proj-list-row:hover { background: var(--bg-card-hover); }
+  .proj-list-name-cell { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .proj-list-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .proj-list-name { font-size: 13px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .proj-list-cat { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+  .proj-list-client-cell { font-size: 12px; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .proj-list-prog-cell { display: flex; align-items: center; gap: 8px; }
+  .proj-list-pct { font-size: 11px; font-weight: 700; color: var(--text-primary); font-family: 'DM Mono', monospace; min-width: 30px; }
+  .proj-list-track { flex: 1; height: 5px; background: var(--border-subtle); border-radius: 3px; overflow: hidden; }
+  .proj-list-fill { height: 100%; border-radius: 3px; transition: width 700ms var(--ease-out); }
+  .proj-due-cell { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-muted); }
+  .proj-due-cell svg { width: 11px; height: 11px; }
+  .proj-due-cell.overdue { color: var(--accent-red); }
+  .proj-due-cell.soon    { color: var(--accent-yellow); }
+
+  /* Empty state */
+  .proj-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 60px 20px; color: var(--text-muted); background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 10px; }
+  .proj-empty svg { opacity: 0.3; }
+  .proj-empty-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 600; color: var(--text-secondary); }
+  .proj-empty-sub { font-size: 13px; text-align: center; }
+
+  /* Color swatches for new project modal */
+  .color-swatch-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .color-swatch { width: 28px; height: 28px; border-radius: 6px; cursor: pointer; border: 2px solid transparent; transition: transform var(--duration-fast), border-color var(--duration-fast); }
+  .color-swatch:hover { transform: scale(1.15); }
+  .color-swatch.sel { border-color: var(--text-primary); box-shadow: 0 0 0 2px var(--bg-card); transform: scale(1.1); }
+
+  /* Project detail panel */
+  .proj-detail-overlay { position: fixed; inset: 0; z-index: 250; background: rgba(0,0,0,0.5); opacity: 0; pointer-events: none; transition: opacity var(--duration-normal); backdrop-filter: blur(2px); }
+  .proj-detail-overlay.open { opacity: 1; pointer-events: all; }
+  .proj-detail-panel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 260; width: 480px; max-width: 95vw; background: var(--bg-card); border-left: 1px solid var(--border-default); display: flex; flex-direction: column; transform: translateX(100%); transition: transform var(--duration-normal) var(--ease-out); box-shadow: -8px 0 40px rgba(0,0,0,0.4); }
+  .proj-detail-panel.open { transform: translateX(0); }
+  .proj-detail-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; gap: 12px; }
+  .proj-detail-header-left { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+  .proj-detail-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .proj-detail-body { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+  .proj-detail-body::-webkit-scrollbar { width: 4px; }
+  .proj-detail-body::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 2px; }
+  .proj-detail-section { display: flex; flex-direction: column; gap: 10px; }
+  .proj-detail-section-label { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .proj-detail-title-text { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+  .proj-detail-client-text { font-size: 13px; color: var(--accent-blue); }
+  .proj-detail-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+  .proj-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .proj-meta-cell { background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 10px 12px; }
+  .proj-meta-cell-label { font-size: 9px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+  .proj-meta-cell-value { font-size: 13px; color: var(--text-primary); font-weight: 500; }
+  .proj-big-progress { display: flex; flex-direction: column; gap: 8px; }
+  .proj-big-progress-bar { height: 8px; background: var(--border-subtle); border-radius: 4px; overflow: hidden; }
+  .proj-big-progress-fill { height: 100%; border-radius: 4px; transition: width 800ms var(--ease-out); }
+  .proj-big-progress-meta { display: flex; justify-content: space-between; }
+  .proj-milestones { display: flex; flex-direction: column; gap: 8px; }
+  .proj-milestone-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 8px; cursor: pointer; transition: background var(--duration-fast); }
+  .proj-milestone-item:hover { background: var(--bg-card-hover); }
+  .proj-milestone-check { width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .proj-milestone-check.done { background: var(--accent-green); }
+  .proj-milestone-check.done::after { content: '✓'; font-size: 9px; color: #fff; font-weight: 700; }
+  .proj-milestone-check:not(.done) { border: 1.5px solid var(--border-default); }
+  .proj-milestone-text { font-size: 12px; color: var(--text-primary); flex: 1; }
+  .proj-milestone-text.done { text-decoration: line-through; color: var(--text-muted); }
+  .proj-milestone-date { font-size: 10px; color: var(--text-muted); white-space: nowrap; }
+  .proj-team-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+  .proj-team-member { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .proj-team-avatar-lg { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; }
+  .proj-team-name { font-size: 10px; color: var(--text-secondary); text-align: center; }
+
+  @media (max-width: 1280px) { .proj-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 900px)  { .proj-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px)  { .proj-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -1458,6 +1613,80 @@
       <div id="tasks-board-view" style="display:none;" class="board-view"></div>
 
     </div><!-- /page-tasks -->
+
+    <!-- ===== PROJECTS PAGE ===== -->
+    <div id="page-projects" style="display:none;">
+
+      <!-- Header -->
+      <div class="tasks-page-header">
+        <div>
+          <div class="page-breadcrumb">Overview / Projects</div>
+          <div class="page-heading">Projects</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="view-toggle" id="proj-view-toggle">
+            <button class="view-btn active" data-view="grid" type="button"><i data-lucide="layout-grid"></i> Grid</button>
+            <button class="view-btn" data-view="list" type="button"><i data-lucide="list"></i> List</button>
+          </div>
+          <button class="btn-primary" id="btn-new-project" type="button">
+            <i data-lucide="plus"></i> New Project
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats + Toolbar -->
+      <div class="task-stats-row" id="proj-stat-chips">
+        <div class="task-stat-chip active" data-pfilter="all">
+          <span class="chip-dot" style="background:var(--accent-blue)"></span>
+          <span class="chip-num">10</span>
+          <span class="chip-label">Total</span>
+        </div>
+        <div class="task-stat-chip" data-pfilter="active">
+          <span class="chip-dot" style="background:var(--accent-blue)"></span>
+          <span class="chip-num">4</span>
+          <span class="chip-label">Active</span>
+        </div>
+        <div class="task-stat-chip" data-pfilter="in-progress">
+          <span class="chip-dot" style="background:var(--accent-purple)"></span>
+          <span class="chip-num">2</span>
+          <span class="chip-label">In Progress</span>
+        </div>
+        <div class="task-stat-chip" data-pfilter="completed">
+          <span class="chip-dot" style="background:var(--accent-green)"></span>
+          <span class="chip-num">2</span>
+          <span class="chip-label">Completed</span>
+        </div>
+        <div class="task-stat-chip" data-pfilter="overdue">
+          <span class="chip-dot" style="background:var(--accent-red)"></span>
+          <span class="chip-num">1</span>
+          <span class="chip-label">Overdue</span>
+        </div>
+        <div class="task-stat-chip" data-pfilter="on-hold">
+          <span class="chip-dot" style="background:var(--accent-yellow)"></span>
+          <span class="chip-num">1</span>
+          <span class="chip-label">On Hold</span>
+        </div>
+        <div class="tasks-toolbar">
+          <button class="btn-secondary" id="proj-sort-btn" type="button">
+            <i data-lucide="arrow-up-down"></i> Sort
+          </button>
+          <button class="btn-secondary" id="proj-filter-btn" type="button">
+            <i data-lucide="sliders-horizontal"></i> Filter
+          </button>
+          <div class="search-wrap" style="max-width:190px;">
+            <i data-lucide="search" class="search-icon"></i>
+            <input class="search-input" id="proj-search" type="search" placeholder="Search projects...">
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid View -->
+      <div id="proj-grid-view" class="proj-grid"></div>
+
+      <!-- List View -->
+      <div id="proj-list-view" style="display:none;"></div>
+
+    </div><!-- /page-projects -->
 
     </div>
   </main>
@@ -1871,6 +2100,185 @@
   </div>
 </div>
 
+<!-- ===== PROJECT DETAIL PANEL ===== -->
+<div class="proj-detail-overlay" id="proj-detail-overlay"></div>
+<div class="proj-detail-panel" id="proj-detail-panel">
+  <div class="proj-detail-header">
+    <div class="proj-detail-header-left">
+      <div id="proj-detail-accent-dot" style="width:10px;height:10px;border-radius:50%;flex-shrink:0;"></div>
+      <span id="proj-detail-status-badge" class="proj-status-badge active"><i data-lucide="play-circle"></i> Active</span>
+    </div>
+    <div class="proj-detail-actions">
+      <button class="task-action-btn" id="proj-detail-edit-btn" title="Edit project" type="button"><i data-lucide="edit-2"></i></button>
+      <button class="task-action-btn" id="proj-detail-delete-btn" title="Delete project" style="color:var(--accent-red)" type="button"><i data-lucide="trash-2"></i></button>
+      <button class="detail-panel-close" id="proj-detail-close-btn" title="Close" type="button"><i data-lucide="x"></i></button>
+    </div>
+  </div>
+  <div class="proj-detail-body">
+    <div class="proj-detail-section">
+      <div class="proj-detail-title-text" id="proj-detail-name"></div>
+      <div class="proj-detail-client-text" id="proj-detail-client"></div>
+      <div class="proj-detail-desc" id="proj-detail-desc-text"></div>
+    </div>
+    <div class="proj-detail-section">
+      <div class="proj-detail-section-label">Progress</div>
+      <div class="proj-big-progress">
+        <div class="proj-big-progress-meta">
+          <span id="proj-detail-tasks-text" style="font-size:12px;color:var(--text-secondary);"></span>
+          <span id="proj-detail-progress-pct" style="font-size:14px;font-weight:700;font-family:'DM Mono',monospace;color:var(--text-primary);"></span>
+        </div>
+        <div class="proj-big-progress-bar">
+          <div class="proj-big-progress-fill" id="proj-detail-progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="proj-detail-section">
+      <div class="proj-detail-section-label">Details</div>
+      <div class="proj-meta-grid">
+        <div class="proj-meta-cell">
+          <div class="proj-meta-cell-label">Priority</div>
+          <div class="proj-meta-cell-value" id="proj-detail-priority"></div>
+        </div>
+        <div class="proj-meta-cell">
+          <div class="proj-meta-cell-label">Category</div>
+          <div class="proj-meta-cell-value" id="proj-detail-category"></div>
+        </div>
+        <div class="proj-meta-cell">
+          <div class="proj-meta-cell-label">Due Date</div>
+          <div class="proj-meta-cell-value" id="proj-detail-due"></div>
+        </div>
+        <div class="proj-meta-cell">
+          <div class="proj-meta-cell-label">Tasks</div>
+          <div class="proj-meta-cell-value" id="proj-detail-task-count"></div>
+        </div>
+      </div>
+    </div>
+    <div class="proj-detail-section">
+      <div class="proj-detail-section-label">Team</div>
+      <div class="proj-team-grid" id="proj-detail-team"></div>
+    </div>
+    <div class="proj-detail-section">
+      <div class="proj-detail-section-label">Milestones</div>
+      <div class="proj-milestones" id="proj-detail-milestones"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECT CONTEXT DROPDOWN -->
+<div class="dd-panel" id="dd-proj-ctx">
+  <button class="dd-item" data-paction="view" type="button"><i data-lucide="eye"></i> View Details</button>
+  <button class="dd-item" data-paction="edit" type="button"><i data-lucide="edit-2"></i> Edit Project</button>
+  <button class="dd-item" data-paction="archive" type="button"><i data-lucide="archive"></i> Archive</button>
+  <div class="dd-divider"></div>
+  <button class="dd-item danger" data-paction="delete" type="button"><i data-lucide="trash-2"></i> Delete</button>
+</div>
+
+<!-- PROJECT SORT DROPDOWN -->
+<div class="dd-panel" id="dd-proj-sort">
+  <button class="dd-item active" data-psort="name" type="button"><i data-lucide="type"></i> Name (A–Z)</button>
+  <button class="dd-item" data-psort="dueDate" type="button"><i data-lucide="calendar"></i> Due Date</button>
+  <button class="dd-item" data-psort="progress" type="button"><i data-lucide="bar-chart-2"></i> Progress</button>
+  <button class="dd-item" data-psort="priority" type="button"><i data-lucide="flag"></i> Priority</button>
+  <button class="dd-item" data-psort="status" type="button"><i data-lucide="circle"></i> Status</button>
+</div>
+
+<!-- PROJECT FILTER DROPDOWN -->
+<div class="dd-panel" id="dd-proj-filter" style="min-width:220px;padding:0;">
+  <div class="filter-section-title">Priority</div>
+  <label class="filter-check-item"><input type="checkbox" checked id="pf-high"> <span>High</span></label>
+  <label class="filter-check-item"><input type="checkbox" checked id="pf-medium"> <span>Medium</span></label>
+  <label class="filter-check-item"><input type="checkbox" checked id="pf-low"> <span>Low</span></label>
+  <div class="dd-divider"></div>
+  <div class="filter-section-title">Category</div>
+  <label class="filter-check-item"><input type="checkbox" checked id="pf-dev"> <span>Development</span></label>
+  <label class="filter-check-item"><input type="checkbox" checked id="pf-design"> <span>Design</span></label>
+  <label class="filter-check-item"><input type="checkbox" checked id="pf-mktg"> <span>Marketing</span></label>
+  <div class="filter-footer">
+    <button class="filter-clear" id="proj-filter-clear" type="button">Clear</button>
+    <button class="filter-apply" id="proj-filter-apply" type="button">Apply</button>
+  </div>
+</div>
+
+<!-- NEW PROJECT MODAL -->
+<div class="modal-overlay" id="modal-newproject">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">New Project</div>
+        <div class="modal-subtitle">Set up a new project for your team</div>
+      </div>
+      <button class="modal-close-btn" onclick="closeModal('modal-newproject')" type="button"><i data-lucide="x"></i></button>
+    </div>
+    <div class="modal-body" id="form-newproject">
+      <div class="form-group">
+        <label class="form-label" for="proj-name-input">Project Name *</label>
+        <input class="form-input" id="proj-name-input" type="text" placeholder="e.g. Mobile App Redesign">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="proj-client-input">Client</label>
+          <input class="form-input" id="proj-client-input" type="text" placeholder="Client name">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="proj-cat-sel">Category</label>
+          <select class="form-select" id="proj-cat-sel">
+            <option>Development</option>
+            <option>Design</option>
+            <option>Marketing</option>
+            <option>Research</option>
+            <option>Operations</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Priority</label>
+        <div class="priority-group" id="proj-priority-group">
+          <button class="priority-pill high" data-priority="high" type="button">High</button>
+          <button class="priority-pill medium sel" data-priority="medium" type="button">Medium</button>
+          <button class="priority-pill low" data-priority="low" type="button">Low</button>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="proj-due-input">Due Date</label>
+          <input class="form-input" id="proj-due-input" type="date">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="proj-assignee-sel">Lead Assignee</label>
+          <select class="form-select" id="proj-assignee-sel">
+            <option>Aspen Herwitz</option>
+            <option>Roger Dokidis</option>
+            <option>Marley Vaccaro</option>
+            <option>Ryan Culhane</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Accent Color</label>
+        <div class="color-swatch-row">
+          <div class="color-swatch sel" data-color="#4A90FF" style="background:#4A90FF" title="Blue"></div>
+          <div class="color-swatch" data-color="#22C55E" style="background:#22C55E" title="Green"></div>
+          <div class="color-swatch" data-color="#A855F7" style="background:#A855F7" title="Purple"></div>
+          <div class="color-swatch" data-color="#FF8C42" style="background:#FF8C42" title="Orange"></div>
+          <div class="color-swatch" data-color="#00D4AA" style="background:#00D4AA" title="Teal"></div>
+          <div class="color-swatch" data-color="#EC4899" style="background:#EC4899" title="Pink"></div>
+          <div class="color-swatch" data-color="#EAB308" style="background:#EAB308" title="Yellow"></div>
+          <div class="color-swatch" data-color="#FF4D4D" style="background:#FF4D4D" title="Red"></div>
+          <div class="color-swatch" data-color="#06B6D4" style="background:#06B6D4" title="Cyan"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="proj-desc-input">Description</label>
+        <textarea class="form-textarea" id="proj-desc-input" placeholder="What is this project about?"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modal-newproject')" type="button">Cancel</button>
+      <button class="btn-primary" id="btn-create-project" type="button"><i data-lucide="briefcase"></i> Create Project</button>
+    </div>
+  </div>
+</div>
+
 <script>
 lucide.createIcons();
 
@@ -1918,7 +2326,9 @@ document.addEventListener('click', (e) => {
       !e.target.closest('#btn-developer') &&
       !e.target.closest('#btn-selectproject') &&
       !e.target.closest('#tasks-sort-btn') &&
-      !e.target.closest('#tasks-filter-btn')) {
+      !e.target.closest('#tasks-filter-btn') &&
+      !e.target.closest('#proj-sort-btn') &&
+      !e.target.closest('#proj-filter-btn')) {
     closeAllDD();
   }
   if (!e.target.closest('.ctx-menu') && !e.target.closest('.three-dot-btn')) {
@@ -1998,18 +2408,21 @@ function setTheme(theme) {
 function setActive(el, label) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   el.classList.add('active');
-  const pages = { Dashboard: 'page-dashboard', Tasks: 'page-tasks' };
   document.getElementById('page-dashboard').style.display = 'none';
   document.getElementById('page-tasks').style.display = 'none';
+  document.getElementById('page-projects').style.display = 'none';
   if (label === 'Dashboard') {
     document.getElementById('page-dashboard').style.display = 'flex';
   } else if (label === 'Tasks') {
     document.getElementById('page-tasks').style.display = 'flex';
+    renderTasksPage();
+  } else if (label === 'Projects') {
+    document.getElementById('page-projects').style.display = 'flex';
+    renderProjectsPage();
   } else {
     document.getElementById('page-dashboard').style.display = 'flex';
     showToast('Navigating to ' + label, 'info', 2000);
   }
-  if (label === 'Tasks') renderTasksPage();
 }
 
 // ============================================================
@@ -2975,10 +3388,10 @@ document.getElementById('view-toggle').addEventListener('click', (e) => {
   renderTasksPage();
 });
 
-// ===== TASK FILTER CHIPS =====
-document.querySelectorAll('.task-stat-chip').forEach(chip => {
+// ===== TASK FILTER CHIPS (scoped to tasks page only) =====
+document.querySelectorAll('#page-tasks .task-stat-chip').forEach(chip => {
   chip.addEventListener('click', () => {
-    document.querySelectorAll('.task-stat-chip').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('#page-tasks .task-stat-chip').forEach(c => c.classList.remove('active'));
     chip.classList.add('active');
     activeTaskFilter = chip.dataset.filter;
     renderTasksPage();
@@ -3011,6 +3424,456 @@ document.getElementById('tasks-filter-apply').addEventListener('click', () => {
   closeAllDD();
   showToast('Filters applied', 'success', 1500);
   renderTasksPage();
+});
+
+// ============================================================
+// PROJECTS PAGE — DATA
+// ============================================================
+const PROJECTS = [
+  { id:'p1', name:'Web 3 App for Fxtrade', client:'Fxtrade Expert', category:'Development',
+    status:'active', priority:'high', progress:45, color:'#4A90FF',
+    tasksTotal:18, tasksDone:8, dueDays:-1, dueDate:'Nov 20, 2024',
+    desc:'Building a comprehensive Web3 application with smart contract integration and DeFi features for the Fxtrade Expert trading platform.',
+    team:[{i:'AS',c:'#4A90FF',n:'Aspen H.'},{i:'RD',c:'#FF8C42',n:'Roger D.'},{i:'MV',c:'#A855F7',n:'Marley V.'}],
+    milestones:[{l:'Smart Contract Architecture',done:true,d:'Oct 15'},{l:'Frontend UI Framework',done:true,d:'Nov 1'},{l:'Wallet Integration',done:false,d:'Nov 18'},{l:'Security Audit',done:false,d:'Nov 20'}]
+  },
+  { id:'p2', name:'Healthydog Landing Page', client:'DogXpert', category:'Design',
+    status:'active', priority:'medium', progress:72, color:'#00D4AA',
+    tasksTotal:12, tasksDone:9, dueDays:3, dueDate:'Nov 23, 2024',
+    desc:'A beautiful, conversion-optimized landing page for DogXpert premium pet nutrition products and services.',
+    team:[{i:'RC',c:'#00D4AA',n:'Ryan C.'},{i:'AS',c:'#4A90FF',n:'Aspen H.'}],
+    milestones:[{l:'Wireframes & Mockups',done:true,d:'Nov 2'},{l:'Design System',done:true,d:'Nov 8'},{l:'Content & Copy',done:true,d:'Nov 14'},{l:'Development & QA',done:false,d:'Nov 23'}]
+  },
+  { id:'p3', name:'Redesign of Website', client:'Artstyle Co.', category:'Design',
+    status:'in-progress', priority:'high', progress:30, color:'#A855F7',
+    tasksTotal:20, tasksDone:6, dueDays:20, dueDate:'Dec 10, 2024',
+    desc:'Complete overhaul of the Artstyle Co. corporate website with a focus on portfolio showcase and client acquisition flow.',
+    team:[{i:'MV',c:'#A855F7',n:'Marley V.'},{i:'AS',c:'#4A90FF',n:'Aspen H.'},{i:'RD',c:'#FF8C42',n:'Roger D.'},{i:'RC',c:'#00D4AA',n:'Ryan C.'}],
+    milestones:[{l:'Discovery & Research',done:true,d:'Nov 5'},{l:'Information Architecture',done:false,d:'Nov 22'},{l:'Visual Design',done:false,d:'Dec 1'},{l:'Development',done:false,d:'Dec 10'}]
+  },
+  { id:'p4', name:'ChronoLoop Product Launch', client:'Internal', category:'Marketing',
+    status:'completed', priority:'high', progress:100, color:'#22C55E',
+    tasksTotal:24, tasksDone:24, dueDays:20, dueDate:'Nov 1, 2024',
+    desc:'Full product launch campaign for ChronoLoop including marketing materials, press releases, and launch event coordination.',
+    team:[{i:'AS',c:'#4A90FF',n:'Aspen H.'},{i:'MV',c:'#A855F7',n:'Marley V.'}],
+    milestones:[{l:'Marketing Strategy',done:true,d:'Oct 5'},{l:'Content Creation',done:true,d:'Oct 20'},{l:'Press Release',done:true,d:'Oct 28'},{l:'Launch Event',done:true,d:'Nov 1'}]
+  },
+  { id:'p5', name:'Mobile Banking App', client:'FinTech Pro', category:'Development',
+    status:'on-hold', priority:'low', progress:15, color:'#EAB308',
+    tasksTotal:30, tasksDone:5, dueDays:56, dueDate:'Jan 15, 2025',
+    desc:'Native mobile banking app with biometric authentication, real-time push notifications, and AI-powered spending insights.',
+    team:[{i:'RD',c:'#FF8C42',n:'Roger D.'}],
+    milestones:[{l:'Requirements Gathering',done:true,d:'Nov 8'},{l:'UI/UX Design',done:false,d:'Dec 10'},{l:'Backend Development',done:false,d:'Jan 5'},{l:'Testing & QA',done:false,d:'Jan 15'}]
+  },
+  { id:'p6', name:'E-Commerce Platform Revamp', client:'ShopMax', category:'Development',
+    status:'active', priority:'medium', progress:60, color:'#06B6D4',
+    tasksTotal:22, tasksDone:13, dueDays:12, dueDate:'Dec 2, 2024',
+    desc:'Modernizing the ShopMax e-commerce platform with improved performance, redesigned UX, and new payment gateway integrations.',
+    team:[{i:'AS',c:'#4A90FF',n:'Aspen H.'},{i:'RC',c:'#00D4AA',n:'Ryan C.'},{i:'RD',c:'#FF8C42',n:'Roger D.'}],
+    milestones:[{l:'Platform Audit',done:true,d:'Oct 28'},{l:'Architecture Design',done:true,d:'Nov 10'},{l:'Migration & Dev',done:false,d:'Nov 28'},{l:'Testing & Launch',done:false,d:'Dec 2'}]
+  },
+  { id:'p7', name:'Brand Identity System', client:'Branders Inc.', category:'Design',
+    status:'overdue', priority:'high', progress:25, color:'#FF4D4D',
+    tasksTotal:16, tasksDone:4, dueDays:-10, dueDate:'Nov 10, 2024',
+    desc:'Comprehensive brand identity redesign covering logo, typography system, color palette, and full brand guidelines.',
+    team:[{i:'MV',c:'#A855F7',n:'Marley V.'},{i:'AS',c:'#4A90FF',n:'Aspen H.'}],
+    milestones:[{l:'Brand Discovery Workshop',done:true,d:'Oct 20'},{l:'Logo Concepts',done:false,d:'Nov 5'},{l:'Color & Typography',done:false,d:'Nov 8'},{l:'Brand Guidelines',done:false,d:'Nov 10'}]
+  },
+  { id:'p8', name:'API Integration Suite', client:'TechCorp', category:'Development',
+    status:'in-progress', priority:'medium', progress:55, color:'#EC4899',
+    tasksTotal:14, tasksDone:8, dueDays:8, dueDate:'Nov 28, 2024',
+    desc:'Unified API integration suite connecting 12 third-party services into TechCorp\'s central data platform with real-time sync.',
+    team:[{i:'RD',c:'#FF8C42',n:'Roger D.'},{i:'RC',c:'#00D4AA',n:'Ryan C.'}],
+    milestones:[{l:'API Mapping & Docs',done:true,d:'Nov 2'},{l:'Core Integrations 1–6',done:true,d:'Nov 12'},{l:'Integrations 7–12',done:false,d:'Nov 24'},{l:'Testing & Docs',done:false,d:'Nov 28'}]
+  },
+  { id:'p9', name:'Analytics Dashboard', client:'DataViz Ltd.', category:'Design',
+    status:'completed', priority:'low', progress:100, color:'#22C55E',
+    tasksTotal:10, tasksDone:10, dueDays:20, dueDate:'Oct 31, 2024',
+    desc:'Interactive analytics dashboard with real-time data visualizations, custom reporting tools, and AI-powered anomaly detection.',
+    team:[{i:'AS',c:'#4A90FF',n:'Aspen H.'},{i:'MV',c:'#A855F7',n:'Marley V.'}],
+    milestones:[{l:'Data Architecture',done:true,d:'Oct 15'},{l:'Chart Components',done:true,d:'Oct 22'},{l:'Real-time Feed',done:true,d:'Oct 28'},{l:'Launch',done:true,d:'Oct 31'}]
+  },
+  { id:'p10', name:'Content Management System', client:'MediaGroup', category:'Development',
+    status:'active', priority:'medium', progress:40, color:'#FF8C42',
+    tasksTotal:18, tasksDone:7, dueDays:25, dueDate:'Dec 15, 2024',
+    desc:'Custom headless CMS for MediaGroup\'s network of 8 publications, supporting 50+ content editors with workflow automation.',
+    team:[{i:'RC',c:'#00D4AA',n:'Ryan C.'},{i:'RD',c:'#FF8C42',n:'Roger D.'},{i:'AS',c:'#4A90FF',n:'Aspen H.'}],
+    milestones:[{l:'Architecture & Stack',done:true,d:'Nov 8'},{l:'Content Modeling',done:false,d:'Nov 22'},{l:'Editor Interface',done:false,d:'Dec 5'},{l:'Publishing Pipeline',done:false,d:'Dec 15'}]
+  }
+];
+
+let projViewMode = 'grid';
+let projFilterMode = 'all';
+let projSearchQ = '';
+let projSortMode = 'name';
+let activeProjId = null;
+
+function _projStatusLabel(s) {
+  return {active:'Active','in-progress':'In Progress',completed:'Completed',overdue:'Overdue','on-hold':'On Hold'}[s]||s;
+}
+function _projStatusIcon(s) {
+  return {active:'play-circle','in-progress':'loader-2',completed:'check-circle-2',overdue:'alert-circle','on-hold':'pause-circle'}[s]||'circle';
+}
+function _priorityLabel(p) { return p.charAt(0).toUpperCase()+p.slice(1); }
+
+function renderProjectsPage() {
+  let list = [...PROJECTS];
+  if (projFilterMode !== 'all') list = list.filter(p => p.status === projFilterMode);
+  if (projSearchQ) {
+    const q = projSearchQ.toLowerCase();
+    list = list.filter(p => p.name.toLowerCase().includes(q) || p.client.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+  }
+  list.sort((a,b) => {
+    if (projSortMode === 'name')     return a.name.localeCompare(b.name);
+    if (projSortMode === 'progress') return b.progress - a.progress;
+    if (projSortMode === 'dueDate')  return a.dueDays - b.dueDays;
+    if (projSortMode === 'priority') { const o={high:0,medium:1,low:2}; return o[a.priority]-o[b.priority]; }
+    return 0;
+  });
+  if (projViewMode === 'grid') {
+    document.getElementById('proj-grid-view').style.display = '';
+    document.getElementById('proj-list-view').style.display = 'none';
+    _renderProjGrid(list);
+  } else {
+    document.getElementById('proj-grid-view').style.display = 'none';
+    document.getElementById('proj-list-view').style.display = '';
+    _renderProjList(list);
+  }
+}
+
+function _renderProjGrid(projects) {
+  const c = document.getElementById('proj-grid-view');
+  if (!projects.length) {
+    c.innerHTML = `<div class="proj-empty" style="grid-column:1/-1"><i data-lucide="folder-open" width="44" height="44"></i><div class="proj-empty-title">No projects found</div><div class="proj-empty-sub">Try adjusting your filter or search</div><button class="btn-primary" onclick="openModal('modal-newproject')" style="margin-top:8px;" type="button"><i data-lucide="plus"></i> New Project</button></div>`;
+    lucide.createIcons(); return;
+  }
+  c.innerHTML = projects.map((p,i) => `
+    <div class="proj-card" data-id="${p.id}" style="animation-delay:${60+i*60}ms" tabindex="0" role="button" aria-label="${p.name}">
+      <div class="proj-card-accent" style="background:${p.color}"></div>
+      <div class="proj-card-body">
+        <div class="proj-card-top">
+          <div class="proj-card-name">${p.name}</div>
+          <button class="proj-card-menu" type="button" aria-label="More options" data-proj-id="${p.id}"><i data-lucide="more-horizontal"></i></button>
+        </div>
+        <div class="proj-card-client">
+          <span class="proj-client-text">${p.client}</span>
+          <span class="proj-category-tag">${p.category}</span>
+        </div>
+        <div class="proj-badges">
+          <span class="proj-status-badge ${p.status}"><i data-lucide="${_projStatusIcon(p.status)}"></i>${_projStatusLabel(p.status)}</span>
+          <span class="proj-priority-badge ${p.priority}">${_priorityLabel(p.priority)}</span>
+        </div>
+        <div class="proj-progress-section">
+          <div class="proj-progress-label">
+            <span class="proj-progress-tasks">${p.tasksDone}/${p.tasksTotal} tasks</span>
+            <span class="proj-progress-pct">${p.progress}%</span>
+          </div>
+          <div class="proj-progress-track">
+            <div class="proj-progress-fill" style="background:${p.color};width:${p.progress}%"></div>
+          </div>
+        </div>
+        <div class="proj-card-footer">
+          <div class="proj-due-label ${p.dueDays<0?'overdue':p.dueDays<=7?'soon':''}">
+            <i data-lucide="calendar"></i>${p.dueDays<0?'Overdue · ':'Due · '}${p.dueDate}
+          </div>
+          <div class="proj-avatars">
+            ${p.team.slice(0,3).map(m=>`<div class="proj-avatar" style="background:${m.c}" title="${m.n}">${m.i}</div>`).join('')}
+            ${p.team.length>3?`<div class="proj-avatar proj-avatar-more">+${p.team.length-3}</div>`:''}
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  lucide.createIcons();
+  requestAnimationFrame(() => {
+    c.querySelectorAll('.proj-progress-fill').forEach(f => {
+      const w=f.style.width; f.style.width='0%';
+      requestAnimationFrame(() => { f.style.width=w; });
+    });
+  });
+  c.querySelectorAll('.proj-card').forEach(card => {
+    card.addEventListener('click', e => { if(e.target.closest('.proj-card-menu')) return; openProjectDetail(card.dataset.id); });
+    card.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();openProjectDetail(card.dataset.id);} });
+  });
+  c.querySelectorAll('.proj-card-menu').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      activeProjId = btn.dataset.projId;
+      const rect = btn.getBoundingClientRect();
+      const panel = document.getElementById('dd-proj-ctx');
+      closeAllDD();
+      panel.style.visibility='hidden'; panel.style.display='block';
+      const pw=panel.offsetWidth, ph=panel.offsetHeight;
+      panel.style.display=''; panel.style.visibility='';
+      let top=rect.bottom+6, left=rect.left;
+      if(left+pw>window.innerWidth-8) left=window.innerWidth-pw-8;
+      if(top+ph>window.innerHeight-8) top=rect.top-ph-6;
+      panel.style.top=top+'px'; panel.style.left=left+'px';
+      panel.classList.add('open');
+      lucide.createIcons();
+    });
+  });
+}
+
+function _renderProjList(projects) {
+  const c = document.getElementById('proj-list-view');
+  if (!projects.length) {
+    c.innerHTML = `<div class="proj-empty"><i data-lucide="folder-open" width="44" height="44"></i><div class="proj-empty-title">No projects found</div><div class="proj-empty-sub">Try adjusting your filter</div></div>`;
+    lucide.createIcons(); return;
+  }
+  c.innerHTML = `
+    <div class="proj-list">
+      <div class="proj-list-head">
+        <div class="proj-list-col">Project <i data-lucide="chevrons-up-down"></i></div>
+        <div class="proj-list-col">Client</div>
+        <div class="proj-list-col">Status</div>
+        <div class="proj-list-col">Priority</div>
+        <div class="proj-list-col">Progress</div>
+        <div class="proj-list-col">Due Date</div>
+        <div class="proj-list-col">Team</div>
+      </div>
+      ${projects.map(p => `
+        <div class="proj-list-row" data-id="${p.id}" tabindex="0" role="button">
+          <div class="proj-list-name-cell">
+            <div class="proj-list-dot" style="background:${p.color}"></div>
+            <div>
+              <div class="proj-list-name">${p.name}</div>
+              <div class="proj-list-cat">${p.category}</div>
+            </div>
+          </div>
+          <div class="proj-list-client-cell">${p.client}</div>
+          <div><span class="proj-status-badge ${p.status}"><i data-lucide="${_projStatusIcon(p.status)}"></i>${_projStatusLabel(p.status)}</span></div>
+          <div><span class="proj-priority-badge ${p.priority}">${_priorityLabel(p.priority)}</span></div>
+          <div class="proj-list-prog-cell">
+            <span class="proj-list-pct">${p.progress}%</span>
+            <div class="proj-list-track"><div class="proj-list-fill" style="background:${p.color};width:${p.progress}%"></div></div>
+          </div>
+          <div class="proj-due-cell ${p.dueDays<0?'overdue':p.dueDays<=7?'soon':''}">
+            <i data-lucide="calendar"></i>${p.dueDate}
+          </div>
+          <div class="proj-avatars">
+            ${p.team.slice(0,3).map(m=>`<div class="proj-avatar" style="background:${m.c}" title="${m.n}">${m.i}</div>`).join('')}
+            ${p.team.length>3?`<div class="proj-avatar proj-avatar-more">+${p.team.length-3}</div>`:''}
+          </div>
+        </div>
+      `).join('')}
+    </div>`;
+  lucide.createIcons();
+  requestAnimationFrame(() => {
+    c.querySelectorAll('.proj-list-fill').forEach(f => {
+      const w=f.style.width; f.style.width='0%';
+      requestAnimationFrame(() => { f.style.width=w; });
+    });
+  });
+  c.querySelectorAll('.proj-list-row').forEach(row => {
+    row.addEventListener('click', () => openProjectDetail(row.dataset.id));
+    row.addEventListener('keydown', e => { if(e.key==='Enter') openProjectDetail(row.dataset.id); });
+  });
+}
+
+// ============================================================
+// PROJECT DETAIL PANEL
+// ============================================================
+function openProjectDetail(projId) {
+  const p = PROJECTS.find(x => x.id === projId);
+  if (!p) return;
+  activeProjId = projId;
+
+  document.getElementById('proj-detail-name').textContent = p.name;
+  document.getElementById('proj-detail-client').textContent = p.client;
+  document.getElementById('proj-detail-accent-dot').style.background = p.color;
+  document.getElementById('proj-detail-task-count').textContent = p.tasksDone + ' / ' + p.tasksTotal;
+
+  const sb = document.getElementById('proj-detail-status-badge');
+  sb.className = 'proj-status-badge ' + p.status;
+  sb.innerHTML = `<i data-lucide="${_projStatusIcon(p.status)}"></i> ${_projStatusLabel(p.status)}`;
+
+  document.getElementById('proj-detail-desc-text').textContent = p.desc;
+
+  const pf = document.getElementById('proj-detail-progress-fill');
+  pf.style.background = p.color;
+  pf.style.width = '0%';
+  document.getElementById('proj-detail-progress-pct').textContent = p.progress + '%';
+  document.getElementById('proj-detail-tasks-text').textContent = p.tasksDone + ' of ' + p.tasksTotal + ' tasks completed';
+  document.getElementById('proj-detail-priority').textContent = _priorityLabel(p.priority);
+  document.getElementById('proj-detail-category').textContent = p.category;
+  document.getElementById('proj-detail-due').textContent = p.dueDate;
+
+  document.getElementById('proj-detail-team').innerHTML = p.team.map(m => `
+    <div class="proj-team-member">
+      <div class="proj-team-avatar-lg" style="background:${m.c}">${m.i}</div>
+      <div class="proj-team-name">${m.n}</div>
+    </div>`).join('');
+
+  document.getElementById('proj-detail-milestones').innerHTML = p.milestones.map(m => `
+    <div class="proj-milestone-item">
+      <div class="proj-milestone-check ${m.done?'done':''}"></div>
+      <span class="proj-milestone-text ${m.done?'done':''}">${m.l}</span>
+      <span class="proj-milestone-date">${m.d}</span>
+    </div>`).join('');
+
+  document.getElementById('proj-detail-overlay').classList.add('open');
+  document.getElementById('proj-detail-panel').classList.add('open');
+  lucide.createIcons();
+
+  requestAnimationFrame(() => { requestAnimationFrame(() => { pf.style.width = p.progress + '%'; }); });
+}
+
+function closeProjectDetail() {
+  document.getElementById('proj-detail-overlay').classList.remove('open');
+  document.getElementById('proj-detail-panel').classList.remove('open');
+  activeProjId = null;
+}
+
+document.getElementById('proj-detail-close-btn').addEventListener('click', closeProjectDetail);
+document.getElementById('proj-detail-overlay').addEventListener('click', closeProjectDetail);
+
+document.getElementById('proj-detail-delete-btn').addEventListener('click', () => {
+  if (!activeProjId) return;
+  const idx = PROJECTS.findIndex(p => p.id === activeProjId);
+  if (idx === -1) return;
+  const name = PROJECTS[idx].name;
+  PROJECTS.splice(idx, 1);
+  closeProjectDetail();
+  renderProjectsPage();
+  showToast('"' + name + '" deleted', 'success', 3000);
+});
+
+document.getElementById('proj-detail-edit-btn').addEventListener('click', () => {
+  showToast('Edit project coming soon', 'info', 2000);
+});
+
+// Project context dropdown actions
+document.querySelectorAll('#dd-proj-ctx .dd-item').forEach(item => {
+  item.addEventListener('click', () => {
+    closeAllDD();
+    const action = item.dataset.paction;
+    if (action === 'view') { openProjectDetail(activeProjId); }
+    else if (action === 'edit') { showToast('Edit project coming soon', 'info'); }
+    else if (action === 'archive') { showToast('Project archived', 'success', 2000); }
+    else if (action === 'delete') {
+      const idx = PROJECTS.findIndex(p => p.id === activeProjId);
+      if (idx !== -1) {
+        const name = PROJECTS[idx].name;
+        PROJECTS.splice(idx, 1);
+        renderProjectsPage();
+        showToast('"' + name + '" deleted', 'success', 3000);
+      }
+    }
+  });
+});
+
+// ============================================================
+// PROJECTS — VIEW TOGGLE
+// ============================================================
+document.getElementById('proj-view-toggle').addEventListener('click', e => {
+  const btn = e.target.closest('.view-btn');
+  if (!btn) return;
+  document.querySelectorAll('#proj-view-toggle .view-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  projViewMode = btn.dataset.view;
+  renderProjectsPage();
+});
+
+// ============================================================
+// PROJECTS — FILTER CHIPS
+// ============================================================
+document.getElementById('proj-stat-chips').addEventListener('click', e => {
+  const chip = e.target.closest('[data-pfilter]');
+  if (!chip) return;
+  document.querySelectorAll('#proj-stat-chips [data-pfilter]').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  projFilterMode = chip.dataset.pfilter;
+  renderProjectsPage();
+});
+
+// ============================================================
+// PROJECTS — SEARCH
+// ============================================================
+document.getElementById('proj-search').addEventListener('input', e => {
+  projSearchQ = e.target.value;
+  renderProjectsPage();
+});
+
+// ============================================================
+// PROJECTS — SORT
+// ============================================================
+document.getElementById('proj-sort-btn').addEventListener('click', () => openDD('proj-sort-btn', 'dd-proj-sort'));
+document.querySelectorAll('#dd-proj-sort .dd-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('#dd-proj-sort .dd-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    projSortMode = item.dataset.psort;
+    closeAllDD();
+    showToast('Sorted by ' + item.textContent.trim(), 'info', 1500);
+    renderProjectsPage();
+  });
+});
+
+// ============================================================
+// PROJECTS — FILTER PANEL
+// ============================================================
+document.getElementById('proj-filter-btn').addEventListener('click', () => openDD('proj-filter-btn', 'dd-proj-filter'));
+document.getElementById('proj-filter-clear').addEventListener('click', () => {
+  document.querySelectorAll('#dd-proj-filter input').forEach(cb => cb.checked = false);
+  showToast('Filters cleared', 'info', 1500);
+});
+document.getElementById('proj-filter-apply').addEventListener('click', () => {
+  closeAllDD();
+  showToast('Filters applied', 'success', 1500);
+  renderProjectsPage();
+});
+
+// ============================================================
+// NEW PROJECT MODAL
+// ============================================================
+document.getElementById('btn-new-project').addEventListener('click', () => openModal('modal-newproject'));
+
+document.querySelectorAll('.color-swatch').forEach(sw => {
+  sw.addEventListener('click', () => {
+    document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('sel'));
+    sw.classList.add('sel');
+  });
+});
+
+document.querySelectorAll('#proj-priority-group .priority-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('#proj-priority-group .priority-pill').forEach(p => p.classList.remove('sel'));
+    pill.classList.add('sel');
+  });
+});
+
+document.getElementById('btn-create-project').addEventListener('click', () => {
+  const name = document.getElementById('proj-name-input').value.trim();
+  if (!name) { showToast('Project name is required', 'error', 2000); return; }
+  const client   = document.getElementById('proj-client-input').value.trim() || 'No client';
+  const category = document.getElementById('proj-cat-sel').value;
+  const priority = document.querySelector('#proj-priority-group .priority-pill.sel')?.dataset.priority || 'medium';
+  const dueRaw   = document.getElementById('proj-due-input').value;
+  const dueDate  = dueRaw ? new Date(dueRaw+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : 'TBD';
+  const color    = document.querySelector('.color-swatch.sel')?.dataset.color || '#4A90FF';
+  const desc     = document.getElementById('proj-desc-input').value.trim() || 'No description provided.';
+
+  PROJECTS.unshift({
+    id: 'p_new_' + Date.now(), name, client, category, status:'active', priority,
+    progress:0, color, tasksTotal:0, tasksDone:0, dueDays:30, dueDate, desc,
+    team:[{i:'JA',c:'#4A90FF',n:'Jacobs A.'}],
+    milestones:[]
+  });
+
+  // Reset form
+  document.getElementById('proj-name-input').value = '';
+  document.getElementById('proj-client-input').value = '';
+  document.getElementById('proj-desc-input').value = '';
+  document.getElementById('proj-due-input').value = '';
+  document.querySelectorAll('#proj-priority-group .priority-pill').forEach(p => p.classList.remove('sel'));
+  document.querySelector('#proj-priority-group .priority-pill.medium').classList.add('sel');
+  document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('sel'));
+  document.querySelector('.color-swatch[data-color="#4A90FF"]').classList.add('sel');
+
+  closeModal('modal-newproject');
+  renderProjectsPage();
+  showToast('Project "' + name + '" created!', 'success', 3000);
 });
 
 
