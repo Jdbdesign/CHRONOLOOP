@@ -280,6 +280,9 @@
 
   .avatar-sm:hover { transform: translateY(-2px) scale(1.1); z-index: 1; }
   .avatar-sm:not(:first-child) { margin-left: -8px; }
+  .avatar-sm,.avatar-md,.team-avatar,.user-menu-avatar,.activity-avatar,.proj-avatar,.proj-team-avatar-lg,.tm-avatar,.tm-workload-avatar,.tm-perf-avatar,.tm-detail-avatar,.rpt-team-avatar,.settings-avatar,.member-avatar-sm,.tm-activity-ava,.task-assignee-bubble { overflow: hidden; }
+  .settings-avatar { position: relative; }
+  .avatar-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
   .share-btn {
     display: flex;
@@ -3031,10 +3034,10 @@
 
       <div class="topbar-right">
         <div class="avatar-cluster">
-          <div class="avatar-sm" style="background:#4A90FF;" title="Aspen Herwitz">AS</div>
-          <div class="avatar-sm" style="background:#FF8C42;" title="Roger Dokidis">RD</div>
-          <div class="avatar-sm" style="background:#A855F7;" title="Marley Vaccaro">MV</div>
-          <div class="avatar-sm" style="background:#00D4AA;" title="Ryan Culhane">RC</div>
+          <div class="avatar-sm" title="Aspen Herwitz"><img class="avatar-img" src="avatars/Ellipse 2.png" alt="Aspen Herwitz"></div>
+          <div class="avatar-sm" title="Roger Dokidis"><img class="avatar-img" src="avatars/Ellipse 3.png" alt="Roger Dokidis"></div>
+          <div class="avatar-sm" title="Marley Vaccaro"><img class="avatar-img" src="avatars/Ellipse 4.png" alt="Marley Vaccaro"></div>
+          <div class="avatar-sm" title="Ryan Culhane"><img class="avatar-img" src="avatars/Ellipse 5.png" alt="Ryan Culhane"></div>
         </div>
 
         <button class="share-btn" id="btn-share" type="button">
@@ -3047,7 +3050,7 @@
         </button>
 
         <button class="user-avatar-btn" id="btn-user" type="button">
-          <div class="avatar-md">JA</div>
+          <div class="avatar-md"><img class="avatar-img" src="avatars/Ellipse 1.png" alt="Jacob Solayinka"></div>
           <i data-lucide="chevron-down"></i>
         </button>
       </div>
@@ -3239,22 +3242,22 @@
 
           <div class="team-grid">
             <div class="team-member" tabindex="0" data-initials="AS">
-              <div class="team-avatar" style="background:linear-gradient(135deg,#4A90FF,#2563eb)">AS</div>
+              <div class="team-avatar"><img class="avatar-img" src="avatars/Ellipse 2.png" alt="Aspen Herwitz"></div>
               <div class="team-member-name">Aspen Herwitz</div>
               <div class="team-member-email">Joedoe@gmail.com</div>
             </div>
             <div class="team-member" tabindex="0" data-initials="RD">
-              <div class="team-avatar" style="background:linear-gradient(135deg,#FF8C42,#ea580c)">RD</div>
+              <div class="team-avatar"><img class="avatar-img" src="avatars/Ellipse 3.png" alt="Roger Dokidis"></div>
               <div class="team-member-name">Roger Dokidis</div>
               <div class="team-member-email">Joedoe@gmail.com</div>
             </div>
             <div class="team-member" tabindex="0" data-initials="MV">
-              <div class="team-avatar" style="background:linear-gradient(135deg,#A855F7,#7c3aed)">MV</div>
+              <div class="team-avatar"><img class="avatar-img" src="avatars/Ellipse 4.png" alt="Marley Vaccaro"></div>
               <div class="team-member-name">Marley Vaccaro</div>
               <div class="team-member-email">Joedoe@gmail.com</div>
             </div>
             <div class="team-member" tabindex="0" data-initials="RC">
-              <div class="team-avatar" style="background:linear-gradient(135deg,#00D4AA,#059669)">RC</div>
+              <div class="team-avatar"><img class="avatar-img" src="avatars/Ellipse 5.png" alt="Ryan Culhane"></div>
               <div class="team-member-name">Ryan Culhane</div>
               <div class="team-member-email">Joedoe@gmail.com</div>
             </div>
@@ -3964,7 +3967,7 @@
 
               <div class="settings-avatar-row">
                 <div class="settings-avatar" id="settings-avatar-circle">
-                  JS
+                  <img class="avatar-img" src="avatars/Ellipse 1.png" alt="Jacob Solayinka">
                   <div class="settings-avatar-overlay"><i data-lucide="camera"></i></div>
                 </div>
                 <div>
@@ -4901,7 +4904,7 @@
                   <tr>
                     <td>
                       <div class="member-cell">
-                        <div class="member-avatar-sm" style="background:#4A90FF;">JS</div>
+                        <div class="member-avatar-sm"><img class="avatar-img" src="avatars/Ellipse 1.png" alt="Jacob Solayinka"></div>
                         <div>
                           <div class="member-name">Jacob Solayinka</div>
                           <div class="member-email">jacobsolayinka19@gmail.com</div>
@@ -5509,7 +5512,7 @@
   </div>
   <div class="detail-panel-footer">
     <div class="comment-input-row" style="flex:1;">
-      <div class="team-avatar" style="width:28px;height:28px;font-size:10px;background:linear-gradient(135deg,#4A90FF,#A855F7);flex-shrink:0;">JA</div>
+      <div class="team-avatar" style="width:28px;height:28px;flex-shrink:0;"><img class="avatar-img" src="avatars/Ellipse 1.png" alt="Jacob Solayinka"></div>
       <textarea class="comment-textarea" id="detail-comment-input" placeholder="Add a comment..."></textarea>
       <button class="btn-primary" id="detail-comment-send" type="button" style="height:34px;padding:0 12px;flex-shrink:0;"><i data-lucide="send"></i></button>
     </div>
@@ -5636,14 +5639,14 @@
         <div style="display:flex;flex-direction:column;gap:8px;">
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <div style="display:flex;align-items:center;gap:8px;">
-              <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#4A90FF,#2563eb);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;">AS</div>
+              <div style="width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;"><img class="avatar-img" src="avatars/Ellipse 2.png" alt="Aspen Herwitz"></div>
               <div><div style="font-size:12px;color:var(--text-primary);">Aspen Herwitz</div><div style="font-size:10px;color:var(--text-muted);">aspen@example.com</div></div>
             </div>
             <span style="font-size:11px;color:var(--accent-blue);font-weight:500;">Editor</span>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <div style="display:flex;align-items:center;gap:8px;">
-              <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#FF8C42,#ea580c);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;">RD</div>
+              <div style="width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;"><img class="avatar-img" src="avatars/Ellipse 3.png" alt="Roger Dokidis"></div>
               <div><div style="font-size:12px;color:var(--text-primary);">Roger Dokidis</div><div style="font-size:10px;color:var(--text-muted);">roger@example.com</div></div>
             </div>
             <span style="font-size:11px;color:var(--text-muted);">Viewer</span>
@@ -5762,23 +5765,23 @@
     <div class="modal-body">
       <div>
         <div class="activity-item">
-          <div class="activity-avatar" style="background:linear-gradient(135deg,#4A90FF,#2563eb)">AS</div>
+          <div class="activity-avatar"><img class="avatar-img" src="avatars/Ellipse 2.png" alt="Aspen Herwitz"></div>
           <div><div class="activity-text"><strong>Aspen Herwitz</strong> completed <em>Login screen wireframe</em></div><div class="activity-time">2 minutes ago</div></div>
         </div>
         <div class="activity-item">
-          <div class="activity-avatar" style="background:linear-gradient(135deg,#FF8C42,#ea580c)">RD</div>
+          <div class="activity-avatar"><img class="avatar-img" src="avatars/Ellipse 3.png" alt="Roger Dokidis"></div>
           <div><div class="activity-text"><strong>Roger Dokidis</strong> added a comment to <em>Healthydog Landing Page</em></div><div class="activity-time">15 minutes ago</div></div>
         </div>
         <div class="activity-item">
-          <div class="activity-avatar" style="background:linear-gradient(135deg,#A855F7,#7c3aed)">MV</div>
+          <div class="activity-avatar"><img class="avatar-img" src="avatars/Ellipse 4.png" alt="Marley Vaccaro"></div>
           <div><div class="activity-text"><strong>Marley Vaccaro</strong> uploaded 3 design assets</div><div class="activity-time">1 hour ago</div></div>
         </div>
         <div class="activity-item">
-          <div class="activity-avatar" style="background:linear-gradient(135deg,#00D4AA,#059669)">RC</div>
+          <div class="activity-avatar"><img class="avatar-img" src="avatars/Ellipse 5.png" alt="Ryan Culhane"></div>
           <div><div class="activity-text"><strong>Ryan Culhane</strong> moved <em>Web 3 App</em> to In Review</div><div class="activity-time">2 hours ago</div></div>
         </div>
         <div class="activity-item">
-          <div class="activity-avatar" style="background:linear-gradient(135deg,#4A90FF,#A855F7)">JA</div>
+          <div class="activity-avatar"><img class="avatar-img" src="avatars/Ellipse 1.png" alt="Jacob Solayinka"></div>
           <div><div class="activity-text"><strong>You</strong> created a new sprint <em>Sprint 4</em></div><div class="activity-time">Yesterday</div></div>
         </div>
       </div>
@@ -5834,7 +5837,7 @@
       <button class="modal-close-btn" onclick="closeModal('modal-member')"><i data-lucide="x"></i></button>
     </div>
     <div class="modal-body" style="align-items:center;text-align:center;">
-      <div id="modal-member-avatar" style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#4A90FF,#A855F7);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;margin:0 auto;"></div>
+      <div id="modal-member-avatar" style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#4A90FF,#A855F7);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;margin:0 auto;overflow:hidden;"></div>
       <div>
         <div style="font-family:'Syne';font-size:17px;font-weight:700;color:var(--text-primary);" id="modal-member-name"></div>
         <div style="font-size:12px;color:var(--accent-blue);margin-top:2px;" id="modal-member-role"></div>
@@ -6645,7 +6648,9 @@ document.querySelectorAll('.team-member').forEach(member => {
     const init = member.dataset.initials;
     const d = memberData[init];
     if (!d) return;
-    document.getElementById('modal-member-avatar').textContent = init;
+    const _mavEl = document.getElementById('modal-member-avatar');
+    if (AVATAR_MAP[init]) { _mavEl.innerHTML = `<img class="avatar-img" src="${AVATAR_MAP[init]}" alt="${init}">`; _mavEl.style.background = 'transparent'; }
+    else { _mavEl.textContent = init; _mavEl.style.background = 'linear-gradient(135deg,#4A90FF,#A855F7)'; }
     document.getElementById('modal-member-name').textContent = d.name;
     document.getElementById('modal-member-role').textContent = d.role;
     document.getElementById('modal-member-email').textContent = d.email;
@@ -7030,7 +7035,7 @@ function buildTaskRowHTML(t) {
       </div>
       <div class="task-tags">${t.tags.slice(0,2).map(g=>`<span class="task-tag">${g}</span>`).join('')}</div>
       <div class="task-priority ${t.priority}"><i data-lucide="${priorityIcon}"></i>${t.priority.charAt(0).toUpperCase()+t.priority.slice(1)}</div>
-      <div class="task-assignee-bubble" style="background:${t.aColor}" title="${t.assignee}">${t.assignee}</div>
+      ${AVATAR_MAP[t.assignee]?`<div class="task-assignee-bubble" title="${t.assignee}"><img class="avatar-img" src="${AVATAR_MAP[t.assignee]}" alt="${t.assignee}"></div>`:`<div class="task-assignee-bubble" style="background:${t.aColor}" title="${t.assignee}">${t.assignee}</div>`}
       <div class="task-due ${dueClass}"><i data-lucide="calendar" style="width:10px;height:10px;margin-right:3px;"></i>${formatDue(t.due)}</div>
       <div class="task-row-actions">
         <button class="task-action-btn" data-action="edit" title="Edit"><i data-lucide="edit-2"></i></button>
@@ -7073,7 +7078,7 @@ function buildBoardView(tasks) {
                   <div class="task-priority ${t.priority}" style="font-size:9px;padding:2px 6px;">${t.priority.charAt(0).toUpperCase()+t.priority.slice(1)}</div>
                   <div style="display:flex;align-items:center;gap:6px;">
                     <div class="task-due ${dueClass}" style="font-size:10px;">${formatDue(t.due)}</div>
-                    <div class="task-assignee-bubble" style="background:${t.aColor};width:22px;height:22px;font-size:8px;">${t.assignee}</div>
+                    ${AVATAR_MAP[t.assignee]?`<div class="task-assignee-bubble" style="width:22px;height:22px;"><img class="avatar-img" src="${AVATAR_MAP[t.assignee]}" alt="${t.assignee}"></div>`:`<div class="task-assignee-bubble" style="background:${t.aColor};width:22px;height:22px;font-size:8px;">${t.assignee}</div>`}
                   </div>
                 </div>
                 <div style="margin-top:8px;font-size:10px;color:var(--text-muted);">${t.project}</div>
@@ -7593,7 +7598,7 @@ function _renderProjGrid(projects) {
             <i data-lucide="calendar"></i>${p.dueDays<0?'Overdue · ':'Due · '}${p.dueDate}
           </div>
           <div class="proj-avatars">
-            ${p.team.slice(0,3).map(m=>`<div class="proj-avatar" style="background:${m.c}" title="${m.n}">${m.i}</div>`).join('')}
+            ${p.team.slice(0,3).map(m=>AVATAR_MAP[m.i]?`<div class="proj-avatar" title="${m.n||m.i}"><img class="avatar-img" src="${AVATAR_MAP[m.i]}" alt="${m.i}"></div>`:`<div class="proj-avatar" style="background:${m.c}" title="${m.n||m.i}">${m.i}</div>`).join('')}
             ${p.team.length>3?`<div class="proj-avatar proj-avatar-more">+${p.team.length-3}</div>`:''}
           </div>
         </div>
@@ -7668,7 +7673,7 @@ function _renderProjList(projects) {
             <i data-lucide="calendar"></i>${p.dueDate}
           </div>
           <div class="proj-avatars">
-            ${p.team.slice(0,3).map(m=>`<div class="proj-avatar" style="background:${m.c}" title="${m.n}">${m.i}</div>`).join('')}
+            ${p.team.slice(0,3).map(m=>AVATAR_MAP[m.i]?`<div class="proj-avatar" title="${m.n||m.i}"><img class="avatar-img" src="${AVATAR_MAP[m.i]}" alt="${m.i}"></div>`:`<div class="proj-avatar" style="background:${m.c}" title="${m.n||m.i}">${m.i}</div>`).join('')}
             ${p.team.length>3?`<div class="proj-avatar proj-avatar-more">+${p.team.length-3}</div>`:''}
           </div>
         </div>
@@ -7717,8 +7722,8 @@ function openProjectDetail(projId) {
 
   document.getElementById('proj-detail-team').innerHTML = p.team.map(m => `
     <div class="proj-team-member">
-      <div class="proj-team-avatar-lg" style="background:${m.c}">${m.i}</div>
-      <div class="proj-team-name">${m.n}</div>
+      ${AVATAR_MAP[m.i]?`<div class="proj-team-avatar-lg"><img class="avatar-img" src="${AVATAR_MAP[m.i]}" alt="${m.i}"></div>`:`<div class="proj-team-avatar-lg" style="background:${m.c}">${m.i}</div>`}
+      <div class="proj-team-name">${m.n||m.i}</div>
     </div>`).join('');
 
   document.getElementById('proj-detail-milestones').innerHTML = p.milestones.map(m => `
@@ -8513,6 +8518,25 @@ document.getElementById('btn-create-project').addEventListener('click', () => {
 // ============================================================
 // TEAM PAGE
 // ============================================================
+const AVATAR_MAP = {
+  'JA': 'avatars/Ellipse 1.png',
+  'JS': 'avatars/Ellipse 1.png',
+  'AS': 'avatars/Ellipse 2.png',
+  'AH': 'avatars/Ellipse 2.png',
+  'RD': 'avatars/Ellipse 3.png',
+  'MV': 'avatars/Ellipse 4.png',
+  'RC': 'avatars/Ellipse 5.png',
+  'SC': 'avatars/Ellipse 6.png',
+  'DO': 'avatars/Ellipse 7.png',
+  'NP': 'avatars/Ellipse 8.png',
+  'MW': 'avatars/Ellipse 9.png',
+};
+function mkAva(initials, color, cssClass) {
+  const src = AVATAR_MAP[initials];
+  if (src) return `<div class="${cssClass}"><img class="avatar-img" src="${src}" alt="${initials}"></div>`;
+  return `<div class="${cssClass}" style="background:${color}">${initials}</div>`;
+}
+
 const TEAM_MEMBERS = [
   {
     id:'tm1', name:'Aspen Herwitz', initials:'AH', role:'Senior Developer', dept:'Development',
@@ -8720,7 +8744,7 @@ function renderTeamPage() {
       <div class="tm-card-body">
         <div class="tm-card-top">
           <div class="tm-avatar-wrap">
-            <div class="tm-avatar" style="background:${m.color}">${m.initials}</div>
+            ${mkAva(m.initials, m.color, 'tm-avatar')}
             <div class="tm-online-dot ${m.online?'online':'offline'}"></div>
           </div>
           <button class="tm-card-menu" id="tm-ctx-${m.id}" type="button" aria-label="More options">
@@ -8796,7 +8820,7 @@ function renderWorkloadPanel(members) {
     const todoW = 100 - doneW - inpW;
     return `
     <div class="tm-workload-row">
-      <div class="tm-workload-avatar" style="background:${m.color}">${m.initials}</div>
+      ${mkAva(m.initials, m.color, 'tm-workload-avatar')}
       <div class="tm-workload-name">${m.name.split(' ')[0]}</div>
       <div class="tm-workload-bars">
         <div class="tm-workload-seg" style="width:${doneW}%;background:var(--accent-green);opacity:0.85;border-radius:3px 0 0 3px;"></div>
@@ -8813,7 +8837,7 @@ function renderTeamActivity() {
   TEAM_MEMBERS.forEach(m => m.activity.forEach(a => allActivity.push({...a, member:m})));
   document.getElementById('tm-activity-feed').innerHTML = allActivity.slice(0,8).map(a => `
     <div class="tm-activity-item">
-      <div class="tm-activity-ava" style="background:${a.member.color}">${a.member.initials}</div>
+      ${mkAva(a.member.initials, a.member.color, 'tm-activity-ava')}
       <div class="tm-activity-content">
         <div class="tm-activity-text"><strong>${a.member.name.split(' ')[0]}</strong> ${a.text}</div>
         <div class="tm-activity-time">${a.time}</div>
@@ -8826,7 +8850,7 @@ function renderPerfLeaderboard() {
   document.getElementById('tm-perf-list').innerHTML = sorted.map((m, i) => `
     <div class="tm-perf-row">
       <div class="tm-perf-rank">#${i+1}</div>
-      <div class="tm-perf-avatar" style="background:${m.color}">${m.initials}</div>
+      ${mkAva(m.initials, m.color, 'tm-perf-avatar')}
       <div class="tm-perf-name">${m.name.split(' ')[0]} ${m.name.split(' ')[1][0]}.</div>
       <div class="tm-perf-bar-wrap"><div class="tm-perf-bar" style="width:${m.completion}%;background:${m.color}"></div></div>
       <div class="tm-perf-pct">${m.completion}%</div>
@@ -8841,7 +8865,7 @@ function openMemberDetail(id) {
   document.getElementById('tm-detail-body').innerHTML = `
     <div class="tm-detail-hero">
       <div style="position:relative;display:inline-block;">
-        <div class="tm-detail-avatar" style="background:${m.color}">${m.initials}</div>
+        ${mkAva(m.initials, m.color, 'tm-detail-avatar')}
         <div style="position:absolute;bottom:3px;right:3px;width:14px;height:14px;border-radius:50%;border:2.5px solid var(--bg-card);background:${m.online?'var(--accent-green)':'var(--text-muted)'};"></div>
       </div>
       <div style="text-align:center;">
@@ -9262,7 +9286,7 @@ function renderRptTeamOutput() {
   const max = Math.max(...data.map(d => d.total));
   wrap.innerHTML = data.map(d => `
     <div class="rpt-team-row">
-      <div class="rpt-team-avatar" style="background:${d.color};">${d.initials}</div>
+      ${mkAva(d.initials, d.color, 'rpt-team-avatar')}
       <div class="rpt-team-name">${d.name}</div>
       <div class="rpt-team-track"><div class="rpt-team-fill" style="width:${(d.completed / max * 100).toFixed(1)}%;background:${d.color};opacity:0.85;"></div></div>
       <div class="rpt-team-count">${d.completed}/${d.total}</div>
