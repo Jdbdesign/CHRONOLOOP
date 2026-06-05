@@ -1562,6 +1562,13 @@
 
   .rpt-summary-number { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-secondary); }
 
+  #rpt-chart-tooltip {
+    position: fixed; z-index: 9999; pointer-events: none; display: none;
+    background: #1e1e2e; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px;
+    padding: 8px 12px; font-family: 'DM Sans',sans-serif; font-size: 12px; color: #fff;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.5); white-space: nowrap; line-height: 1.75;
+  }
+
   @media (max-width: 1280px) {
     .rpt-kpi-grid { grid-template-columns: repeat(3, 1fr); }
     .rpt-chart-row-2col { grid-template-columns: 1fr; }
@@ -3394,14 +3401,14 @@
         <div class="rpt-chart-panel" style="padding-bottom:0;overflow:hidden;">
           <div class="panel-header" style="margin-bottom:8px;">
             <h2 class="panel-title">Project Performance</h2>
-            <button class="dropdown-btn" type="button"><span>All Projects</span><i data-lucide="chevron-down"></i></button>
+            <button class="dropdown-btn" id="rpt-proj-filter-btn" type="button"><span>All Projects</span><i data-lucide="chevron-down"></i></button>
           </div>
           <div id="rpt-proj-table"></div>
         </div>
         <div class="rpt-chart-panel" style="padding-bottom:0;overflow:hidden;">
           <div class="panel-header" style="margin-bottom:8px;">
             <h2 class="panel-title">Sprint Summary</h2>
-            <button class="dropdown-btn" type="button"><span>Last 6 Sprints</span><i data-lucide="chevron-down"></i></button>
+            <button class="dropdown-btn" id="rpt-sprint-filter-btn" type="button"><span>Last 6 Sprints</span><i data-lucide="chevron-down"></i></button>
           </div>
           <div id="rpt-sprint-table"></div>
         </div>
@@ -5123,6 +5130,23 @@
   <button class="dd-item"><i data-lucide="briefcase"></i> ChronoLoop Launch</button>
 </div>
 
+<!-- Reports page table filter dropdowns -->
+<div class="dd-panel" id="dd-rpt-proj-filter" style="min-width:180px;">
+  <button class="dd-item active" data-rptproj="all"><i data-lucide="layers"></i> All Projects</button>
+  <div class="dd-divider"></div>
+  <button class="dd-item" data-rptproj="in-progress"><i data-lucide="loader"></i> In Progress</button>
+  <button class="dd-item" data-rptproj="completed"><i data-lucide="check-circle-2"></i> Completed</button>
+  <button class="dd-item" data-rptproj="on-hold"><i data-lucide="pause-circle"></i> On Hold</button>
+  <button class="dd-item" data-rptproj="overdue"><i data-lucide="alert-circle"></i> Overdue</button>
+</div>
+<div class="dd-panel" id="dd-rpt-sprint-filter" style="min-width:180px;">
+  <button class="dd-item active" data-rptsprint="6"><i data-lucide="layers"></i> Last 6 Sprints</button>
+  <button class="dd-item" data-rptsprint="4"><i data-lucide="list"></i> Last 4 Sprints</button>
+  <button class="dd-item" data-rptsprint="3"><i data-lucide="list"></i> Last 3 Sprints</button>
+  <div class="dd-divider"></div>
+  <button class="dd-item" data-rptsprint="all"><i data-lucide="calendar"></i> All Sprints</button>
+</div>
+
 <!-- ===== TASK DETAIL PANEL ===== -->
 <div class="detail-panel-overlay" id="detail-overlay"></div>
 <div class="task-detail-panel" id="task-detail-panel">
@@ -5849,7 +5873,9 @@ document.addEventListener('click', (e) => {
       !e.target.closest('#sprint-filter-btn') &&
       !e.target.closest('.tm-card-menu') &&
       !e.target.closest('#tm-sort-btn') &&
-      !e.target.closest('#tm-filter-btn')) {
+      !e.target.closest('#tm-filter-btn') &&
+      !e.target.closest('#rpt-proj-filter-btn') &&
+      !e.target.closest('#rpt-sprint-filter-btn')) {
     closeAllDD();
   }
   if (!e.target.closest('.ctx-menu') && !e.target.closest('.three-dot-btn')) {
@@ -8692,7 +8718,7 @@ function renderRptTrend() {
   });
   grid += `<line x1="${padL}" y1="${(padT + cH).toFixed(1)}" x2="${svgW - padR}" y2="${(padT + cH).toFixed(1)}" stroke="currentColor" stroke-opacity="0.18" stroke-width="1"/>`;
 
-  let bars = '', xlabels = '';
+  let bars = '', xlabels = '', hovers = '';
   data.forEach(([total, comp], i) => {
     const gx = padL + i * groupW;
     const cx = gx + (groupW - bw * 2 - gap) / 2;
@@ -8701,9 +8727,10 @@ function renderRptTrend() {
     bars += `<rect x="${cx.toFixed(1)}" y="${(padT + cH - +th).toFixed(1)}" width="${bw}" height="${th}" rx="3" fill="#4A90FF" opacity="0.3"/>`;
     bars += `<rect x="${(cx + bw + gap).toFixed(1)}" y="${(padT + cH - +ch2).toFixed(1)}" width="${bw}" height="${ch2}" rx="3" fill="#00D4AA" opacity="0.9"/>`;
     if (i % 2 === 0) xlabels += `<text x="${(gx + groupW / 2).toFixed(1)}" y="${(svgH - 6).toFixed(1)}" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.38">${labels[i]}</text>`;
+    hovers += `<rect x="${gx.toFixed(1)}" y="${padT}" width="${groupW.toFixed(1)}" height="${cH}" fill="rgba(255,255,255,0)" style="cursor:crosshair;" onmouseenter="rptBarHover(event,'trend',${i})" onmousemove="positionRptTooltip(event)" onmouseleave="rptBarLeave()"/>`;
   });
 
-  wrap.innerHTML = `<svg viewBox="0 0 ${svgW} ${svgH}" preserveAspectRatio="xMidYMid meet" style="color:var(--text-primary)">${grid}${bars}${xlabels}</svg>`;
+  wrap.innerHTML = `<svg viewBox="0 0 ${svgW} ${svgH}" preserveAspectRatio="xMidYMid meet" style="color:var(--text-primary)">${grid}${bars}${xlabels}${hovers}</svg>`;
 }
 
 function renderRptDonut() {
@@ -8752,7 +8779,7 @@ function renderRptVelocity() {
   const targetLine = `<line x1="${padL}" y1="${targetY}" x2="${svgW - padR}" y2="${targetY}" stroke="#EAB308" stroke-width="1" stroke-dasharray="4 3" opacity="0.55"/>`;
   const targetLabel = `<text x="${svgW - padR - 2}" y="${(+targetY - 3).toFixed(1)}" text-anchor="end" font-size="8" fill="#EAB308" opacity="0.7">Target</text>`;
 
-  let bars = '', xlabels = '';
+  let bars = '', xlabels = '', hovers = '';
   data.forEach((d, i) => {
     const x = padL + i * groupW + (groupW - bw) / 2;
     const h = ((d.pts / maxPts) * cH).toFixed(1);
@@ -8761,9 +8788,10 @@ function renderRptVelocity() {
     bars += `<rect x="${x.toFixed(1)}" y="${y}" width="${bw}" height="${h}" rx="4" fill="${fill}" opacity="0.88"/>`;
     bars += `<text x="${(x + bw / 2).toFixed(1)}" y="${(+y - 4).toFixed(1)}" text-anchor="middle" font-size="8" fill="currentColor" opacity="0.65">${d.pts}</text>`;
     xlabels += `<text x="${(padL + i * groupW + groupW / 2).toFixed(1)}" y="${(svgH - 5).toFixed(1)}" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.4">${d.name}</text>`;
+    hovers += `<rect x="${(padL + i * groupW).toFixed(1)}" y="${padT}" width="${groupW.toFixed(1)}" height="${cH}" fill="rgba(255,255,255,0)" style="cursor:crosshair;" onmouseenter="rptBarHover(event,'velocity',${i})" onmousemove="positionRptTooltip(event)" onmouseleave="rptBarLeave()"/>`;
   });
 
-  wrap.innerHTML = `<svg viewBox="0 0 ${svgW} ${svgH}" style="color:var(--text-primary);width:100%;">${grid}${targetLine}${targetLabel}${bars}${xlabels}</svg>`;
+  wrap.innerHTML = `<svg viewBox="0 0 ${svgW} ${svgH}" style="color:var(--text-primary);width:100%;">${grid}${targetLine}${targetLabel}${bars}${xlabels}${hovers}</svg>`;
 }
 
 function renderRptPriority() {
@@ -8823,8 +8851,9 @@ function renderRptBurndown() {
   const areaPolygon = `<polygon points="${xOf(0).toFixed(1)},${yOf(0).toFixed(1)} ${actualPts} ${xOf(13).toFixed(1)},${yOf(0).toFixed(1)}" fill="#FF8C42" opacity="0.08"/>`;
   const actualLine = `<polyline points="${actualPts}" fill="none" stroke="#FF8C42" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
   const dots = data.map(([d, , a]) => `<circle cx="${xOf(d).toFixed(1)}" cy="${yOf(a).toFixed(1)}" r="3" fill="#FF8C42" stroke-width="1.5" style="stroke:var(--bg-card);"/>`).join('');
+  const hoverDots = data.map(([d, id, a], i) => `<circle cx="${xOf(d).toFixed(1)}" cy="${yOf(a).toFixed(1)}" r="9" fill="rgba(255,255,255,0)" style="cursor:crosshair;" onmouseenter="rptBarHover(event,'burndown',${i})" onmousemove="positionRptTooltip(event)" onmouseleave="rptBarLeave()"/>`).join('');
 
-  wrap.innerHTML = `<svg viewBox="0 0 ${svgW} ${svgH}" style="color:var(--text-primary);width:100%;">${grid}${xlabels}${idealLine}${areaPolygon}${actualLine}${dots}</svg>`;
+  wrap.innerHTML = `<svg viewBox="0 0 ${svgW} ${svgH}" style="color:var(--text-primary);width:100%;">${grid}${xlabels}${idealLine}${areaPolygon}${actualLine}${dots}${hoverDots}</svg>`;
 }
 
 function renderRptProjTable() {
@@ -8888,6 +8917,77 @@ document.querySelectorAll('#rpt-range-tabs .rpt-range-tab').forEach(btn => {
     showToast(`Showing data for last ${btn.dataset.range.toUpperCase()}`, 'info', 1500);
   });
 });
+
+// Reports table filter dropdowns
+document.getElementById('rpt-proj-filter-btn').addEventListener('click', () => openDD('rpt-proj-filter-btn', 'dd-rpt-proj-filter'));
+document.getElementById('rpt-sprint-filter-btn').addEventListener('click', () => openDD('rpt-sprint-filter-btn', 'dd-rpt-sprint-filter'));
+
+document.querySelectorAll('#dd-rpt-proj-filter .dd-item[data-rptproj]').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('#dd-rpt-proj-filter .dd-item').forEach(b => b.classList.remove('active'));
+    item.classList.add('active');
+    const label = item.dataset.rptproj === 'all' ? 'All Projects' : item.textContent.trim();
+    document.querySelector('#rpt-proj-filter-btn span').textContent = label;
+    closeAllDD();
+    showToast(`Filtered by: ${label}`, 'info', 1200);
+  });
+});
+
+document.querySelectorAll('#dd-rpt-sprint-filter .dd-item[data-rptsprint]').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('#dd-rpt-sprint-filter .dd-item').forEach(b => b.classList.remove('active'));
+    item.classList.add('active');
+    const n = item.dataset.rptsprint;
+    const label = n === 'all' ? 'All Sprints' : `Last ${n} Sprints`;
+    document.querySelector('#rpt-sprint-filter-btn span').textContent = label;
+    closeAllDD();
+    showToast(`Showing ${label.toLowerCase()}`, 'info', 1200);
+  });
+});
+
+// Chart tooltip helpers
+function positionRptTooltip(e) {
+  const tip = document.getElementById('rpt-chart-tooltip');
+  const tw = tip.offsetWidth, th = tip.offsetHeight;
+  let x = e.clientX + 14, y = e.clientY - Math.round(th / 2);
+  if (x + tw > window.innerWidth - 8) x = e.clientX - tw - 14;
+  if (y < 8) y = 8;
+  if (y + th > window.innerHeight - 8) y = window.innerHeight - th - 8;
+  tip.style.left = x + 'px';
+  tip.style.top = y + 'px';
+}
+function rptBarLeave() {
+  document.getElementById('rpt-chart-tooltip').style.display = 'none';
+}
+function rptBarHover(e, type, idx) {
+  const tip = document.getElementById('rpt-chart-tooltip');
+  let html = '';
+  if (type === 'trend') {
+    const [total, comp] = RPT_DATA.weeklyTasks[idx];
+    const label = RPT_DATA.weekLabels[idx];
+    const rate = Math.round(comp / total * 100);
+    html = `<div style="font-size:10px;color:rgba(255,255,255,0.5);margin-bottom:4px;">${label}</div>`
+      + `<div style="color:#00D4AA;">● Completed: <strong>${comp}</strong></div>`
+      + `<div style="color:rgba(74,144,255,0.9);">● Assigned: <strong>${total}</strong></div>`
+      + `<div style="font-size:10px;color:rgba(255,255,255,0.45);margin-top:3px;">Rate: ${rate}%</div>`;
+  } else if (type === 'velocity') {
+    const d = RPT_DATA.sprintVelocity[idx];
+    const diff = d.pts - 40;
+    html = `<div style="font-size:10px;color:rgba(255,255,255,0.5);margin-bottom:4px;">${d.name}</div>`
+      + `<div style="color:#4A90FF;">● Velocity: <strong>${d.pts} pts</strong></div>`
+      + `<div style="color:${diff >= 0 ? '#22C55E' : '#FF4D4D'};">● vs Target: <strong>${diff >= 0 ? '+' : ''}${diff}</strong></div>`;
+  } else if (type === 'burndown') {
+    const [day, ideal, actual] = RPT_DATA.burndown[idx];
+    const delta = actual - ideal;
+    html = `<div style="font-size:10px;color:rgba(255,255,255,0.5);margin-bottom:4px;">Day ${day}</div>`
+      + `<div style="color:#888;">● Ideal: <strong>${ideal} pts</strong></div>`
+      + `<div style="color:#FF8C42;">● Actual: <strong>${actual} pts</strong></div>`
+      + `<div style="font-size:10px;color:${delta > 0 ? '#FF4D4D' : '#22C55E'};margin-top:3px;">${delta > 0 ? '▲ Behind' : delta < 0 ? '▼ Ahead' : '✓ On track'} by ${Math.abs(delta)} pts</div>`;
+  }
+  tip.innerHTML = html;
+  tip.style.display = 'block';
+  positionRptTooltip(e);
+}
 
 // ============================================================
 // INTEGRATIONS PAGE
@@ -9877,5 +9977,6 @@ function renderSettingsPage() {
 }
 
 </script>
+<div id="rpt-chart-tooltip"></div>
 </body>
 </html>
