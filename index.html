@@ -1213,6 +1213,140 @@
   @media (max-width: 1280px) { .proj-grid { grid-template-columns: repeat(3, 1fr); } }
   @media (max-width: 900px)  { .proj-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 640px)  { .proj-grid { grid-template-columns: 1fr; } }
+
+  /* ===== SPRINTS PAGE ===== */
+  #page-sprints { display: flex; flex-direction: column; gap: 14px; }
+  .sprint-kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+
+  .active-sprint-banner {
+    background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px;
+    overflow: hidden; position: relative;
+    transition: background var(--duration-normal) var(--ease-out);
+  }
+  .active-sprint-banner::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-teal));
+  }
+  .sprint-banner-inner {
+    padding: 20px 24px; display: grid;
+    grid-template-columns: 1fr auto auto; gap: 24px; align-items: center;
+  }
+  .sprint-banner-left { display: flex; flex-direction: column; gap: 10px; }
+  .sprint-banner-badge {
+    display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 20px;
+    background: rgba(74,144,255,0.12); color: var(--accent-blue); border: 1px solid rgba(74,144,255,0.2);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.06em; width: fit-content;
+  }
+  .sprint-banner-badge svg { width: 10px; height: 10px; }
+  .sprint-banner-name { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: var(--text-primary); line-height: 1.2; }
+  .sprint-banner-goal { font-size: 12px; color: var(--text-secondary); line-height: 1.5; max-width: 460px; }
+  .sprint-banner-meta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .sprint-banner-meta-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-muted); }
+  .sprint-banner-meta-item svg { width: 12px; height: 12px; }
+  .sprint-meta-accent { color: var(--text-primary); font-weight: 600; }
+
+  .sprint-ring-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 8px 16px; }
+  .sprint-ring-svg { transform: rotate(-90deg); }
+  .sprint-ring-bg { fill: none; stroke: var(--border-subtle); stroke-width: 8; }
+  .sprint-ring-fill { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1000ms var(--ease-out); }
+  .sprint-ring-pct { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--text-primary); }
+  .sprint-ring-label { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+
+  .sprint-task-breakdown { display: flex; flex-direction: column; gap: 10px; min-width: 160px; padding: 8px 0; }
+  .sprint-breakdown-title { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .sprint-breakdown-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .sprint-breakdown-label { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-secondary); }
+  .sprint-breakdown-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .sprint-breakdown-count { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 700; color: var(--text-primary); }
+  .sprint-mini-burndown { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-subtle); }
+  .sprint-burndown-title { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; }
+  .sprint-burndown-svg { width: 160px; height: 36px; }
+
+  .sprints-list { display: flex; flex-direction: column; gap: 8px; }
+  .sprint-item {
+    background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 10px;
+    display: flex; align-items: center; cursor: pointer; overflow: hidden;
+    transition: transform var(--duration-fast), box-shadow var(--duration-fast), border-color var(--duration-fast), background var(--duration-normal) var(--ease-out);
+  }
+  .sprint-item:hover { border-color: var(--border-default); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.25); }
+  .sprint-item-accent { width: 4px; min-height: 72px; flex-shrink: 0; align-self: stretch; }
+  .sprint-item-inner { display: flex; align-items: center; gap: 14px; padding: 14px 16px 14px 12px; flex: 1; min-width: 0; }
+  .sprint-item-num { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 700; color: var(--text-muted); min-width: 52px; flex-shrink: 0; letter-spacing: 0.06em; }
+  .sprint-item-main { flex: 1; min-width: 0; }
+  .sprint-item-name { font-size: 13px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px; }
+  .sprint-item-goal { font-size: 11px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sprint-item-dates { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
+  .sprint-item-dates svg { width: 11px; height: 11px; }
+  .sprint-item-progress { min-width: 130px; flex-shrink: 0; }
+  .sprint-item-prog-label { display: flex; justify-content: space-between; font-size: 10px; margin-bottom: 4px; }
+  .sprint-item-prog-tasks { color: var(--text-muted); }
+  .sprint-item-prog-pct { color: var(--text-primary); font-weight: 700; font-family: 'DM Mono', monospace; }
+  .sprint-item-prog-track { height: 5px; background: var(--border-subtle); border-radius: 3px; overflow: hidden; }
+  .sprint-item-prog-fill { height: 100%; border-radius: 3px; transition: width 600ms var(--ease-out); }
+  .sprint-item-pts { display: flex; flex-direction: column; align-items: center; gap: 1px; min-width: 44px; flex-shrink: 0; }
+  .sprint-item-pts-num { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-primary); }
+  .sprint-item-pts-label { font-size: 9px; color: var(--text-muted); }
+  .sprint-item-team { display: flex; align-items: center; flex-shrink: 0; }
+
+  .sprint-status-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 5px; font-size: 10px; font-weight: 600; white-space: nowrap; }
+  .sprint-status-badge.active    { background: rgba(74,144,255,0.12);  color: var(--accent-blue);   border: 1px solid rgba(74,144,255,0.2); }
+  .sprint-status-badge.completed { background: rgba(34,197,94,0.12);   color: var(--accent-green);  border: 1px solid rgba(34,197,94,0.2); }
+  .sprint-status-badge.planning  { background: rgba(234,179,8,0.12);   color: var(--accent-yellow); border: 1px solid rgba(234,179,8,0.2); }
+  .sprint-status-badge.upcoming  { background: rgba(168,85,247,0.12);  color: var(--accent-purple); border: 1px solid rgba(168,85,247,0.2); }
+  .sprint-status-badge svg { width: 10px; height: 10px; }
+
+  .sprint-board-view { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; align-items: start; }
+  .sprint-board-col { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 10px; overflow: hidden; transition: background var(--duration-normal) var(--ease-out); }
+  .sprint-board-col-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid var(--border-subtle); }
+  .sprint-board-col-title { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--text-primary); }
+  .sprint-board-col-count { font-size: 10px; padding: 1px 7px; border-radius: 10px; background: var(--bg-input); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .sprint-board-cards { padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 60px; }
+  .sprint-board-card { background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 12px; cursor: pointer; transition: box-shadow var(--duration-fast), transform var(--duration-fast), border-color var(--duration-fast); }
+  .sprint-board-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.3); transform: translateY(-2px); border-color: var(--border-default); }
+  .sprint-board-card-num { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-muted); margin-bottom: 4px; letter-spacing: 0.06em; }
+  .sprint-board-card-name { font-size: 12px; font-weight: 600; color: var(--text-primary); line-height: 1.4; margin-bottom: 6px; }
+  .sprint-board-card-goal { font-size: 10px; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .sprint-board-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .sprint-board-card-pts { font-size: 10px; color: var(--text-muted); font-family: 'DM Mono', monospace; display:flex;align-items:center;gap:2px; }
+
+  .sprint-detail-overlay { position: fixed; inset: 0; z-index: 250; background: rgba(0,0,0,0.5); opacity: 0; pointer-events: none; transition: opacity var(--duration-normal); backdrop-filter: blur(2px); }
+  .sprint-detail-overlay.open { opacity: 1; pointer-events: all; }
+  .sprint-detail-panel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 260; width: 500px; max-width: 95vw; background: var(--bg-card); border-left: 1px solid var(--border-default); display: flex; flex-direction: column; transform: translateX(100%); transition: transform var(--duration-normal) var(--ease-out); box-shadow: -8px 0 40px rgba(0,0,0,0.4); }
+  .sprint-detail-panel.open { transform: translateX(0); }
+  .sprint-detail-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; gap: 12px; }
+  .sprint-detail-header-left { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+  .sprint-detail-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .sprint-detail-body { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+  .sprint-detail-body::-webkit-scrollbar { width: 4px; }
+  .sprint-detail-body::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 2px; }
+  .sprint-detail-section { display: flex; flex-direction: column; gap: 10px; }
+  .sprint-detail-section-label { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .sprint-detail-title-text { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+  .sprint-detail-goal-text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+  .sprint-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .sprint-meta-cell { background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 10px 12px; }
+  .sprint-meta-cell-label { font-size: 9px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+  .sprint-meta-cell-value { font-size: 13px; color: var(--text-primary); font-weight: 500; }
+  .sprint-big-progress { display: flex; flex-direction: column; gap: 8px; }
+  .sprint-big-progress-bar { height: 8px; background: var(--border-subtle); border-radius: 4px; overflow: hidden; }
+  .sprint-big-progress-fill { height: 100%; border-radius: 4px; transition: width 800ms var(--ease-out); }
+  .sprint-big-progress-meta { display: flex; justify-content: space-between; }
+  .sprint-detail-task-list { display: flex; flex-direction: column; gap: 6px; }
+  .sprint-detail-task-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; background: var(--bg-input); border: 1px solid var(--border-subtle); cursor: default; transition: background var(--duration-fast); }
+  .sprint-detail-task-item:hover { background: var(--bg-card-hover); }
+  .sprint-detail-task-check { width: 14px; height: 14px; border-radius: 3px; border: 1.5px solid var(--border-default); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .sprint-detail-task-check.done { background: var(--accent-green); border-color: var(--accent-green); }
+  .sprint-detail-task-check.done::after { content: '✓'; font-size: 8px; color: #fff; font-weight: 700; }
+  .sprint-detail-task-name { font-size: 12px; color: var(--text-primary); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sprint-detail-task-name.done { text-decoration: line-through; color: var(--text-muted); }
+  .velocity-bars { display: flex; align-items: flex-end; gap: 8px; height: 64px; padding-top: 8px; }
+  .velocity-bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+  .velocity-bar { width: 100%; border-radius: 3px 3px 0 0; }
+  .velocity-bar-label { font-size: 9px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+  .velocity-bar-num { font-size: 9px; color: var(--text-primary); font-weight: 700; font-family: 'DM Mono', monospace; }
+
+  @media (max-width: 1280px) { .sprint-kpi-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 900px)  { .sprint-banner-inner { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -1687,6 +1821,74 @@
       <div id="proj-list-view" style="display:none;"></div>
 
     </div><!-- /page-projects -->
+
+    <!-- ===== SPRINTS PAGE ===== -->
+    <div id="page-sprints" style="display:none;">
+
+      <div class="tasks-page-header">
+        <div>
+          <div class="page-breadcrumb">Overview / Sprints</div>
+          <div class="page-heading">Sprints</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="view-toggle" id="sprint-view-toggle">
+            <button class="view-btn active" data-sview="list" type="button"><i data-lucide="list"></i> List</button>
+            <button class="view-btn" data-sview="board" type="button"><i data-lucide="layout-template"></i> Board</button>
+          </div>
+          <button class="btn-secondary" id="sprint-filter-btn" type="button">
+            <i data-lucide="sliders-horizontal"></i> Filter
+          </button>
+          <button class="btn-primary" id="btn-new-sprint" type="button">
+            <i data-lucide="plus"></i> New Sprint
+          </button>
+        </div>
+      </div>
+
+      <div class="sprint-kpi-grid" id="sprint-kpi-grid"></div>
+
+      <div class="active-sprint-banner" id="active-sprint-banner"></div>
+
+      <div class="task-stats-row" id="sprint-stat-chips">
+        <div class="task-stat-chip active" data-sfilter="all">
+          <span class="chip-dot" style="background:var(--accent-blue)"></span>
+          <span class="chip-num" id="schip-total">0</span>
+          <span class="chip-label">All</span>
+        </div>
+        <div class="task-stat-chip" data-sfilter="active">
+          <span class="chip-dot" style="background:var(--accent-blue)"></span>
+          <span class="chip-num" id="schip-active">0</span>
+          <span class="chip-label">Active</span>
+        </div>
+        <div class="task-stat-chip" data-sfilter="planning">
+          <span class="chip-dot" style="background:var(--accent-yellow)"></span>
+          <span class="chip-num" id="schip-planning">0</span>
+          <span class="chip-label">Planning</span>
+        </div>
+        <div class="task-stat-chip" data-sfilter="completed">
+          <span class="chip-dot" style="background:var(--accent-green)"></span>
+          <span class="chip-num" id="schip-completed">0</span>
+          <span class="chip-label">Completed</span>
+        </div>
+        <div class="task-stat-chip" data-sfilter="upcoming">
+          <span class="chip-dot" style="background:var(--accent-purple)"></span>
+          <span class="chip-num" id="schip-upcoming">0</span>
+          <span class="chip-label">Upcoming</span>
+        </div>
+        <div class="tasks-toolbar">
+          <button class="btn-secondary" id="sprint-sort-btn" type="button">
+            <i data-lucide="arrow-up-down"></i> Sort
+          </button>
+          <div class="search-wrap" style="max-width:190px;">
+            <i data-lucide="search" class="search-icon"></i>
+            <input class="search-input" id="sprint-search" type="search" placeholder="Search sprints...">
+          </div>
+        </div>
+      </div>
+
+      <div id="sprint-list-view"></div>
+      <div id="sprint-board-view" style="display:none;" class="sprint-board-view"></div>
+
+    </div><!-- /page-sprints -->
 
     </div>
   </main>
@@ -2279,6 +2481,171 @@
   </div>
 </div>
 
+<!-- ===== SPRINT DETAIL PANEL ===== -->
+<div class="sprint-detail-overlay" id="sprint-detail-overlay"></div>
+<div class="sprint-detail-panel" id="sprint-detail-panel">
+  <div class="sprint-detail-header">
+    <div class="sprint-detail-header-left">
+      <div id="sprint-detail-accent-dot" style="width:10px;height:10px;border-radius:50%;flex-shrink:0;"></div>
+      <span id="sprint-detail-status-badge" class="sprint-status-badge active"></span>
+    </div>
+    <div class="sprint-detail-actions">
+      <button class="task-action-btn" id="sprint-detail-edit-btn" title="Edit sprint" type="button"><i data-lucide="edit-2"></i></button>
+      <button class="task-action-btn" id="sprint-detail-delete-btn" title="Delete sprint" style="color:var(--accent-red)" type="button"><i data-lucide="trash-2"></i></button>
+      <button class="detail-panel-close" id="sprint-detail-close-btn" title="Close" type="button"><i data-lucide="x"></i></button>
+    </div>
+  </div>
+  <div class="sprint-detail-body" id="sprint-detail-body"></div>
+</div>
+
+<!-- SPRINT CONTEXT DROPDOWN -->
+<div class="dd-panel" id="dd-sprint-ctx">
+  <button class="dd-item" data-saction="view" type="button"><i data-lucide="eye"></i> View Details</button>
+  <button class="dd-item" data-saction="edit" type="button"><i data-lucide="edit-2"></i> Edit Sprint</button>
+  <button class="dd-item" data-saction="complete" type="button"><i data-lucide="check-circle-2"></i> Mark Complete</button>
+  <div class="dd-divider"></div>
+  <button class="dd-item danger" data-saction="delete" type="button"><i data-lucide="trash-2"></i> Delete</button>
+</div>
+
+<!-- SPRINT SORT DROPDOWN -->
+<div class="dd-panel" id="dd-sprint-sort">
+  <button class="dd-item active" data-ssort="number" type="button"><i data-lucide="hash"></i> Sprint Number</button>
+  <button class="dd-item" data-ssort="name" type="button"><i data-lucide="type"></i> Name (A–Z)</button>
+  <button class="dd-item" data-ssort="progress" type="button"><i data-lucide="bar-chart-2"></i> Progress</button>
+  <button class="dd-item" data-ssort="storyPts" type="button"><i data-lucide="zap"></i> Story Points</button>
+</div>
+
+<!-- SPRINT FILTER DROPDOWN -->
+<div class="dd-panel" id="dd-sprint-filter" style="min-width:220px;padding:0;">
+  <div class="filter-section-title">Status</div>
+  <label class="filter-check-item"><input type="checkbox" checked id="sf-active"> <span>Active</span></label>
+  <label class="filter-check-item"><input type="checkbox" checked id="sf-planning"> <span>Planning</span></label>
+  <label class="filter-check-item"><input type="checkbox" checked id="sf-upcoming"> <span>Upcoming</span></label>
+  <label class="filter-check-item"><input type="checkbox" checked id="sf-completed"> <span>Completed</span></label>
+  <div class="dd-divider"></div>
+  <div class="filter-section-title">Project</div>
+  <label class="filter-check-item"><input type="checkbox" checked id="sf-p1"> <span>Web 3 App for Fxtrade</span></label>
+  <label class="filter-check-item"><input type="checkbox" checked id="sf-p2"> <span>Healthydog Landing Page</span></label>
+  <label class="filter-check-item"><input type="checkbox" checked id="sf-p3"> <span>Redesign of Website</span></label>
+  <div class="filter-footer">
+    <button class="filter-clear" id="sprint-filter-clear" type="button">Clear</button>
+    <button class="filter-apply" id="sprint-filter-apply" type="button">Apply</button>
+  </div>
+</div>
+
+<!-- NEW SPRINT MODAL -->
+<div class="modal-overlay" id="modal-newsprint">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">New Sprint</div>
+        <div class="modal-subtitle">Plan and launch a new development sprint</div>
+      </div>
+      <button class="modal-close-btn" onclick="closeModal('modal-newsprint')" type="button"><i data-lucide="x"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label" for="sprint-name-input">Sprint Name *</label>
+        <input class="form-input" id="sprint-name-input" type="text" placeholder="e.g. Authentication & Onboarding">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="sprint-goal-input">Sprint Goal</label>
+        <textarea class="form-textarea" id="sprint-goal-input" placeholder="Describe the main objective for this sprint..." style="min-height:60px;"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="sprint-start-input">Start Date</label>
+          <input class="form-input" id="sprint-start-input" type="date">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="sprint-end-input">End Date</label>
+          <input class="form-input" id="sprint-end-input" type="date">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="sprint-pts-input">Story Point Capacity</label>
+          <input class="form-input" id="sprint-pts-input" type="number" placeholder="e.g. 40" min="1" max="200">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="sprint-project-sel">Project</label>
+          <select class="form-select" id="sprint-project-sel">
+            <option>Web 3 App for Fxtrade</option>
+            <option>Healthydog Landing Page</option>
+            <option>Redesign of Website</option>
+            <option>ChronoLoop Launch</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modal-newsprint')" type="button">Cancel</button>
+      <button class="btn-primary" id="btn-create-sprint" type="button"><i data-lucide="zap"></i> Create Sprint</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT SPRINT MODAL -->
+<div class="modal-overlay" id="modal-editsprint">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Edit Sprint</div>
+        <div class="modal-subtitle">Update sprint details and settings</div>
+      </div>
+      <button class="modal-close-btn" onclick="closeModal('modal-editsprint')" type="button"><i data-lucide="x"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label" for="edit-sprint-name-input">Sprint Name *</label>
+        <input class="form-input" id="edit-sprint-name-input" type="text" placeholder="e.g. Authentication & Onboarding">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="edit-sprint-goal-input">Sprint Goal</label>
+        <textarea class="form-textarea" id="edit-sprint-goal-input" placeholder="Describe the main objective for this sprint..." style="min-height:60px;"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="edit-sprint-start-input">Start Date</label>
+          <input class="form-input" id="edit-sprint-start-input" type="date">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="edit-sprint-end-input">End Date</label>
+          <input class="form-input" id="edit-sprint-end-input" type="date">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="edit-sprint-pts-input">Story Point Capacity</label>
+          <input class="form-input" id="edit-sprint-pts-input" type="number" placeholder="e.g. 40" min="1" max="200">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="edit-sprint-status-sel">Status</label>
+          <select class="form-select" id="edit-sprint-status-sel">
+            <option value="planning">Planning</option>
+            <option value="active">Active</option>
+            <option value="upcoming">Upcoming</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="edit-sprint-project-sel">Project</label>
+        <select class="form-select" id="edit-sprint-project-sel">
+          <option>Web 3 App for Fxtrade</option>
+          <option>Healthydog Landing Page</option>
+          <option>Redesign of Website</option>
+          <option>ChronoLoop Launch</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modal-editsprint')" type="button">Cancel</button>
+      <button class="btn-primary" id="btn-save-sprint" type="button"><i data-lucide="check"></i> Save Changes</button>
+    </div>
+  </div>
+</div>
+
 <script>
 lucide.createIcons();
 
@@ -2328,7 +2695,9 @@ document.addEventListener('click', (e) => {
       !e.target.closest('#tasks-sort-btn') &&
       !e.target.closest('#tasks-filter-btn') &&
       !e.target.closest('#proj-sort-btn') &&
-      !e.target.closest('#proj-filter-btn')) {
+      !e.target.closest('#proj-filter-btn') &&
+      !e.target.closest('#sprint-sort-btn') &&
+      !e.target.closest('#sprint-filter-btn')) {
     closeAllDD();
   }
   if (!e.target.closest('.ctx-menu') && !e.target.closest('.three-dot-btn')) {
@@ -2411,6 +2780,7 @@ function setActive(el, label) {
   document.getElementById('page-dashboard').style.display = 'none';
   document.getElementById('page-tasks').style.display = 'none';
   document.getElementById('page-projects').style.display = 'none';
+  document.getElementById('page-sprints').style.display = 'none';
   if (label === 'Dashboard') {
     document.getElementById('page-dashboard').style.display = 'flex';
   } else if (label === 'Tasks') {
@@ -2419,6 +2789,9 @@ function setActive(el, label) {
   } else if (label === 'Projects') {
     document.getElementById('page-projects').style.display = 'flex';
     renderProjectsPage();
+  } else if (label === 'Sprints') {
+    document.getElementById('page-sprints').style.display = 'flex';
+    renderSprintsPage();
   } else {
     document.getElementById('page-dashboard').style.display = 'flex';
     showToast('Navigating to ' + label, 'info', 2000);
@@ -3841,6 +4214,624 @@ document.querySelectorAll('#proj-priority-group .priority-pill').forEach(pill =>
     document.querySelectorAll('#proj-priority-group .priority-pill').forEach(p => p.classList.remove('sel'));
     pill.classList.add('sel');
   });
+});
+
+// ============================================================
+// SPRINTS DATA
+// ============================================================
+const SPRINTS = [
+  {
+    id:'s1', number:'SPRINT 01', name:'Foundation & Architecture',
+    goal:'Establish the project foundation: repo setup, design system tokens, CI/CD pipeline, and core authentication flow.',
+    status:'completed', startDate:'Oct 1, 2024', endDate:'Oct 14, 2024', daysLeft:0,
+    progress:100, storyPoints:42, completedPoints:42,
+    tasksTotal:12, tasksDone:12, inProgress:0, todo:0,
+    color:'#22C55E', project:'Web 3 App for Fxtrade', velocity:42,
+    team:[{i:'AS',c:'#4A90FF'},{i:'RD',c:'#FF8C42'},{i:'RC',c:'#00D4AA'}],
+    burndown:[42,36,30,24,18,12,6,0],
+    sprintTasks:[
+      {title:'Setup monorepo structure',status:'done'},{title:'Configure CI/CD pipeline',status:'done'},
+      {title:'Design token system',status:'done'},{title:'Auth flow wireframes',status:'done'},
+      {title:'JWT authentication backend',status:'done'},{title:'Login & signup pages',status:'done'},
+      {title:'Password reset flow',status:'done'},{title:'Email verification',status:'done'},
+      {title:'Role-based access control',status:'done'},{title:'Session management',status:'done'},
+      {title:'API error handling layer',status:'done'},{title:'Deployment pipeline',status:'done'},
+    ]
+  },
+  {
+    id:'s2', number:'SPRINT 02', name:'Core Dashboard Development',
+    goal:'Build the trading dashboard, wallet integration, and real-time data feeds from the blockchain.',
+    status:'completed', startDate:'Oct 15, 2024', endDate:'Oct 28, 2024', daysLeft:0,
+    progress:100, storyPoints:38, completedPoints:38,
+    tasksTotal:10, tasksDone:10, inProgress:0, todo:0,
+    color:'#22C55E', project:'Web 3 App for Fxtrade', velocity:38,
+    team:[{i:'AS',c:'#4A90FF'},{i:'RD',c:'#FF8C42'},{i:'MV',c:'#A855F7'}],
+    burndown:[38,34,28,22,16,10,4,0],
+    sprintTasks:[
+      {title:'Dashboard layout & grid system',status:'done'},{title:'Portfolio overview widget',status:'done'},
+      {title:'MetaMask wallet connector',status:'done'},{title:'Token price feed (WebSocket)',status:'done'},
+      {title:'Transaction history table',status:'done'},{title:'Candlestick chart component',status:'done'},
+      {title:'Token swap interface',status:'done'},{title:'Portfolio analytics panel',status:'done'},
+      {title:'Responsive breakpoints',status:'done'},{title:'Loading skeleton states',status:'done'},
+    ]
+  },
+  {
+    id:'s3', number:'SPRINT 03', name:'UX Polish & Integrations',
+    goal:'Refine the user experience, integrate third-party APIs, complete the payment gateway, and perform UX audit revisions.',
+    status:'active', startDate:'Nov 4, 2024', endDate:'Nov 17, 2024', daysLeft:7,
+    progress:58, storyPoints:45, completedPoints:26,
+    tasksTotal:11, tasksDone:6, inProgress:3, todo:2,
+    color:'#4A90FF', project:'Web 3 App for Fxtrade', velocity:null,
+    team:[{i:'AS',c:'#4A90FF'},{i:'RD',c:'#FF8C42'},{i:'MV',c:'#A855F7'},{i:'RC',c:'#00D4AA'}],
+    burndown:[45,41,36,30,24,null,null,null],
+    sprintTasks:[
+      {title:'Payment gateway (Stripe)',status:'done'},{title:'UX audit revisions',status:'done'},
+      {title:'Onboarding flow dev',status:'done'},{title:'Mobile responsive tweaks',status:'done'},
+      {title:'Dark mode refinement',status:'done'},{title:'API rate limit handling',status:'done'},
+      {title:'Notification system',status:'in-progress'},{title:'Smart contract UI',status:'in-progress'},
+      {title:'Performance optimization',status:'in-progress'},{title:'Accessibility audit',status:'todo'},
+      {title:'User testing sessions',status:'todo'},
+    ]
+  },
+  {
+    id:'s4', number:'SPRINT 04', name:'Testing & Hardening',
+    goal:'QA testing across all features, security audit, performance benchmarks, and production deployment preparation.',
+    status:'planning', startDate:'Nov 18, 2024', endDate:'Dec 1, 2024', daysLeft:21,
+    progress:0, storyPoints:38, completedPoints:0,
+    tasksTotal:9, tasksDone:0, inProgress:0, todo:9,
+    color:'#EAB308', project:'Web 3 App for Fxtrade', velocity:null,
+    team:[{i:'AS',c:'#4A90FF'},{i:'RD',c:'#FF8C42'},{i:'RC',c:'#00D4AA'}],
+    burndown:[],
+    sprintTasks:[
+      {title:'End-to-end test suite',status:'todo'},{title:'Security penetration test',status:'todo'},
+      {title:'Load testing (k6)',status:'todo'},{title:'Bug triage & fixes',status:'todo'},
+      {title:'Staging environment QA',status:'todo'},{title:'App store screenshots',status:'todo'},
+      {title:'Prod deployment checklist',status:'todo'},{title:'Rollback strategy plan',status:'todo'},
+      {title:'Launch announcement prep',status:'todo'},
+    ]
+  },
+  {
+    id:'s5', number:'SPRINT 05', name:'Post-Launch Iteration',
+    goal:'Address user feedback from the initial launch, implement quick wins, and begin planning v2 features.',
+    status:'upcoming', startDate:'Dec 2, 2024', endDate:'Dec 15, 2024', daysLeft:36,
+    progress:0, storyPoints:30, completedPoints:0,
+    tasksTotal:7, tasksDone:0, inProgress:0, todo:7,
+    color:'#A855F7', project:'Web 3 App for Fxtrade', velocity:null,
+    team:[{i:'AS',c:'#4A90FF'},{i:'MV',c:'#A855F7'}],
+    burndown:[],
+    sprintTasks:[
+      {title:'User feedback analysis',status:'todo'},{title:'Critical bug fixes',status:'todo'},
+      {title:'Onboarding improvements',status:'todo'},{title:'Analytics integration',status:'todo'},
+      {title:'v2 feature planning',status:'todo'},{title:'Documentation updates',status:'todo'},
+      {title:'Team retrospective',status:'todo'},
+    ]
+  },
+];
+
+let sprintViewMode = 'list';
+let sprintFilterMode = 'all';
+let sprintSearchQ = '';
+let sprintSortMode = 'number';
+let activeSprintId = null;
+let sprintDropdownFilters = null; // null = no dropdown filter active
+
+function _sprintStatusLabel(s) {
+  return {active:'Active',completed:'Completed',planning:'Planning',upcoming:'Upcoming'}[s]||s;
+}
+function _sprintStatusIcon(s) {
+  return {active:'play-circle',completed:'check-circle-2',planning:'clipboard-list',upcoming:'clock'}[s]||'circle';
+}
+
+function renderSprintsPage() {
+  let list = [...SPRINTS];
+  if (sprintFilterMode !== 'all') list = list.filter(s => s.status === sprintFilterMode);
+  if (sprintDropdownFilters) list = list.filter(s => sprintDropdownFilters.includes(s.status));
+  if (sprintSearchQ) {
+    const q = sprintSearchQ.toLowerCase();
+    list = list.filter(s => s.name.toLowerCase().includes(q) || s.goal.toLowerCase().includes(q) || s.project.toLowerCase().includes(q));
+  }
+  list.sort((a,b) => {
+    if (sprintSortMode === 'name')     return a.name.localeCompare(b.name);
+    if (sprintSortMode === 'progress') return b.progress - a.progress;
+    if (sprintSortMode === 'storyPts') return b.storyPoints - a.storyPoints;
+    return a.id.localeCompare(b.id);
+  });
+  _renderSprintKPIs();
+  _renderActiveSprintBanner();
+  _updateSprintChips();
+  if (sprintViewMode === 'list') {
+    document.getElementById('sprint-list-view').style.display = '';
+    document.getElementById('sprint-board-view').style.display = 'none';
+    _renderSprintList(list);
+  } else {
+    document.getElementById('sprint-list-view').style.display = 'none';
+    document.getElementById('sprint-board-view').style.display = 'grid';
+    _renderSprintBoard(list);
+  }
+}
+
+function _renderSprintKPIs() {
+  const total = SPRINTS.length;
+  const active = SPRINTS.filter(s => s.status === 'active').length;
+  const completed = SPRINTS.filter(s => s.status === 'completed').length;
+  const vSprints = SPRINTS.filter(s => s.velocity !== null);
+  const avgVel = vSprints.length ? Math.round(vSprints.reduce((sum,s) => sum + s.velocity, 0) / vSprints.length) : 0;
+  const totalPts = SPRINTS.reduce((sum,s) => sum + s.completedPoints, 0);
+  document.getElementById('sprint-kpi-grid').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-card-top"><span class="stat-label">Total Sprints</span><div class="stat-icon-wrap"><i data-lucide="zap"></i></div></div>
+      <div class="stat-value">${total}</div>
+      <div class="stat-delta up"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M5 2L9 8H1L5 2Z"/></svg><span>Across all projects</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-top"><span class="stat-label">Active Sprint</span><div class="stat-icon-wrap" style="background:rgba(74,144,255,0.12)"><i data-lucide="play-circle" style="color:var(--accent-blue)"></i></div></div>
+      <div class="stat-value">${active}</div>
+      <div class="stat-delta up"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M5 2L9 8H1L5 2Z"/></svg><span>Currently running</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-top"><span class="stat-label">Completed</span><div class="stat-icon-wrap" style="background:rgba(34,197,94,0.12)"><i data-lucide="check-circle-2" style="color:var(--accent-green)"></i></div></div>
+      <div class="stat-value">${completed}</div>
+      <div class="stat-delta up"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M5 2L9 8H1L5 2Z"/></svg><span>Delivered</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-top"><span class="stat-label">Avg Velocity</span><div class="stat-icon-wrap" style="background:rgba(0,212,170,0.12)"><i data-lucide="trending-up" style="color:var(--accent-teal)"></i></div></div>
+      <div class="stat-value">${avgVel}</div>
+      <div class="stat-delta up"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M5 2L9 8H1L5 2Z"/></svg><span>Points per sprint</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-top"><span class="stat-label">Points Delivered</span><div class="stat-icon-wrap" style="background:rgba(168,85,247,0.12)"><i data-lucide="target" style="color:var(--accent-purple)"></i></div></div>
+      <div class="stat-value">${totalPts}</div>
+      <div class="stat-delta up"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M5 2L9 8H1L5 2Z"/></svg><span>Story points total</span></div>
+    </div>`;
+  lucide.createIcons();
+}
+
+function _renderActiveSprintBanner() {
+  const s = SPRINTS.find(x => x.status === 'active');
+  const banner = document.getElementById('active-sprint-banner');
+  if (!s) { banner.style.display = 'none'; return; }
+  banner.style.display = '';
+  const circ = 2 * Math.PI * 42;
+  const offset = circ * (1 - s.progress / 100);
+  const bd = s.burndown.filter(v => v !== null);
+  const n = bd.length;
+  const W = 160, H = 36;
+  const bPoints = n > 1 ? bd.map((v,i) => ((i/(n-1))*W) + ',' + (H - (v/s.storyPoints)*H)).join(' ') : '';
+
+  banner.innerHTML = `
+    <div class="sprint-banner-inner">
+      <div class="sprint-banner-left">
+        <span class="sprint-banner-badge"><i data-lucide="zap"></i> ACTIVE SPRINT</span>
+        <div class="sprint-banner-name">${s.number} — ${s.name}</div>
+        <div class="sprint-banner-goal">${s.goal}</div>
+        <div class="sprint-banner-meta">
+          <span class="sprint-banner-meta-item"><i data-lucide="calendar"></i>${s.startDate} — <span class="sprint-meta-accent">${s.endDate}</span></span>
+          <span class="sprint-banner-meta-item"><i data-lucide="clock"></i><span class="sprint-meta-accent">${s.daysLeft} days</span> remaining</span>
+          <span class="sprint-banner-meta-item"><i data-lucide="briefcase"></i>${s.project}</span>
+          <span class="sprint-banner-meta-item" style="gap:0;">
+            ${s.team.map(m=>`<div class="proj-avatar" style="background:${m.c};width:20px;height:20px;font-size:8px;border-color:var(--bg-card);">${m.i}</div>`).join('')}
+          </span>
+        </div>
+      </div>
+      <div class="sprint-ring-wrap">
+        <div style="position:relative;display:inline-block;">
+          <svg class="sprint-ring-svg" width="100" height="100" viewBox="0 0 100 100">
+            <circle class="sprint-ring-bg" cx="50" cy="50" r="42"/>
+            <circle class="sprint-ring-fill" cx="50" cy="50" r="42" stroke="${s.color}"
+              stroke-dasharray="${circ.toFixed(2)}" stroke-dashoffset="${circ.toFixed(2)}" id="sprint-ring-el"/>
+          </svg>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">
+            <div class="sprint-ring-pct">${s.progress}%</div>
+            <div class="sprint-ring-label">complete</div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--text-secondary);text-align:center;">${s.completedPoints}/${s.storyPoints} pts</div>
+      </div>
+      <div class="sprint-task-breakdown">
+        <div class="sprint-breakdown-title">Task Breakdown</div>
+        <div class="sprint-breakdown-row">
+          <span class="sprint-breakdown-label"><span class="sprint-breakdown-dot" style="background:var(--accent-green)"></span>Done</span>
+          <span class="sprint-breakdown-count">${s.tasksDone}</span>
+        </div>
+        <div class="sprint-breakdown-row">
+          <span class="sprint-breakdown-label"><span class="sprint-breakdown-dot" style="background:var(--accent-yellow)"></span>In Progress</span>
+          <span class="sprint-breakdown-count">${s.inProgress}</span>
+        </div>
+        <div class="sprint-breakdown-row">
+          <span class="sprint-breakdown-label"><span class="sprint-breakdown-dot" style="background:var(--accent-blue)"></span>To Do</span>
+          <span class="sprint-breakdown-count">${s.todo}</span>
+        </div>
+        <div class="sprint-mini-burndown">
+          <div class="sprint-burndown-title">Burndown</div>
+          <svg class="sprint-burndown-svg" viewBox="0 0 160 36" preserveAspectRatio="none">
+            <line x1="0" y1="0" x2="160" y2="36" stroke="var(--border-default)" stroke-width="1.5" stroke-dasharray="4,3"/>
+            ${bPoints ? `<polyline points="${bPoints}" fill="none" stroke="var(--accent-blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>` : ''}
+          </svg>
+        </div>
+      </div>
+    </div>`;
+  lucide.createIcons();
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const ring = document.getElementById('sprint-ring-el');
+    if (ring) ring.style.strokeDashoffset = offset.toFixed(2);
+  }));
+}
+
+function _updateSprintChips() {
+  const c = {all:SPRINTS.length,active:0,planning:0,completed:0,upcoming:0};
+  SPRINTS.forEach(s => { if (c[s.status]!==undefined) c[s.status]++; });
+  document.getElementById('schip-total').textContent = c.all;
+  document.getElementById('schip-active').textContent = c.active;
+  document.getElementById('schip-planning').textContent = c.planning;
+  document.getElementById('schip-completed').textContent = c.completed;
+  document.getElementById('schip-upcoming').textContent = c.upcoming;
+}
+
+function _renderSprintList(sprints) {
+  const c = document.getElementById('sprint-list-view');
+  if (!sprints.length) {
+    c.innerHTML = `<div class="proj-empty"><i data-lucide="zap" width="44" height="44"></i><div class="proj-empty-title">No sprints found</div><div class="proj-empty-sub">Try adjusting your filter or search</div><button class="btn-primary" onclick="openModal('modal-newsprint')" type="button" style="margin-top:8px;"><i data-lucide="plus"></i> New Sprint</button></div>`;
+    lucide.createIcons(); return;
+  }
+  c.innerHTML = `<div class="sprints-list">${sprints.map(s => `
+    <div class="sprint-item" data-id="${s.id}" tabindex="0" role="button">
+      <div class="sprint-item-accent" style="background:${s.color}"></div>
+      <div class="sprint-item-inner">
+        <div class="sprint-item-num">${s.number}</div>
+        <div class="sprint-item-main">
+          <div class="sprint-item-name">${s.name}</div>
+          <div class="sprint-item-goal">${s.goal}</div>
+        </div>
+        <span class="sprint-status-badge ${s.status}"><i data-lucide="${_sprintStatusIcon(s.status)}"></i>${_sprintStatusLabel(s.status)}</span>
+        <div class="sprint-item-dates"><i data-lucide="calendar"></i>${s.startDate} — ${s.endDate}</div>
+        <div class="sprint-item-progress">
+          <div class="sprint-item-prog-label">
+            <span class="sprint-item-prog-tasks">${s.tasksDone}/${s.tasksTotal} tasks</span>
+            <span class="sprint-item-prog-pct">${s.progress}%</span>
+          </div>
+          <div class="sprint-item-prog-track"><div class="sprint-item-prog-fill" style="background:${s.color};width:${s.progress}%"></div></div>
+        </div>
+        <div class="sprint-item-pts">
+          <div class="sprint-item-pts-num">${s.completedPoints}<span style="font-size:10px;color:var(--text-muted);font-family:'DM Sans';">/${s.storyPoints}</span></div>
+          <div class="sprint-item-pts-label">pts</div>
+        </div>
+        <div class="sprint-item-team">
+          ${s.team.slice(0,3).map(m=>`<div class="proj-avatar" style="background:${m.c};width:24px;height:24px;font-size:9px;border-color:var(--bg-card);">${m.i}</div>`).join('')}
+          ${s.team.length>3?`<div class="proj-avatar proj-avatar-more" style="width:24px;height:24px;font-size:9px;">+${s.team.length-3}</div>`:''}
+        </div>
+        <button class="three-dot-btn" data-sprint-id="${s.id}" type="button" style="opacity:0.7;flex-shrink:0;"><i data-lucide="more-horizontal"></i></button>
+      </div>
+    </div>`).join('')}</div>`;
+  lucide.createIcons();
+  requestAnimationFrame(() => {
+    c.querySelectorAll('.sprint-item-prog-fill').forEach(f => {
+      const w = f.style.width; f.style.width = '0%';
+      requestAnimationFrame(() => { f.style.width = w; });
+    });
+  });
+  c.querySelectorAll('.sprint-item').forEach(item => {
+    item.addEventListener('click', e => { if (e.target.closest('.three-dot-btn')) return; openSprintDetail(item.dataset.id); });
+    item.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' '){e.preventDefault();openSprintDetail(item.dataset.id);} });
+  });
+  c.querySelectorAll('.three-dot-btn[data-sprint-id]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      activeSprintId = btn.dataset.sprintId;
+      const panel = document.getElementById('dd-sprint-ctx');
+      const rect = btn.getBoundingClientRect();
+      closeAllDD();
+      panel.style.visibility='hidden'; panel.style.display='block';
+      const pw=panel.offsetWidth,ph=panel.offsetHeight;
+      panel.style.display=''; panel.style.visibility='';
+      let top=rect.bottom+6, left=rect.right-pw;
+      if (left<8) left=rect.left;
+      if (top+ph>window.innerHeight-8) top=rect.top-ph-6;
+      panel.style.top=top+'px'; panel.style.left=left+'px';
+      panel.classList.add('open'); lucide.createIcons();
+    });
+  });
+}
+
+function _renderSprintBoard(sprints) {
+  const c = document.getElementById('sprint-board-view');
+  const cols = [
+    {key:'active',label:'Active',color:'#4A90FF'},
+    {key:'planning',label:'Planning',color:'#EAB308'},
+    {key:'upcoming',label:'Upcoming',color:'#A855F7'},
+    {key:'completed',label:'Completed',color:'#22C55E'},
+  ];
+  c.innerHTML = cols.map(col => {
+    const cs = sprints.filter(s => s.status === col.key);
+    return `<div class="sprint-board-col">
+      <div class="sprint-board-col-header">
+        <div class="sprint-board-col-title">
+          <span style="width:8px;height:8px;border-radius:50%;background:${col.color};display:inline-block;"></span>
+          ${col.label} <span class="sprint-board-col-count">${cs.length}</span>
+        </div>
+      </div>
+      <div class="sprint-board-cards">
+        ${cs.length===0
+          ? `<div style="text-align:center;color:var(--text-muted);font-size:11px;padding:20px 0;">No sprints</div>`
+          : cs.map(s=>`<div class="sprint-board-card" data-id="${s.id}">
+              <div class="sprint-board-card-num">${s.number}</div>
+              <div class="sprint-board-card-name">${s.name}</div>
+              <div class="sprint-board-card-goal">${s.goal}</div>
+              <div class="sprint-board-card-footer">
+                <span class="sprint-board-card-pts"><i data-lucide="zap"></i>${s.completedPoints}/${s.storyPoints} pts</span>
+                <div style="display:flex;align-items:center;gap:0;">
+                  ${s.team.slice(0,2).map(m=>`<div class="proj-avatar" style="background:${m.c};width:20px;height:20px;font-size:8px;border-color:var(--bg-base);">${m.i}</div>`).join('')}
+                </div>
+              </div>
+              <div style="margin-top:8px;"><div class="sprint-item-prog-track"><div class="sprint-item-prog-fill" style="background:${s.color};width:${s.progress}%"></div></div></div>
+            </div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+  lucide.createIcons();
+  requestAnimationFrame(() => {
+    c.querySelectorAll('.sprint-item-prog-fill').forEach(f => {
+      const w=f.style.width; f.style.width='0%'; requestAnimationFrame(()=>{f.style.width=w;});
+    });
+  });
+  c.querySelectorAll('.sprint-board-card').forEach(card => {
+    card.addEventListener('click', () => openSprintDetail(card.dataset.id));
+  });
+}
+
+function openSprintDetail(sprintId) {
+  const s = SPRINTS.find(x => x.id === sprintId);
+  if (!s) return;
+  activeSprintId = sprintId;
+
+  const sb = document.getElementById('sprint-detail-status-badge');
+  sb.className = 'sprint-status-badge ' + s.status;
+  sb.innerHTML = `<i data-lucide="${_sprintStatusIcon(s.status)}"></i> ${_sprintStatusLabel(s.status)}`;
+  document.getElementById('sprint-detail-accent-dot').style.background = s.color;
+
+  const vSprints = SPRINTS.filter(x => x.velocity !== null);
+  const maxVel = vSprints.length ? Math.max(...vSprints.map(x => x.velocity)) : 1;
+  const velBars = vSprints.map(x => `
+    <div class="velocity-bar-wrap">
+      <div class="velocity-bar-num">${x.velocity}</div>
+      <div class="velocity-bar" style="height:${Math.round((x.velocity/maxVel)*48)}px;background:${x.id===s.id?'var(--accent-blue)':'var(--border-default)'};"></div>
+      <div class="velocity-bar-label">${x.number.replace('SPRINT ','S')}</div>
+    </div>`).join('');
+
+  const taskList = s.sprintTasks.map(t => `
+    <div class="sprint-detail-task-item">
+      <div class="sprint-detail-task-check${t.status==='done'?' done':''}"></div>
+      <span class="sprint-detail-task-name${t.status==='done'?' done':''}">${t.title}</span>
+      <span class="sprint-status-badge ${t.status==='done'?'completed':t.status==='in-progress'?'active':'planning'}" style="font-size:9px;padding:2px 7px;flex-shrink:0;">
+        ${t.status==='done'?'Done':t.status==='in-progress'?'Active':'Todo'}
+      </span>
+    </div>`).join('');
+
+  document.getElementById('sprint-detail-body').innerHTML = `
+    <div class="sprint-detail-section">
+      <div class="sprint-detail-title-text">${s.name}</div>
+      <div class="sprint-detail-goal-text">${s.goal}</div>
+    </div>
+    <div class="sprint-detail-section">
+      <div class="sprint-detail-section-label">Details</div>
+      <div class="sprint-meta-grid">
+        <div class="sprint-meta-cell"><div class="sprint-meta-cell-label">Start Date</div><div class="sprint-meta-cell-value">${s.startDate}</div></div>
+        <div class="sprint-meta-cell"><div class="sprint-meta-cell-label">End Date</div><div class="sprint-meta-cell-value">${s.endDate}</div></div>
+        <div class="sprint-meta-cell"><div class="sprint-meta-cell-label">Story Points</div><div class="sprint-meta-cell-value">${s.completedPoints} / ${s.storyPoints}</div></div>
+        <div class="sprint-meta-cell"><div class="sprint-meta-cell-label">Velocity</div><div class="sprint-meta-cell-value">${s.velocity!==null?s.velocity+' pts':'—'}</div></div>
+        <div class="sprint-meta-cell" style="grid-column:1/-1;"><div class="sprint-meta-cell-label">Project</div><div class="sprint-meta-cell-value" style="font-size:12px;">${s.project}</div></div>
+      </div>
+    </div>
+    <div class="sprint-detail-section">
+      <div class="sprint-detail-section-label">Progress</div>
+      <div class="sprint-big-progress">
+        <div class="sprint-big-progress-meta">
+          <span style="font-size:12px;color:var(--text-secondary);">${s.tasksDone} of ${s.tasksTotal} tasks done</span>
+          <span style="font-size:14px;font-weight:700;font-family:'DM Mono',monospace;color:var(--text-primary);">${s.progress}%</span>
+        </div>
+        <div class="sprint-big-progress-bar"><div class="sprint-big-progress-fill" id="sdp-fill" style="background:${s.color};width:0%"></div></div>
+        <div style="display:flex;gap:14px;margin-top:4px;flex-wrap:wrap;">
+          <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted);"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent-green);display:inline-block;"></span>Done: ${s.tasksDone}</span>
+          <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted);"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent-yellow);display:inline-block;"></span>In Progress: ${s.inProgress}</span>
+          <span style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted);"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent-blue);display:inline-block;"></span>To Do: ${s.todo}</span>
+        </div>
+      </div>
+    </div>
+    <div class="sprint-detail-section">
+      <div class="sprint-detail-section-label">Team</div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;">
+        ${s.team.map(m=>`<div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
+          <div style="width:38px;height:38px;border-radius:50%;background:${m.c};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;">${m.i}</div>
+          <div style="font-size:10px;color:var(--text-secondary);">${m.i}</div>
+        </div>`).join('')}
+      </div>
+    </div>
+    ${vSprints.length>0?`
+    <div class="sprint-detail-section">
+      <div class="sprint-detail-section-label">Team Velocity</div>
+      <div class="velocity-bars">${velBars}</div>
+    </div>`:''}
+    <div class="sprint-detail-section">
+      <div class="sprint-detail-section-label">Sprint Tasks (${s.tasksDone}/${s.tasksTotal})</div>
+      <div class="sprint-detail-task-list">${taskList}</div>
+    </div>`;
+
+  document.getElementById('sprint-detail-overlay').classList.add('open');
+  document.getElementById('sprint-detail-panel').classList.add('open');
+  lucide.createIcons();
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const f = document.getElementById('sdp-fill');
+    if (f) f.style.width = s.progress + '%';
+  }));
+}
+
+function closeSprintDetail() {
+  document.getElementById('sprint-detail-overlay').classList.remove('open');
+  document.getElementById('sprint-detail-panel').classList.remove('open');
+  activeSprintId = null;
+}
+
+document.getElementById('sprint-detail-close-btn').addEventListener('click', closeSprintDetail);
+document.getElementById('sprint-detail-overlay').addEventListener('click', closeSprintDetail);
+
+document.getElementById('sprint-detail-delete-btn').addEventListener('click', () => {
+  if (!activeSprintId) return;
+  const idx = SPRINTS.findIndex(s => s.id === activeSprintId);
+  if (idx===-1) return;
+  const name = SPRINTS[idx].name;
+  SPRINTS.splice(idx, 1);
+  closeSprintDetail();
+  renderSprintsPage();
+  showToast('"' + name + '" deleted', 'success', 3000);
+});
+
+document.getElementById('sprint-detail-edit-btn').addEventListener('click', () => {
+  if (!activeSprintId) return;
+  const id = activeSprintId;
+  closeSprintDetail();
+  openEditSprint(id);
+});
+
+document.getElementById('sprint-view-toggle').addEventListener('click', e => {
+  const btn = e.target.closest('.view-btn');
+  if (!btn) return;
+  document.querySelectorAll('#sprint-view-toggle .view-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  sprintViewMode = btn.dataset.sview;
+  renderSprintsPage();
+});
+
+document.getElementById('sprint-stat-chips').addEventListener('click', e => {
+  const chip = e.target.closest('[data-sfilter]');
+  if (!chip) return;
+  document.querySelectorAll('#sprint-stat-chips [data-sfilter]').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  sprintFilterMode = chip.dataset.sfilter;
+  renderSprintsPage();
+});
+
+document.getElementById('sprint-search').addEventListener('input', e => {
+  sprintSearchQ = e.target.value;
+  renderSprintsPage();
+});
+
+document.getElementById('sprint-sort-btn').addEventListener('click', () => openDD('sprint-sort-btn','dd-sprint-sort'));
+document.querySelectorAll('#dd-sprint-sort .dd-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('#dd-sprint-sort .dd-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    sprintSortMode = item.dataset.ssort;
+    closeAllDD();
+    showToast('Sorted by ' + item.textContent.trim(), 'info', 1500);
+    renderSprintsPage();
+  });
+});
+
+document.querySelectorAll('#dd-sprint-ctx .dd-item').forEach(item => {
+  item.addEventListener('click', () => {
+    closeAllDD();
+    const action = item.dataset.saction;
+    if (action === 'view') { openSprintDetail(activeSprintId); }
+    else if (action === 'edit') { openEditSprint(activeSprintId); }
+    else if (action === 'complete') {
+      const s = SPRINTS.find(x => x.id === activeSprintId);
+      if (s) { s.status='completed'; s.progress=100; renderSprintsPage(); showToast('Sprint marked complete', 'success'); }
+    }
+    else if (action === 'delete') {
+      const idx = SPRINTS.findIndex(x => x.id === activeSprintId);
+      if (idx!==-1) { const name=SPRINTS[idx].name; SPRINTS.splice(idx,1); renderSprintsPage(); showToast('"'+name+'" deleted','success',3000); }
+    }
+  });
+});
+
+document.getElementById('sprint-filter-btn').addEventListener('click', () => openDD('sprint-filter-btn','dd-sprint-filter'));
+document.getElementById('sprint-filter-clear').addEventListener('click', () => {
+  document.querySelectorAll('#dd-sprint-filter input[type="checkbox"]').forEach(cb => cb.checked = true);
+  sprintDropdownFilters = null;
+  closeAllDD();
+  showToast('Filters cleared','info',1500);
+  renderSprintsPage();
+});
+document.getElementById('sprint-filter-apply').addEventListener('click', () => {
+  const checked = [];
+  if (document.getElementById('sf-active').checked)    checked.push('active');
+  if (document.getElementById('sf-planning').checked)  checked.push('planning');
+  if (document.getElementById('sf-upcoming').checked)  checked.push('upcoming');
+  if (document.getElementById('sf-completed').checked) checked.push('completed');
+  sprintDropdownFilters = checked.length === 4 ? null : checked;
+  closeAllDD();
+  showToast('Filters applied','success',1500);
+  renderSprintsPage();
+});
+
+function openEditSprint(sprintId) {
+  const s = SPRINTS.find(x => x.id === sprintId);
+  if (!s) return;
+  activeSprintId = sprintId;
+  document.getElementById('edit-sprint-name-input').value = s.name;
+  document.getElementById('edit-sprint-goal-input').value = s.goal;
+  document.getElementById('edit-sprint-pts-input').value = s.storyPoints;
+  document.getElementById('edit-sprint-status-sel').value = s.status;
+  document.getElementById('edit-sprint-project-sel').value = s.project;
+  document.getElementById('edit-sprint-start-input').value = s.startRaw || '';
+  document.getElementById('edit-sprint-end-input').value = s.endRaw || '';
+  openModal('modal-editsprint');
+  lucide.createIcons();
+}
+
+document.getElementById('btn-save-sprint').addEventListener('click', () => {
+  if (!activeSprintId) return;
+  const s = SPRINTS.find(x => x.id === activeSprintId);
+  if (!s) return;
+  const name = document.getElementById('edit-sprint-name-input').value.trim();
+  if (!name) { showToast('Sprint name is required','error',2000); return; }
+  const goal = document.getElementById('edit-sprint-goal-input').value.trim() || s.goal;
+  const pts = parseInt(document.getElementById('edit-sprint-pts-input').value) || s.storyPoints;
+  const status = document.getElementById('edit-sprint-status-sel').value;
+  const project = document.getElementById('edit-sprint-project-sel').value;
+  const startRaw = document.getElementById('edit-sprint-start-input').value;
+  const endRaw   = document.getElementById('edit-sprint-end-input').value;
+  const fmtDate  = d => new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  s.name = name;
+  s.goal = goal;
+  s.storyPoints = pts;
+  s.status = status;
+  s.project = project;
+  if (startRaw) { s.startDate = fmtDate(startRaw); s.startRaw = startRaw; }
+  if (endRaw)   { s.endDate   = fmtDate(endRaw);   s.endRaw   = endRaw; }
+  if (status === 'completed') s.progress = 100;
+  closeModal('modal-editsprint');
+  renderSprintsPage();
+  showToast('Sprint "'+name+'" updated!','success',3000);
+});
+
+document.getElementById('btn-new-sprint').addEventListener('click', () => openModal('modal-newsprint'));
+document.getElementById('btn-create-sprint').addEventListener('click', () => {
+  const name = document.getElementById('sprint-name-input').value.trim();
+  if (!name) { showToast('Sprint name is required','error',2000); return; }
+  const goal = document.getElementById('sprint-goal-input').value.trim() || 'No goal defined.';
+  const startRaw = document.getElementById('sprint-start-input').value;
+  const endRaw = document.getElementById('sprint-end-input').value;
+  const pts = parseInt(document.getElementById('sprint-pts-input').value)||40;
+  const project = document.getElementById('sprint-project-sel').value;
+  const fmtDate = d => d ? new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : 'TBD';
+  const num = 'SPRINT ' + String(SPRINTS.length+1).padStart(2,'0');
+  SPRINTS.push({
+    id:'s_'+Date.now(), number:num, name, goal, status:'planning',
+    startDate:fmtDate(startRaw), endDate:fmtDate(endRaw), daysLeft:30,
+    startRaw, endRaw,
+    progress:0, storyPoints:pts, completedPoints:0,
+    tasksTotal:0, tasksDone:0, inProgress:0, todo:0,
+    color:'#EAB308', project, velocity:null,
+    team:[{i:'JA',c:'#4A90FF'}], burndown:[], sprintTasks:[]
+  });
+  document.getElementById('sprint-name-input').value='';
+  document.getElementById('sprint-goal-input').value='';
+  document.getElementById('sprint-start-input').value='';
+  document.getElementById('sprint-end-input').value='';
+  document.getElementById('sprint-pts-input').value='';
+  closeModal('modal-newsprint');
+  renderSprintsPage();
+  showToast('Sprint "'+name+'" created!','success',3000);
 });
 
 document.getElementById('btn-create-project').addEventListener('click', () => {
