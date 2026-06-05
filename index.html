@@ -92,15 +92,7 @@
     gap: 10px;
   }
 
-  .logo-icon { width: 32px; height: 32px; flex-shrink: 0; }
-
-  .logo-wordmark {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: 0.1em;
-    color: var(--text-primary);
-  }
+  .sidebar-brand-logo { height: 38px; width: auto; flex-shrink: 0; display: block; }
 
   .sidebar-nav {
     flex: 1;
@@ -641,7 +633,7 @@
     background: var(--bg-card);
   }
 
-  .calendar-body { overflow-x: auto; background: #111111; }
+  .calendar-body { overflow-x: auto; background: var(--bg-card); }
   .calendar-body::-webkit-scrollbar { height: 4px; }
   .calendar-body::-webkit-scrollbar-track { background: transparent; }
   .calendar-body::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
@@ -650,18 +642,18 @@
     text-align: center; padding: 10px 0 8px;
     font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500;
     color: var(--text-muted); letter-spacing: 0.12em;
-    border-bottom: 1px solid #222; background: #111111;
+    border-bottom: 1px solid var(--border-subtle); background: var(--bg-card);
   }
 
-  .calendar-grid { display: grid; min-width: 900px; background: #111111; }
+  .calendar-grid { display: grid; min-width: 900px; background: var(--bg-card); }
 
-  .day-headers { display: grid; grid-template-columns: repeat(19, 1fr); border-bottom: 1px solid #222; }
+  .day-headers { display: grid; grid-template-columns: repeat(19, 1fr); border-bottom: 1px solid var(--border-subtle); }
 
   .day-col-header {
     padding: 8px 0 6px;
     display: flex; flex-direction: column; align-items: center; gap: 2px;
-    border-right: 1px solid #222; font-family: 'DM Mono', monospace;
-    background: #111111;
+    border-right: 1px solid var(--border-subtle); font-family: 'DM Mono', monospace;
+    background: var(--bg-card);
   }
   .day-col-header:last-child { border-right: none; }
   .day-name { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
@@ -670,10 +662,10 @@
   .pills-area {
     position: relative; min-height: 160px;
     display: grid; grid-template-columns: repeat(19, 1fr);
-    background: #111111;
+    background: var(--bg-card);
   }
 
-  .grid-col { border-right: 1px solid #1e1e1e; min-height: 160px; }
+  .grid-col { border-right: 1px solid var(--border-subtle); min-height: 160px; }
   .grid-col:last-child { border-right: none; }
 
   .pill-rows {
@@ -1053,9 +1045,10 @@
   @media (max-width: 1280px) { .kpi-grid { grid-template-columns: repeat(3, 1fr); } }
   @media (max-width: 1024px) {
     .app-layout { grid-template-columns: 60px 1fr; }
-    .logo-wordmark, .nav-item span, .sidebar-bottom { display: none; }
+    .nav-item span, .sidebar-bottom { display: none; }
     .nav-item { justify-content: center; padding: 0; }
     .sidebar-logo { justify-content: center; padding: 16px 0; }
+    .sidebar-brand-logo { height: 28px; }
   }
   @media (max-width: 900px) { .middle-row { flex-direction: column; } }
 
@@ -2679,18 +2672,7 @@
   <!-- ===== SIDEBAR ===== -->
   <aside class="sidebar">
     <div class="sidebar-logo">
-      <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="8" cy="8" r="3.5" fill="#4A90FF"/>
-        <circle cx="20" cy="5" r="3.5" fill="#4A90FF"/>
-        <circle cx="32" cy="8" r="3.5" fill="#4A90FF"/>
-        <circle cx="35" cy="20" r="3.5" fill="#4A90FF"/>
-        <circle cx="32" cy="32" r="3.5" fill="#4A90FF"/>
-        <circle cx="20" cy="35" r="3.5" fill="#4A90FF"/>
-        <circle cx="8" cy="32" r="3.5" fill="#4A90FF"/>
-        <circle cx="5" cy="20" r="3.5" fill="#4A90FF"/>
-        <circle cx="20" cy="20" r="4" fill="#4A90FF" opacity="0.6"/>
-      </svg>
-      <span class="logo-wordmark">CHRONOLOOP</span>
+      <img src="Logo.svg" class="sidebar-brand-logo" alt="ChronoLoop">
     </div>
 
     <nav class="sidebar-nav">
