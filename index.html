@@ -1347,6 +1347,228 @@
 
   @media (max-width: 1280px) { .sprint-kpi-grid { grid-template-columns: repeat(3, 1fr); } }
   @media (max-width: 900px)  { .sprint-banner-inner { grid-template-columns: 1fr; } }
+
+  /* ===== TEAM PAGE ===== */
+  #page-team { display: flex; flex-direction: column; gap: 14px; }
+  .tm-kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+
+  .tm-dept-tabs { display: flex; align-items: center; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; padding: 3px; gap: 2px; flex-wrap: wrap; transition: background var(--duration-normal) var(--ease-out); }
+  .tm-dept-tab { display: flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 6px; border: none; background: transparent; color: var(--text-muted); font-size: 12px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background var(--duration-fast), color var(--duration-fast); white-space: nowrap; }
+  .tm-dept-tab.active { background: var(--accent-blue); color: #fff; }
+  .tm-dept-tab:not(.active):hover { color: var(--text-primary); background: var(--bg-card-hover); }
+  .tm-dept-tab-count { background: rgba(255,255,255,0.18); border-radius: 10px; padding: 1px 7px; font-size: 10px; font-weight: 700; }
+  .tm-dept-tab:not(.active) .tm-dept-tab-count { background: var(--bg-input); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+
+  .tm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(256px, 1fr)); gap: 14px; }
+
+  .tm-card {
+    background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px;
+    overflow: hidden; cursor: pointer; position: relative; display: flex; flex-direction: column;
+    transition: transform var(--duration-fast), box-shadow var(--duration-fast), border-color var(--duration-fast), background var(--duration-normal) var(--ease-out);
+  }
+  .tm-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px hsla(230,80%,50%,0.12); border-color: var(--border-default); }
+  .tm-card-accent { height: 3px; width: 100%; flex-shrink: 0; }
+  .tm-card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+
+  .tm-card-top { display: flex; align-items: flex-start; justify-content: space-between; }
+  .tm-avatar-wrap { position: relative; display: inline-block; }
+  .tm-avatar { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .tm-online-dot { position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--bg-card); }
+  .tm-online-dot.online  { background: var(--accent-green); }
+  .tm-online-dot.offline { background: var(--text-muted); }
+
+  .tm-card-menu { width: 28px; height: 28px; border-radius: 6px; background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity var(--duration-fast), background var(--duration-fast), color var(--duration-fast); }
+  .tm-card:hover .tm-card-menu { opacity: 1; }
+  .tm-card-menu:hover { background: var(--border-default); color: var(--text-primary); }
+  .tm-card-menu svg { width: 14px; height: 14px; }
+
+  .tm-card-info { display: flex; flex-direction: column; gap: 3px; }
+  .tm-card-name { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--text-primary); }
+  .tm-card-role { font-size: 11px; color: var(--text-secondary); }
+  .tm-card-dept { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 9px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; background: var(--bg-input); border: 1px solid var(--border-subtle); color: var(--text-muted); width: fit-content; margin-top: 2px; }
+  .tm-card-email { font-size: 10px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tm-card-email svg { width: 10px; height: 10px; flex-shrink: 0; }
+
+  .tm-card-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  .tm-stat-cell { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 4px; background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 8px; }
+  .tm-stat-num { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--text-primary); line-height: 1; }
+  .tm-stat-label { font-size: 9px; color: var(--text-muted); text-align: center; line-height: 1.3; }
+
+  .tm-card-progress { display: flex; flex-direction: column; gap: 5px; }
+  .tm-prog-header { display: flex; align-items: center; justify-content: space-between; }
+  .tm-prog-label { font-size: 10px; color: var(--text-muted); }
+  .tm-prog-pct { font-size: 11px; font-weight: 700; color: var(--text-primary); font-family: 'DM Mono', monospace; }
+  .tm-prog-track { height: 5px; background: var(--border-subtle); border-radius: 3px; overflow: hidden; }
+  .tm-prog-fill { height: 100%; border-radius: 3px; transition: width 700ms var(--ease-out); }
+
+  .tm-card-footer { display: flex; align-items: center; gap: 6px; padding: 10px 16px; border-top: 1px solid var(--border-subtle); transition: background var(--duration-normal) var(--ease-out); }
+  .tm-action-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 5px; height: 28px; border-radius: 6px; font-size: 11px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background var(--duration-fast), color var(--duration-fast), opacity var(--duration-fast); white-space: nowrap; }
+  .tm-action-btn.tm-primary { background: var(--accent-blue); color: #fff; border: none; }
+  .tm-action-btn.tm-primary:hover { opacity: 0.88; }
+  .tm-action-btn.tm-secondary { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-subtle); }
+  .tm-action-btn.tm-secondary:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .tm-action-btn svg { width: 11px; height: 11px; }
+
+  .tm-workload-panel { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 16px 20px; transition: background var(--duration-normal) var(--ease-out); }
+  .tm-workload-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+  .tm-workload-row { display: flex; align-items: center; gap: 12px; }
+  .tm-workload-avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .tm-workload-name { font-size: 11px; color: var(--text-secondary); white-space: nowrap; min-width: 80px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; }
+  .tm-workload-bars { flex: 1; display: flex; height: 16px; border-radius: 4px; overflow: hidden; gap: 1px; }
+  .tm-workload-seg { height: 100%; transition: width 700ms var(--ease-out); }
+  .tm-workload-total { font-size: 10px; color: var(--text-muted); white-space: nowrap; min-width: 36px; text-align: right; font-family: 'DM Mono', monospace; font-weight: 600; }
+  .tm-workload-legend { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .tm-workload-legend-item { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text-secondary); }
+  .tm-workload-legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+  .tm-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+  .tm-section-panel { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 16px 18px; transition: background var(--duration-normal) var(--ease-out); }
+  .tm-activity-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border-subtle); }
+  .tm-activity-item:last-child { border-bottom: none; }
+  .tm-activity-ava { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .tm-activity-content { flex: 1; min-width: 0; }
+  .tm-activity-text { font-size: 12px; color: var(--text-primary); line-height: 1.4; }
+  .tm-activity-time { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+
+  .tm-perf-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border-subtle); }
+  .tm-perf-row:last-child { border-bottom: none; }
+  .tm-perf-avatar { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .tm-perf-name { font-size: 11px; color: var(--text-secondary); min-width: 90px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tm-perf-bar-wrap { flex: 1; height: 6px; background: var(--border-subtle); border-radius: 3px; overflow: hidden; }
+  .tm-perf-bar { height: 100%; border-radius: 3px; transition: width 700ms var(--ease-out); }
+  .tm-perf-pct { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 700; color: var(--text-primary); min-width: 34px; text-align: right; }
+  .tm-perf-rank { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); min-width: 18px; flex-shrink: 0; }
+
+  .tm-detail-overlay { position: fixed; inset: 0; z-index: 250; background: rgba(0,0,0,0.5); opacity: 0; pointer-events: none; transition: opacity var(--duration-normal); backdrop-filter: blur(2px); }
+  .tm-detail-overlay.open { opacity: 1; pointer-events: all; }
+  .tm-detail-panel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 260; width: 440px; max-width: 95vw; background: var(--bg-card); border-left: 1px solid var(--border-default); display: flex; flex-direction: column; transform: translateX(100%); transition: transform var(--duration-normal) var(--ease-out); box-shadow: -8px 0 40px rgba(0,0,0,0.4); }
+  .tm-detail-panel.open { transform: translateX(0); }
+  .tm-detail-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; gap: 10px; }
+  .tm-detail-actions { display: flex; align-items: center; gap: 6px; }
+  .tm-detail-body { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 18px; }
+  .tm-detail-body::-webkit-scrollbar { width: 4px; }
+  .tm-detail-body::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 2px; }
+  .tm-detail-footer { padding: 14px 20px; border-top: 1px solid var(--border-subtle); display: flex; gap: 8px; flex-shrink: 0; }
+  .tm-detail-hero { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 10px 0 4px; }
+  .tm-detail-avatar { width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .tm-detail-name { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--text-primary); text-align: center; }
+  .tm-detail-role-text { font-size: 12px; color: var(--accent-blue); text-align: center; }
+  .tm-detail-stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .tm-detail-stat-cell { background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 12px 8px; text-align: center; }
+  .tm-detail-stat-num { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--text-primary); line-height: 1; }
+  .tm-detail-stat-lbl { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+  .tm-detail-section-label { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .tm-detail-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tm-detail-info-cell { background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 10px 12px; }
+  .tm-detail-info-label { font-size: 9px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .tm-detail-info-val { font-size: 12px; color: var(--text-primary); font-weight: 500; display: flex; align-items: center; gap: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tm-detail-info-val svg { width: 11px; height: 11px; color: var(--text-muted); flex-shrink: 0; }
+  .tm-detail-proj-list { display: flex; flex-direction: column; gap: 6px; }
+  .tm-detail-proj-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 8px; }
+  .tm-detail-proj-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .tm-detail-proj-name { font-size: 12px; color: var(--text-primary); font-weight: 500; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tm-detail-proj-badge { font-size: 9px; padding: 2px 7px; border-radius: 4px; background: rgba(74,144,255,0.12); color: var(--accent-blue); border: 1px solid rgba(74,144,255,0.2); font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+  .tm-detail-task-bars { display: flex; flex-direction: column; gap: 7px; }
+  .tm-detail-task-row { display: flex; align-items: center; gap: 10px; }
+  .tm-detail-task-lbl { font-size: 11px; color: var(--text-secondary); min-width: 72px; flex-shrink: 0; }
+  .tm-detail-task-track { flex: 1; height: 6px; background: var(--border-subtle); border-radius: 3px; overflow: hidden; }
+  .tm-detail-task-bar { height: 100%; border-radius: 3px; transition: width 700ms var(--ease-out); }
+  .tm-detail-task-num { font-size: 10px; font-weight: 700; color: var(--text-primary); font-family: 'DM Mono', monospace; min-width: 20px; text-align: right; flex-shrink: 0; }
+  .tm-detail-act-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-subtle); }
+  .tm-detail-act-item:last-child { border-bottom: none; }
+  .tm-detail-act-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .tm-detail-act-text { font-size: 11px; color: var(--text-primary); line-height: 1.5; flex: 1; }
+  .tm-detail-act-time { font-size: 10px; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
+
+  @media (max-width: 1280px) { .tm-kpi-grid { grid-template-columns: repeat(3, 1fr); } .tm-two-col { grid-template-columns: 1fr; } }
+  @media (max-width: 900px)  { .tm-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px)  { .tm-grid { grid-template-columns: 1fr; } }
+
+  /* ===== REPORTS PAGE ===== */
+  #page-reports { display: flex; flex-direction: column; gap: 14px; }
+
+  .rpt-kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+
+  .rpt-chart-row { display: grid; gap: 14px; }
+  .rpt-chart-row-2col { grid-template-columns: 1.8fr 1fr; }
+  .rpt-chart-row-3col { grid-template-columns: 1fr 1fr 1fr; }
+
+  .rpt-chart-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: background var(--duration-normal) var(--ease-out);
+  }
+
+  .rpt-chart-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600; color: var(--text-primary); }
+  .rpt-chart-subtitle { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
+  .rpt-chart-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .rpt-chart-legend { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; flex-shrink: 0; }
+  .rpt-legend-item { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text-secondary); }
+  .rpt-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .rpt-legend-line { width: 14px; height: 2px; flex-shrink: 0; border-radius: 1px; }
+
+  .rpt-chart-svg-wrap { width: 100%; overflow: hidden; }
+  .rpt-chart-svg-wrap svg { width: 100%; display: block; }
+
+  .rpt-donut-wrap { display: flex; align-items: center; justify-content: center; gap: 20px; flex: 1; }
+  .rpt-donut-legend { display: flex; flex-direction: column; gap: 10px; }
+  .rpt-donut-legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-secondary); }
+  .rpt-donut-legend-swatch { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+  .rpt-donut-legend-pct { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 600; color: var(--text-primary); margin-left: 10px; }
+
+  .rpt-range-tabs { display: flex; align-items: center; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 2px; gap: 2px; }
+  .rpt-range-tab { padding: 5px 12px; border-radius: 6px; background: transparent; border: none; color: var(--text-secondary); font-size: 11px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; transition: background var(--duration-fast), color var(--duration-fast); }
+  .rpt-range-tab.active { background: var(--accent-blue); color: #fff; }
+  .rpt-range-tab:not(.active):hover { background: var(--bg-card-hover); color: var(--text-primary); }
+
+  .health-badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+  .health-badge.good { background: rgba(34,197,94,0.12); color: var(--accent-green); }
+  .health-badge.warn { background: rgba(234,179,8,0.12); color: var(--accent-yellow); }
+  .health-badge.risk { background: rgba(255,77,77,0.12); color: var(--accent-red); }
+
+  .inline-progress-wrap { display: flex; align-items: center; gap: 8px; }
+  .inline-progress-track { flex: 1; height: 4px; background: var(--border-subtle); border-radius: 2px; overflow: hidden; min-width: 50px; }
+  .inline-progress-fill { height: 100%; border-radius: 2px; }
+  .inline-progress-pct { font-size: 11px; color: var(--text-primary); font-weight: 500; white-space: nowrap; min-width: 28px; text-align: right; font-family: 'DM Mono', monospace; }
+
+  .rpt-hbar-row { display: flex; align-items: center; gap: 10px; }
+  .rpt-hbar-label { font-size: 11px; color: var(--text-secondary); width: 60px; flex-shrink: 0; }
+  .rpt-hbar-track { flex: 1; height: 8px; background: var(--border-subtle); border-radius: 4px; overflow: hidden; }
+  .rpt-hbar-fill { height: 100%; border-radius: 4px; transition: width 700ms var(--ease-out); }
+  .rpt-hbar-count { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--text-primary); font-weight: 500; min-width: 26px; text-align: right; }
+
+  .rpt-team-row { display: flex; align-items: center; gap: 8px; }
+  .rpt-team-avatar { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .rpt-team-name { font-size: 11px; color: var(--text-secondary); width: 64px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rpt-team-track { flex: 1; height: 6px; background: var(--border-subtle); border-radius: 3px; overflow: hidden; }
+  .rpt-team-fill { height: 100%; border-radius: 3px; transition: width 700ms var(--ease-out); }
+  .rpt-team-count { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--text-muted); min-width: 36px; text-align: right; white-space: nowrap; }
+
+  .rpt-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .rpt-table thead tr { border-bottom: 1px solid var(--border-default); }
+  .rpt-table th { padding: 8px 14px; text-align: left; font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
+  .rpt-table tbody tr { border-bottom: 1px solid var(--border-subtle); transition: background var(--duration-fast); }
+  .rpt-table tbody tr:last-child { border-bottom: none; }
+  .rpt-table tbody tr:hover { background: var(--bg-card-hover); }
+  .rpt-table td { padding: 9px 14px; color: var(--text-secondary); vertical-align: middle; }
+  .rpt-table td.rpt-td-primary { color: var(--text-primary); font-weight: 500; font-size: 12px; }
+  .rpt-status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+  .rpt-table-row-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .rpt-summary-number { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-secondary); }
+
+  @media (max-width: 1280px) {
+    .rpt-kpi-grid { grid-template-columns: repeat(3, 1fr); }
+    .rpt-chart-row-2col { grid-template-columns: 1fr; }
+    .rpt-chart-row-3col { grid-template-columns: 1fr 1fr; }
+    .rpt-table-row-2col { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 900px) { .rpt-chart-row-3col { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -1889,6 +2111,209 @@
       <div id="sprint-board-view" style="display:none;" class="sprint-board-view"></div>
 
     </div><!-- /page-sprints -->
+
+    <!-- ===== TEAM PAGE ===== -->
+    <div id="page-team" style="display:none;">
+
+      <div class="tasks-page-header">
+        <div>
+          <div class="page-breadcrumb">Overview / Team</div>
+          <div class="page-heading">Team</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <div class="search-wrap" style="max-width:200px;">
+            <i data-lucide="search" class="search-icon"></i>
+            <input class="search-input" id="tm-search-input" type="search" placeholder="Search members...">
+          </div>
+          <button class="btn-secondary" id="tm-filter-btn" type="button">
+            <i data-lucide="sliders-horizontal"></i> Filter
+          </button>
+          <button class="btn-secondary" id="tm-sort-btn" type="button">
+            <i data-lucide="arrow-up-down"></i> Sort
+          </button>
+          <button class="btn-primary" id="tm-invite-btn" type="button">
+            <i data-lucide="user-plus"></i> Add Member
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI grid -->
+      <div class="tm-kpi-grid" id="tm-kpi-grid"></div>
+
+      <!-- Department tabs + view toggle -->
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div class="tm-dept-tabs" id="tm-dept-tabs"></div>
+        <div class="view-toggle" id="tm-view-toggle">
+          <button class="view-btn active" data-tmview="grid" type="button"><i data-lucide="layout-grid"></i> Grid</button>
+          <button class="view-btn" data-tmview="list" type="button"><i data-lucide="list"></i> List</button>
+        </div>
+      </div>
+
+      <!-- Member grid -->
+      <div class="tm-grid" id="tm-grid"></div>
+
+      <!-- Workload distribution -->
+      <div class="tm-workload-panel">
+        <div class="panel-header" style="margin-bottom:0;">
+          <h2 class="panel-title">Workload Distribution</h2>
+          <div class="tm-workload-legend">
+            <div class="tm-workload-legend-item">
+              <div class="tm-workload-legend-dot" style="background:var(--accent-green);opacity:0.85;"></div>Completed
+            </div>
+            <div class="tm-workload-legend-item">
+              <div class="tm-workload-legend-dot" style="background:var(--accent-yellow);opacity:0.85;"></div>In Progress
+            </div>
+            <div class="tm-workload-legend-item">
+              <div class="tm-workload-legend-dot" style="background:var(--border-default);opacity:0.85;"></div>To Do
+            </div>
+          </div>
+        </div>
+        <div class="tm-workload-grid" id="tm-workload-grid"></div>
+      </div>
+
+      <!-- Activity feed + Performance leaderboard -->
+      <div class="tm-two-col">
+        <div class="tm-section-panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Team Activity</h2>
+            <button class="dropdown-btn" type="button">
+              <span>Today</span><i data-lucide="chevron-down"></i>
+            </button>
+          </div>
+          <div id="tm-activity-feed"></div>
+        </div>
+        <div class="tm-section-panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Performance Leaderboard</h2>
+            <button class="dropdown-btn" type="button">
+              <span>This Sprint</span><i data-lucide="chevron-down"></i>
+            </button>
+          </div>
+          <div id="tm-perf-list" style="margin-top:8px;"></div>
+        </div>
+      </div>
+
+    </div><!-- /page-team -->
+
+    <!-- ===== REPORTS PAGE ===== -->
+    <div id="page-reports" style="display:none;">
+
+      <!-- Header -->
+      <div class="tasks-page-header">
+        <div>
+          <div class="page-breadcrumb">Overview / Reports</div>
+          <div class="page-heading">Reports</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <div class="rpt-range-tabs" id="rpt-range-tabs">
+            <button class="rpt-range-tab" data-range="7d" type="button">7D</button>
+            <button class="rpt-range-tab active" data-range="30d" type="button">30D</button>
+            <button class="rpt-range-tab" data-range="90d" type="button">90D</button>
+            <button class="rpt-range-tab" data-range="12m" type="button">12M</button>
+          </div>
+          <button class="btn-secondary" id="rpt-export-btn" type="button">
+            <i data-lucide="download"></i> Export
+          </button>
+          <button class="btn-secondary" id="rpt-print-btn" type="button">
+            <i data-lucide="printer"></i> Print
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI strip -->
+      <div class="rpt-kpi-grid" id="rpt-kpi-grid"></div>
+
+      <!-- Row 1: Trend chart + Project status donut -->
+      <div class="rpt-chart-row rpt-chart-row-2col">
+        <div class="rpt-chart-panel">
+          <div class="rpt-chart-header">
+            <div>
+              <div class="rpt-chart-title">Task Completion Trend</div>
+              <div class="rpt-chart-subtitle">Weekly completed vs assigned — last 12 weeks</div>
+            </div>
+            <div class="rpt-chart-legend">
+              <div class="rpt-legend-item"><div class="rpt-legend-dot" style="background:#00D4AA;"></div><span>Completed</span></div>
+              <div class="rpt-legend-item"><div class="rpt-legend-dot" style="background:#4A90FF;opacity:0.45;"></div><span>Assigned</span></div>
+            </div>
+          </div>
+          <div class="rpt-chart-svg-wrap" id="rpt-trend-chart"></div>
+        </div>
+        <div class="rpt-chart-panel">
+          <div class="rpt-chart-header">
+            <div>
+              <div class="rpt-chart-title">Project Status</div>
+              <div class="rpt-chart-subtitle">All projects · current distribution</div>
+            </div>
+          </div>
+          <div class="rpt-donut-wrap" id="rpt-donut-wrap"></div>
+        </div>
+      </div>
+
+      <!-- Row 2: Sprint velocity + Priority breakdown + Team output -->
+      <div class="rpt-chart-row rpt-chart-row-3col">
+        <div class="rpt-chart-panel">
+          <div class="rpt-chart-header">
+            <div>
+              <div class="rpt-chart-title">Sprint Velocity</div>
+              <div class="rpt-chart-subtitle">Story points · last 6 sprints</div>
+            </div>
+          </div>
+          <div class="rpt-chart-svg-wrap" id="rpt-velocity-chart"></div>
+        </div>
+        <div class="rpt-chart-panel">
+          <div class="rpt-chart-header">
+            <div>
+              <div class="rpt-chart-title">Priority Breakdown</div>
+              <div class="rpt-chart-subtitle">Open tasks by priority level</div>
+            </div>
+          </div>
+          <div id="rpt-priority-chart" style="display:flex;flex-direction:column;gap:10px;margin-top:4px;"></div>
+        </div>
+        <div class="rpt-chart-panel">
+          <div class="rpt-chart-header">
+            <div>
+              <div class="rpt-chart-title">Team Output</div>
+              <div class="rpt-chart-subtitle">Completed tasks this period</div>
+            </div>
+          </div>
+          <div id="rpt-team-output" style="display:flex;flex-direction:column;gap:8px;margin-top:4px;"></div>
+        </div>
+      </div>
+
+      <!-- Row 3: Burndown chart (full width) -->
+      <div class="rpt-chart-panel">
+        <div class="rpt-chart-header">
+          <div>
+            <div class="rpt-chart-title">Sprint Burndown — Sprint 5: Team &amp; Reports</div>
+            <div class="rpt-chart-subtitle">Remaining story points vs ideal line · 2-week sprint · 80 pts</div>
+          </div>
+          <div class="rpt-chart-legend">
+            <div class="rpt-legend-item"><div class="rpt-legend-line" style="background:#666;"></div><span>Ideal</span></div>
+            <div class="rpt-legend-item"><div class="rpt-legend-line" style="background:#FF8C42;"></div><span>Actual</span></div>
+          </div>
+        </div>
+        <div class="rpt-chart-svg-wrap" id="rpt-burndown-chart"></div>
+      </div>
+
+      <!-- Row 4: Tables -->
+      <div class="rpt-table-row-2col">
+        <div class="rpt-chart-panel" style="padding-bottom:0;overflow:hidden;">
+          <div class="panel-header" style="margin-bottom:8px;">
+            <h2 class="panel-title">Project Performance</h2>
+            <button class="dropdown-btn" type="button"><span>All Projects</span><i data-lucide="chevron-down"></i></button>
+          </div>
+          <div id="rpt-proj-table"></div>
+        </div>
+        <div class="rpt-chart-panel" style="padding-bottom:0;overflow:hidden;">
+          <div class="panel-header" style="margin-bottom:8px;">
+            <h2 class="panel-title">Sprint Summary</h2>
+            <button class="dropdown-btn" type="button"><span>Last 6 Sprints</span><i data-lucide="chevron-down"></i></button>
+          </div>
+          <div id="rpt-sprint-table"></div>
+        </div>
+      </div>
+
+    </div><!-- /page-reports -->
 
     </div>
   </main>
@@ -2585,6 +3010,61 @@
   </div>
 </div>
 
+<!-- ===== TEAM MEMBER DETAIL PANEL ===== -->
+<div class="tm-detail-overlay" id="tm-detail-overlay"></div>
+<div class="tm-detail-panel" id="tm-detail-panel">
+  <div class="tm-detail-header">
+    <span style="font-size:13px;font-weight:600;color:var(--text-primary);">Member Profile</span>
+    <div class="tm-detail-actions">
+      <button class="task-action-btn" id="tm-detail-edit-btn" title="Quick View" type="button"><i data-lucide="external-link"></i></button>
+      <button class="detail-panel-close" id="tm-detail-close-btn" title="Close" type="button"><i data-lucide="x"></i></button>
+    </div>
+  </div>
+  <div class="tm-detail-body" id="tm-detail-body"></div>
+  <div class="tm-detail-footer">
+    <button class="btn-secondary" id="tm-detail-msg-btn" type="button" style="flex:1;">
+      <i data-lucide="message-square"></i> Message
+    </button>
+    <button class="btn-primary" id="tm-detail-assign-btn" type="button" style="flex:1;">
+      <i data-lucide="plus"></i> Assign Task
+    </button>
+  </div>
+</div>
+
+<!-- TEAM MEMBER CONTEXT MENU -->
+<div class="dd-panel" id="dd-tm-ctx">
+  <button class="dd-item" data-tmaction="view" type="button"><i data-lucide="eye"></i> View Profile</button>
+  <button class="dd-item" data-tmaction="message" type="button"><i data-lucide="message-square"></i> Send Message</button>
+  <button class="dd-item" data-tmaction="assign" type="button"><i data-lucide="plus-circle"></i> Assign Task</button>
+  <div class="dd-divider"></div>
+  <button class="dd-item danger" data-tmaction="remove" type="button"><i data-lucide="user-minus"></i> Remove from Team</button>
+</div>
+
+<!-- TEAM SORT DROPDOWN -->
+<div class="dd-panel" id="dd-tm-sort">
+  <button class="dd-item active" data-tmsort="name" type="button"><i data-lucide="type"></i> Name (A–Z)</button>
+  <button class="dd-item" data-tmsort="completion" type="button"><i data-lucide="trending-up"></i> Completion Rate</button>
+  <button class="dd-item" data-tmsort="tasks" type="button"><i data-lucide="clipboard-list"></i> Active Tasks</button>
+  <button class="dd-item" data-tmsort="velocity" type="button"><i data-lucide="zap"></i> Velocity</button>
+</div>
+
+<!-- TEAM FILTER DROPDOWN -->
+<div class="dd-panel" id="dd-tm-filter" style="min-width:210px;padding:0;">
+  <div class="filter-section-title">Status</div>
+  <label class="filter-check-item"><input type="checkbox" checked id="tmf-online"><span>Online</span></label>
+  <label class="filter-check-item"><input type="checkbox" checked id="tmf-offline"><span>Offline</span></label>
+  <div class="dd-divider"></div>
+  <div class="filter-section-title">Department</div>
+  <label class="filter-check-item"><input type="checkbox" checked id="tmf-dev"><span>Development</span></label>
+  <label class="filter-check-item"><input type="checkbox" checked id="tmf-design"><span>Design</span></label>
+  <label class="filter-check-item"><input type="checkbox" checked id="tmf-mgmt"><span>Management</span></label>
+  <label class="filter-check-item"><input type="checkbox" checked id="tmf-mktg"><span>Marketing</span></label>
+  <div class="filter-footer">
+    <button class="filter-clear" id="tm-filter-clear" type="button">Clear</button>
+    <button class="filter-apply" id="tm-filter-apply" type="button">Apply</button>
+  </div>
+</div>
+
 <!-- EDIT SPRINT MODAL -->
 <div class="modal-overlay" id="modal-editsprint">
   <div class="modal-card">
@@ -2697,7 +3177,10 @@ document.addEventListener('click', (e) => {
       !e.target.closest('#proj-sort-btn') &&
       !e.target.closest('#proj-filter-btn') &&
       !e.target.closest('#sprint-sort-btn') &&
-      !e.target.closest('#sprint-filter-btn')) {
+      !e.target.closest('#sprint-filter-btn') &&
+      !e.target.closest('.tm-card-menu') &&
+      !e.target.closest('#tm-sort-btn') &&
+      !e.target.closest('#tm-filter-btn')) {
     closeAllDD();
   }
   if (!e.target.closest('.ctx-menu') && !e.target.closest('.three-dot-btn')) {
@@ -2781,6 +3264,9 @@ function setActive(el, label) {
   document.getElementById('page-tasks').style.display = 'none';
   document.getElementById('page-projects').style.display = 'none';
   document.getElementById('page-sprints').style.display = 'none';
+  document.getElementById('page-team').style.display = 'none';
+  document.getElementById('page-reports').style.display = 'none';
+  closeMemberDetail();
   if (label === 'Dashboard') {
     document.getElementById('page-dashboard').style.display = 'flex';
   } else if (label === 'Tasks') {
@@ -2792,6 +3278,12 @@ function setActive(el, label) {
   } else if (label === 'Sprints') {
     document.getElementById('page-sprints').style.display = 'flex';
     renderSprintsPage();
+  } else if (label === 'Team') {
+    document.getElementById('page-team').style.display = 'flex';
+    renderTeamPage();
+  } else if (label === 'Reports') {
+    document.getElementById('page-reports').style.display = 'flex';
+    renderReportsPage();
   } else {
     document.getElementById('page-dashboard').style.display = 'flex';
     showToast('Navigating to ' + label, 'info', 2000);
@@ -4867,6 +5359,858 @@ document.getElementById('btn-create-project').addEventListener('click', () => {
   showToast('Project "' + name + '" created!', 'success', 3000);
 });
 
+// ============================================================
+// TEAM PAGE
+// ============================================================
+const TEAM_MEMBERS = [
+  {
+    id:'tm1', name:'Aspen Herwitz', initials:'AH', role:'Senior Developer', dept:'Development',
+    email:'aspen.h@chronoloop.io', color:'#4A90FF', online:true,
+    activeTasks:8, completedTasks:24, velocity:42, completion:94,
+    todoTasks:4, inProgressTasks:4,
+    projects:[{name:'Web 3 App for Fxtrade',color:'#4A90FF'},{name:'ChronoLoop Launch',color:'#A855F7'}],
+    timezone:'UTC−5 · EST', joinDate:'Mar 2022', location:'New York, USA',
+    activity:[
+      {text:'Completed "Smart contract integration" task', time:'2h ago', dot:'#22C55E'},
+      {text:'Commented on sprint story "Web3 wallet auth"', time:'4h ago', dot:'#4A90FF'},
+      {text:'Added 3 subtasks to "Token dashboard"', time:'Yesterday', dot:'#EAB308'},
+      {text:'Started Sprint 03 board review session', time:'2 days ago', dot:'#A855F7'},
+    ]
+  },
+  {
+    id:'tm2', name:'Roger Dokidis', initials:'RD', role:'UI/UX Designer', dept:'Design',
+    email:'roger.d@chronoloop.io', color:'#FF8C42', online:true,
+    activeTasks:5, completedTasks:18, velocity:30, completion:87,
+    todoTasks:2, inProgressTasks:3,
+    projects:[{name:'Healthydog Landing Page',color:'#00D4AA'},{name:'Redesign of Website',color:'#FF8C42'}],
+    timezone:'UTC+1 · CET', joinDate:'Jun 2022', location:'Berlin, Germany',
+    activity:[
+      {text:'Uploaded new Figma screens for Healthydog', time:'1h ago', dot:'#4A90FF'},
+      {text:'Completed wireframe review with Ryan', time:'3h ago', dot:'#22C55E'},
+      {text:'Resolved design comment on CTA button', time:'Yesterday', dot:'#EAB308'},
+      {text:'Delivered component library v3 to dev', time:'2 days ago', dot:'#A855F7'},
+    ]
+  },
+  {
+    id:'tm3', name:'Marley Vaccaro', initials:'MV', role:'Full Stack Engineer', dept:'Development',
+    email:'marley.v@chronoloop.io', color:'#A855F7', online:false,
+    activeTasks:11, completedTasks:31, velocity:55, completion:91,
+    todoTasks:5, inProgressTasks:6,
+    projects:[{name:'Web 3 App for Fxtrade',color:'#4A90FF'},{name:'Redesign of Website',color:'#FF8C42'}],
+    timezone:'UTC−8 · PST', joinDate:'Jan 2023', location:'San Francisco, USA',
+    activity:[
+      {text:'Merged PR #142 — Auth middleware refactor', time:'30m ago', dot:'#22C55E'},
+      {text:'Reviewed Roger\'s component library update', time:'2h ago', dot:'#4A90FF'},
+      {text:'Fixed critical bug in token refresh flow', time:'5h ago', dot:'#FF4D4D'},
+      {text:'Opened 2 new issues in backlog', time:'Yesterday', dot:'#EAB308'},
+    ]
+  },
+  {
+    id:'tm4', name:'Ryan Culhane', initials:'RC', role:'Product Manager', dept:'Management',
+    email:'ryan.c@chronoloop.io', color:'#00D4AA', online:true,
+    activeTasks:3, completedTasks:41, velocity:28, completion:96,
+    todoTasks:1, inProgressTasks:2,
+    projects:[{name:'ChronoLoop Launch',color:'#A855F7'},{name:'Healthydog Landing Page',color:'#00D4AA'}],
+    timezone:'UTC+0 · GMT', joinDate:'Sep 2021', location:'London, UK',
+    activity:[
+      {text:'Updated Q4 product roadmap document', time:'45m ago', dot:'#4A90FF'},
+      {text:'Closed sprint retrospective with the team', time:'3h ago', dot:'#22C55E'},
+      {text:'Assigned Sprint 04 stories to members', time:'Yesterday', dot:'#EAB308'},
+      {text:'Approved Healthydog design for dev handoff', time:'2 days ago', dot:'#A855F7'},
+    ]
+  },
+  {
+    id:'tm5', name:'Sofia Chen', initials:'SC', role:'Frontend Developer', dept:'Development',
+    email:'sofia.c@chronoloop.io', color:'#EC4899', online:true,
+    activeTasks:6, completedTasks:15, velocity:38, completion:88,
+    todoTasks:3, inProgressTasks:3,
+    projects:[{name:'Redesign of Website',color:'#FF8C42'},{name:'ChronoLoop Launch',color:'#A855F7'}],
+    timezone:'UTC+8 · SGT', joinDate:'Apr 2023', location:'Singapore',
+    activity:[
+      {text:'Completed responsive layout for Homepage', time:'1h ago', dot:'#22C55E'},
+      {text:'Created component: AnimatedHero', time:'3h ago', dot:'#4A90FF'},
+      {text:'Fixed Safari-specific flex alignment bug', time:'Yesterday', dot:'#FF4D4D'},
+      {text:'Code review for Marley\'s PR #139', time:'2 days ago', dot:'#EAB308'},
+    ]
+  },
+  {
+    id:'tm6', name:'David Osei', initials:'DO', role:'DevOps Engineer', dept:'Development',
+    email:'david.o@chronoloop.io', color:'#EAB308', online:false,
+    activeTasks:4, completedTasks:20, velocity:33, completion:85,
+    todoTasks:2, inProgressTasks:2,
+    projects:[{name:'Web 3 App for Fxtrade',color:'#4A90FF'}],
+    timezone:'UTC+0 · GMT', joinDate:'Jul 2022', location:'Accra, Ghana',
+    activity:[
+      {text:'Set up CI/CD pipeline for staging', time:'2h ago', dot:'#22C55E'},
+      {text:'Updated Docker config for auth service', time:'5h ago', dot:'#4A90FF'},
+      {text:'Resolved deploy failure on branch dev/auth', time:'Yesterday', dot:'#FF4D4D'},
+      {text:'Optimised build time by 40%', time:'3 days ago', dot:'#EAB308'},
+    ]
+  },
+  {
+    id:'tm7', name:'Nina Park', initials:'NP', role:'Brand Designer', dept:'Design',
+    email:'nina.p@chronoloop.io', color:'#06B6D4', online:true,
+    activeTasks:7, completedTasks:22, velocity:35, completion:90,
+    todoTasks:3, inProgressTasks:4,
+    projects:[{name:'Healthydog Landing Page',color:'#00D4AA'},{name:'Redesign of Website',color:'#FF8C42'}],
+    timezone:'UTC+9 · KST', joinDate:'Nov 2022', location:'Seoul, South Korea',
+    activity:[
+      {text:'Published new brand guidelines v2.1', time:'2h ago', dot:'#22C55E'},
+      {text:'Delivered icon set for Healthydog mobile', time:'4h ago', dot:'#4A90FF'},
+      {text:'Review session with Roger on colour tokens', time:'Yesterday', dot:'#EAB308'},
+      {text:'Completed motion design spec doc', time:'3 days ago', dot:'#A855F7'},
+    ]
+  },
+  {
+    id:'tm8', name:'Marcus Webb', initials:'MW', role:'Data Analyst', dept:'Marketing',
+    email:'marcus.w@chronoloop.io', color:'#FF4D4D', online:false,
+    activeTasks:2, completedTasks:12, velocity:20, completion:79,
+    todoTasks:1, inProgressTasks:1,
+    projects:[{name:'ChronoLoop Launch',color:'#A855F7'}],
+    timezone:'UTC−6 · CST', joinDate:'Feb 2023', location:'Chicago, USA',
+    activity:[
+      {text:'Published Q3 user analytics report', time:'1d ago', dot:'#22C55E'},
+      {text:'Set up GA4 event tracking on launch page', time:'2d ago', dot:'#4A90FF'},
+      {text:'Presented funnel analysis to Ryan', time:'3d ago', dot:'#EAB308'},
+      {text:'Added UTM tracking to all campaign links', time:'4d ago', dot:'#A855F7'},
+    ]
+  },
+];
+
+let activeTeamFilter = 'all';
+let activeTmSort     = 'name';
+let activeMemberId   = null;
+
+function closeMemberDetail() {
+  const overlay = document.getElementById('tm-detail-overlay');
+  const panel   = document.getElementById('tm-detail-panel');
+  if (overlay) overlay.classList.remove('open');
+  if (panel)   panel.classList.remove('open');
+  activeMemberId = null;
+}
+
+function renderTeamPage() {
+  const totalMembers  = TEAM_MEMBERS.length;
+  const onlineCount   = TEAM_MEMBERS.filter(m => m.online).length;
+  const offlineCount  = totalMembers - onlineCount;
+  const avgCompletion = Math.round(TEAM_MEMBERS.reduce((s,m) => s + m.completion, 0) / totalMembers);
+  const avgVelocity   = Math.round(TEAM_MEMBERS.reduce((s,m) => s + m.velocity, 0) / totalMembers);
+
+  // KPI Cards
+  document.getElementById('tm-kpi-grid').innerHTML = `
+    <div class="stat-card" tabindex="0">
+      <div class="stat-card-top"><span class="stat-label">Total Members</span>
+        <div class="stat-icon-wrap"><i data-lucide="users"></i></div></div>
+      <div class="stat-value">${totalMembers}</div>
+      <div class="stat-delta up">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M5 2L9 8H1L5 2Z"/></svg>
+        <span>▲ 1 member added this month</span>
+      </div>
+    </div>
+    <div class="stat-card" tabindex="0">
+      <div class="stat-card-top"><span class="stat-label">Active Now</span>
+        <div class="stat-icon-wrap" style="background:rgba(34,197,94,0.12)"><i data-lucide="radio" style="color:var(--accent-green)"></i></div></div>
+      <div class="stat-value" style="color:var(--accent-green)">${onlineCount}</div>
+      <div class="stat-delta up"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M5 2L9 8H1L5 2Z"/></svg>
+        <span>${onlineCount} members online right now</span></div>
+    </div>
+    <div class="stat-card" tabindex="0">
+      <div class="stat-card-top"><span class="stat-label">Offline</span>
+        <div class="stat-icon-wrap" style="background:rgba(154,154,154,0.1)"><i data-lucide="moon" style="color:var(--text-muted)"></i></div></div>
+      <div class="stat-value">${offlineCount}</div>
+      <div class="stat-delta" style="color:var(--text-muted)"><span>${offlineCount} members currently offline</span></div>
+    </div>
+    <div class="stat-card" tabindex="0">
+      <div class="stat-card-top"><span class="stat-label">Avg Completion</span>
+        <div class="stat-icon-wrap" style="background:rgba(0,212,170,0.12)"><i data-lucide="trending-up" style="color:var(--accent-teal)"></i></div></div>
+      <div class="stat-value">${avgCompletion}%</div>
+      <div class="stat-delta up"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M5 2L9 8H1L5 2Z"/></svg>
+        <span>▲ Up 3.2% this sprint</span></div>
+    </div>
+    <div class="stat-card" tabindex="0">
+      <div class="stat-card-top"><span class="stat-label">Avg Velocity</span>
+        <div class="stat-icon-wrap" style="background:rgba(168,85,247,0.12)"><i data-lucide="zap" style="color:var(--accent-purple)"></i></div></div>
+      <div class="stat-value">${avgVelocity}<span style="font-size:16px;font-weight:500;color:var(--text-secondary);"> pts</span></div>
+      <div class="stat-delta up"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M5 2L9 8H1L5 2Z"/></svg>
+        <span>▲ Up 8% vs last sprint</span></div>
+    </div>
+  `;
+
+  // Department tabs
+  const depts    = ['all','Development','Design','Management','Marketing'];
+  const deptKeys = { all:TEAM_MEMBERS.length };
+  depts.slice(1).forEach(d => { deptKeys[d.toLowerCase()] = TEAM_MEMBERS.filter(m => m.dept === d).length; });
+  document.getElementById('tm-dept-tabs').innerHTML = depts.map(d => {
+    const key = d.toLowerCase();
+    const lbl = d === 'all' ? 'All Members' : d;
+    return `<button class="tm-dept-tab${activeTeamFilter===key?' active':''}" data-filter="${key}" type="button">
+      ${lbl} <span class="tm-dept-tab-count">${deptKeys[key]||0}</span>
+    </button>`;
+  }).join('');
+  document.querySelectorAll('.tm-dept-tab').forEach(tab => {
+    tab.addEventListener('click', () => { activeTeamFilter = tab.dataset.filter; renderTeamPage(); });
+  });
+
+  // Sorting
+  let filtered = activeTeamFilter === 'all' ? [...TEAM_MEMBERS] : TEAM_MEMBERS.filter(m => m.dept.toLowerCase() === activeTeamFilter);
+  if (activeTmSort === 'completion') filtered.sort((a,b) => b.completion - a.completion);
+  else if (activeTmSort === 'tasks') filtered.sort((a,b) => b.activeTasks - a.activeTasks);
+  else if (activeTmSort === 'velocity') filtered.sort((a,b) => b.velocity - a.velocity);
+  else filtered.sort((a,b) => a.name.localeCompare(b.name));
+
+  // Search filter
+  const q = (document.getElementById('tm-search-input')?.value || '').toLowerCase().trim();
+  if (q) filtered = filtered.filter(m => m.name.toLowerCase().includes(q) || m.role.toLowerCase().includes(q) || m.dept.toLowerCase().includes(q));
+
+  // Member cards
+  document.getElementById('tm-grid').innerHTML = filtered.length ? filtered.map(m => `
+    <div class="tm-card" data-member-id="${m.id}">
+      <div class="tm-card-accent" style="background:${m.color}"></div>
+      <div class="tm-card-body">
+        <div class="tm-card-top">
+          <div class="tm-avatar-wrap">
+            <div class="tm-avatar" style="background:${m.color}">${m.initials}</div>
+            <div class="tm-online-dot ${m.online?'online':'offline'}"></div>
+          </div>
+          <button class="tm-card-menu" id="tm-ctx-${m.id}" type="button" aria-label="More options">
+            <i data-lucide="more-horizontal"></i>
+          </button>
+        </div>
+        <div class="tm-card-info">
+          <div class="tm-card-name">${m.name}</div>
+          <div class="tm-card-role">${m.role}</div>
+          <div class="tm-card-dept">${m.dept}</div>
+          <div class="tm-card-email"><i data-lucide="mail"></i>${m.email}</div>
+        </div>
+        <div class="tm-card-stats">
+          <div class="tm-stat-cell">
+            <div class="tm-stat-num" style="color:${m.color}">${m.activeTasks}</div>
+            <div class="tm-stat-label">Active Tasks</div>
+          </div>
+          <div class="tm-stat-cell">
+            <div class="tm-stat-num">${m.completedTasks}</div>
+            <div class="tm-stat-label">Completed</div>
+          </div>
+          <div class="tm-stat-cell">
+            <div class="tm-stat-num" style="color:var(--accent-teal)">${m.velocity}</div>
+            <div class="tm-stat-label">Velocity</div>
+          </div>
+        </div>
+        <div class="tm-card-progress">
+          <div class="tm-prog-header">
+            <span class="tm-prog-label">Completion Rate</span>
+            <span class="tm-prog-pct">${m.completion}%</span>
+          </div>
+          <div class="tm-prog-track">
+            <div class="tm-prog-fill" style="width:${m.completion}%;background:${m.color}"></div>
+          </div>
+        </div>
+      </div>
+      <div class="tm-card-footer">
+        <button class="tm-action-btn tm-secondary tm-msg-btn" type="button"><i data-lucide="message-square"></i> Message</button>
+        <button class="tm-action-btn tm-primary tm-view-btn" data-id="${m.id}" type="button"><i data-lucide="user"></i> Profile</button>
+      </div>
+    </div>
+  `).join('') : `<div style="grid-column:1/-1;display:flex;flex-direction:column;align-items:center;gap:10px;padding:60px 20px;color:var(--text-muted);background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:10px;">
+    <i data-lucide="users" style="opacity:0.3;width:40px;height:40px;"></i>
+    <div style="font-family:'Syne';font-size:16px;font-weight:600;color:var(--text-secondary);">No members found</div>
+    <div style="font-size:13px;">Try a different search or filter</div>
+  </div>`;
+
+  // Card events
+  document.querySelectorAll('.tm-card[data-member-id]').forEach(card => {
+    card.addEventListener('click', e => { if (!e.target.closest('.tm-card-menu') && !e.target.closest('.tm-action-btn')) openMemberDetail(card.dataset.memberId); });
+  });
+  document.querySelectorAll('.tm-card-menu').forEach(btn => {
+    btn.addEventListener('click', e => { e.stopPropagation(); activeMemberId = btn.closest('.tm-card').dataset.memberId; openDD(btn.id, 'dd-tm-ctx'); });
+  });
+  document.querySelectorAll('.tm-msg-btn').forEach(btn => {
+    btn.addEventListener('click', e => { e.stopPropagation(); showToast('Opening message composer…','info',2000); });
+  });
+  document.querySelectorAll('.tm-view-btn').forEach(btn => {
+    btn.addEventListener('click', e => { e.stopPropagation(); openMemberDetail(btn.dataset.id); });
+  });
+
+  renderWorkloadPanel(filtered);
+  renderTeamActivity();
+  renderPerfLeaderboard();
+  lucide.createIcons();
+}
+
+function renderWorkloadPanel(members) {
+  document.getElementById('tm-workload-grid').innerHTML = members.map(m => {
+    const total = m.todoTasks + m.inProgressTasks + m.completedTasks;
+    const doneW = total ? Math.round((m.completedTasks / total) * 100) : 0;
+    const inpW  = total ? Math.round((m.inProgressTasks / total) * 100) : 0;
+    const todoW = 100 - doneW - inpW;
+    return `
+    <div class="tm-workload-row">
+      <div class="tm-workload-avatar" style="background:${m.color}">${m.initials}</div>
+      <div class="tm-workload-name">${m.name.split(' ')[0]}</div>
+      <div class="tm-workload-bars">
+        <div class="tm-workload-seg" style="width:${doneW}%;background:var(--accent-green);opacity:0.85;border-radius:3px 0 0 3px;"></div>
+        <div class="tm-workload-seg" style="width:${inpW}%;background:var(--accent-yellow);opacity:0.85;"></div>
+        <div class="tm-workload-seg" style="width:${todoW}%;background:var(--border-default);opacity:0.85;border-radius:0 3px 3px 0;"></div>
+      </div>
+      <div class="tm-workload-total">${m.activeTasks + m.completedTasks}t</div>
+    </div>`;
+  }).join('');
+}
+
+function renderTeamActivity() {
+  const allActivity = [];
+  TEAM_MEMBERS.forEach(m => m.activity.forEach(a => allActivity.push({...a, member:m})));
+  document.getElementById('tm-activity-feed').innerHTML = allActivity.slice(0,8).map(a => `
+    <div class="tm-activity-item">
+      <div class="tm-activity-ava" style="background:${a.member.color}">${a.member.initials}</div>
+      <div class="tm-activity-content">
+        <div class="tm-activity-text"><strong>${a.member.name.split(' ')[0]}</strong> ${a.text}</div>
+        <div class="tm-activity-time">${a.time}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderPerfLeaderboard() {
+  const sorted = [...TEAM_MEMBERS].sort((a,b) => b.completion - a.completion);
+  document.getElementById('tm-perf-list').innerHTML = sorted.map((m, i) => `
+    <div class="tm-perf-row">
+      <div class="tm-perf-rank">#${i+1}</div>
+      <div class="tm-perf-avatar" style="background:${m.color}">${m.initials}</div>
+      <div class="tm-perf-name">${m.name.split(' ')[0]} ${m.name.split(' ')[1][0]}.</div>
+      <div class="tm-perf-bar-wrap"><div class="tm-perf-bar" style="width:${m.completion}%;background:${m.color}"></div></div>
+      <div class="tm-perf-pct">${m.completion}%</div>
+    </div>`).join('');
+}
+
+function openMemberDetail(id) {
+  const m = TEAM_MEMBERS.find(x => x.id === id);
+  if (!m) return;
+  activeMemberId = id;
+  const total = m.completedTasks + m.activeTasks;
+  document.getElementById('tm-detail-body').innerHTML = `
+    <div class="tm-detail-hero">
+      <div style="position:relative;display:inline-block;">
+        <div class="tm-detail-avatar" style="background:${m.color}">${m.initials}</div>
+        <div style="position:absolute;bottom:3px;right:3px;width:14px;height:14px;border-radius:50%;border:2.5px solid var(--bg-card);background:${m.online?'var(--accent-green)':'var(--text-muted)'};"></div>
+      </div>
+      <div style="text-align:center;">
+        <div class="tm-detail-name">${m.name}</div>
+        <div class="tm-detail-role-text">${m.role} &middot; ${m.dept}</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:5px;font-size:11px;color:var(--text-muted);margin-top:5px;">
+          <div style="width:7px;height:7px;border-radius:50%;background:${m.online?'var(--accent-green)':'var(--text-muted)'};"></div>
+          ${m.online?'Online now':'Offline'}
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="tm-detail-section-label">Performance</div>
+      <div class="tm-detail-stat-grid">
+        <div class="tm-detail-stat-cell">
+          <div class="tm-detail-stat-num" style="color:${m.color}">${m.activeTasks}</div>
+          <div class="tm-detail-stat-lbl">Active Tasks</div>
+        </div>
+        <div class="tm-detail-stat-cell">
+          <div class="tm-detail-stat-num">${m.completedTasks}</div>
+          <div class="tm-detail-stat-lbl">Completed</div>
+        </div>
+        <div class="tm-detail-stat-cell">
+          <div class="tm-detail-stat-num" style="color:var(--accent-teal)">${m.velocity}</div>
+          <div class="tm-detail-stat-lbl">Velocity</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="tm-detail-section-label">Completion Rate</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:12px;color:var(--text-secondary);">Overall Progress</span>
+          <span style="font-size:14px;font-weight:700;font-family:'DM Mono',monospace;color:var(--text-primary);">${m.completion}%</span>
+        </div>
+        <div class="proj-big-progress-bar">
+          <div class="proj-big-progress-fill" style="width:${m.completion}%;background:${m.color}"></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="tm-detail-section-label">Task Breakdown</div>
+      <div class="tm-detail-task-bars">
+        <div class="tm-detail-task-row">
+          <div class="tm-detail-task-lbl">Completed</div>
+          <div class="tm-detail-task-track"><div class="tm-detail-task-bar" style="width:${total?Math.round((m.completedTasks/total)*100):0}%;background:var(--accent-green)"></div></div>
+          <div class="tm-detail-task-num">${m.completedTasks}</div>
+        </div>
+        <div class="tm-detail-task-row">
+          <div class="tm-detail-task-lbl">In Progress</div>
+          <div class="tm-detail-task-track"><div class="tm-detail-task-bar" style="width:${total?Math.round((m.inProgressTasks/total)*100):0}%;background:var(--accent-yellow)"></div></div>
+          <div class="tm-detail-task-num">${m.inProgressTasks}</div>
+        </div>
+        <div class="tm-detail-task-row">
+          <div class="tm-detail-task-lbl">To Do</div>
+          <div class="tm-detail-task-track"><div class="tm-detail-task-bar" style="width:${total?Math.round((m.todoTasks/total)*100):0}%;background:var(--accent-blue)"></div></div>
+          <div class="tm-detail-task-num">${m.todoTasks}</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="tm-detail-section-label">Contact &amp; Info</div>
+      <div class="tm-detail-info-grid">
+        <div class="tm-detail-info-cell">
+          <div class="tm-detail-info-label">Email</div>
+          <div class="tm-detail-info-val"><i data-lucide="mail"></i><span style="overflow:hidden;text-overflow:ellipsis;">${m.email}</span></div>
+        </div>
+        <div class="tm-detail-info-cell">
+          <div class="tm-detail-info-label">Timezone</div>
+          <div class="tm-detail-info-val"><i data-lucide="clock"></i>${m.timezone}</div>
+        </div>
+        <div class="tm-detail-info-cell">
+          <div class="tm-detail-info-label">Location</div>
+          <div class="tm-detail-info-val"><i data-lucide="map-pin"></i>${m.location}</div>
+        </div>
+        <div class="tm-detail-info-cell">
+          <div class="tm-detail-info-label">Joined</div>
+          <div class="tm-detail-info-val"><i data-lucide="calendar"></i>${m.joinDate}</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="tm-detail-section-label">Projects (${m.projects.length})</div>
+      <div class="tm-detail-proj-list">
+        ${m.projects.map(p => `
+          <div class="tm-detail-proj-item">
+            <div class="tm-detail-proj-dot" style="background:${p.color}"></div>
+            <div class="tm-detail-proj-name">${p.name}</div>
+            <div class="tm-detail-proj-badge">Active</div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <div>
+      <div class="tm-detail-section-label">Recent Activity</div>
+      <div>${m.activity.map(a => `
+        <div class="tm-detail-act-item">
+          <div class="tm-detail-act-dot" style="background:${a.dot}"></div>
+          <div class="tm-detail-act-text">${a.text}</div>
+          <div class="tm-detail-act-time">${a.time}</div>
+        </div>`).join('')}
+      </div>
+    </div>
+  `;
+  document.getElementById('tm-detail-overlay').classList.add('open');
+  document.getElementById('tm-detail-panel').classList.add('open');
+  lucide.createIcons();
+}
+
+// Team page button wiring
+document.getElementById('tm-detail-overlay').addEventListener('click', closeMemberDetail);
+document.getElementById('tm-detail-close-btn').addEventListener('click', closeMemberDetail);
+document.getElementById('tm-detail-msg-btn').addEventListener('click', () => showToast('Opening message composer…','info',2000));
+document.getElementById('tm-detail-assign-btn').addEventListener('click', () => { closeMemberDetail(); openModal('modal-addtask'); });
+document.getElementById('tm-detail-edit-btn').addEventListener('click', () => {
+  if (!activeMemberId) return;
+  const m = TEAM_MEMBERS.find(x => x.id === activeMemberId);
+  if (!m) return;
+  const ava = document.getElementById('modal-member-avatar');
+  ava.textContent = m.initials;
+  ava.style.background = `linear-gradient(135deg,${m.color},${m.color}88)`;
+  document.getElementById('modal-member-name').textContent  = m.name;
+  document.getElementById('modal-member-role').textContent  = m.role;
+  document.getElementById('modal-member-email').textContent = m.email;
+  document.getElementById('modal-member-tasks').textContent = m.activeTasks;
+  openModal('modal-member');
+});
+
+document.getElementById('tm-invite-btn').addEventListener('click', () => openModal('modal-invite'));
+
+document.getElementById('tm-sort-btn').addEventListener('click', () => openDD('tm-sort-btn','dd-tm-sort'));
+document.getElementById('tm-filter-btn').addEventListener('click', () => openDD('tm-filter-btn','dd-tm-filter'));
+
+document.querySelectorAll('#dd-tm-sort .dd-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('#dd-tm-sort .dd-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    activeTmSort = item.dataset.tmsort;
+    closeAllDD();
+    renderTeamPage();
+  });
+});
+
+document.getElementById('tm-filter-clear').addEventListener('click', () => {
+  document.querySelectorAll('#dd-tm-filter input').forEach(cb => cb.checked = false);
+  closeAllDD();
+  showToast('Team filters cleared','info',2000);
+});
+document.getElementById('tm-filter-apply').addEventListener('click', () => { closeAllDD(); showToast('Filters applied','success',2000); });
+
+document.querySelectorAll('#dd-tm-ctx .dd-item').forEach(item => {
+  item.addEventListener('click', () => {
+    closeAllDD();
+    const action = item.dataset.tmaction;
+    if (!activeMemberId) return;
+    if (action === 'view') openMemberDetail(activeMemberId);
+    else if (action === 'message') showToast('Opening message composer…','info',2000);
+    else if (action === 'assign') { openMemberDetail(activeMemberId); }
+    else if (action === 'remove') showToast('Member removed from team','success',3000);
+  });
+});
+
+document.getElementById('tm-search-input').addEventListener('input', () => {
+  if (document.getElementById('page-team').style.display !== 'none') renderTeamPage();
+});
+
+document.querySelectorAll('#tm-view-toggle .view-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#tm-view-toggle .view-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const grid = document.getElementById('tm-grid');
+    if (btn.dataset.tmview === 'list') {
+      grid.style.gridTemplateColumns = '1fr';
+    } else {
+      grid.style.gridTemplateColumns = '';
+    }
+  });
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('tm-detail-panel').classList.contains('open')) {
+    closeMemberDetail();
+  }
+});
+
+// ============================================================
+// REPORTS PAGE
+// ============================================================
+
+const RPT_DATA = {
+  kpis: [
+    { label: 'Tasks Completed', value: '127', delta: '+12', dir: 'up',      sub: 'vs last period',   icon: 'check-circle-2', color: 'var(--accent-green)',  bg: 'rgba(34,197,94,0.1)'  },
+    { label: 'Completion Rate',  value: '84%',  delta: '+5%', dir: 'up',      sub: 'vs last period',   icon: 'percent',        color: 'var(--accent-blue)',   bg: 'rgba(74,144,255,0.1)' },
+    { label: 'Sprint Velocity',  value: '42',   delta: '+8 pts', dir: 'up',   sub: 'avg last 6',       icon: 'zap',            color: 'var(--accent-yellow)', bg: 'rgba(234,179,8,0.1)'  },
+    { label: 'On-Time Delivery', value: '89%',  delta: '+3%', dir: 'up',      sub: 'vs last period',   icon: 'clock',          color: 'var(--accent-teal)',   bg: 'rgba(0,212,170,0.1)'  },
+    { label: 'Active Projects',  value: '10',   delta: '—', dir: 'neutral', sub: 'no change',     icon: 'briefcase',      color: 'var(--accent-purple)', bg: 'rgba(168,85,247,0.1)' },
+  ],
+
+  weeklyTasks: [
+    [22,16],[28,22],[25,20],[30,25],[20,18],[32,28],
+    [27,23],[35,30],[24,20],[31,26],[29,25],[33,28]
+  ],
+  weekLabels: ['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11','W12'],
+
+  projectStatus: [
+    { label: 'Completed',   value: 4, color: '#22C55E' },
+    { label: 'In Progress', value: 4, color: '#4A90FF' },
+    { label: 'On Hold',     value: 1, color: '#EAB308' },
+    { label: 'Overdue',     value: 1, color: '#FF4D4D' },
+  ],
+
+  sprintVelocity: [
+    { name: 'S1', pts: 32 },
+    { name: 'S2', pts: 38 },
+    { name: 'S3', pts: 35 },
+    { name: 'S4', pts: 45 },
+    { name: 'S5', pts: 40 },
+    { name: 'S6', pts: 42 },
+  ],
+
+  priorityBreakdown: [
+    { label: 'Critical', count: 18, color: '#FF4D4D' },
+    { label: 'High',     count: 45, color: '#FF8C42' },
+    { label: 'Medium',   count: 52, color: '#EAB308' },
+    { label: 'Low',      count: 30, color: '#00D4AA' },
+  ],
+
+  teamOutput: [
+    { name: 'Aspen H.',  initials: 'AH', color: '#4A90FF', completed: 32, total: 38 },
+    { name: 'Marley V.', initials: 'MV', color: '#A855F7', completed: 27, total: 32 },
+    { name: 'Jordan K.', initials: 'JK', color: '#00D4AA', completed: 24, total: 28 },
+    { name: 'Sam R.',    initials: 'SR', color: '#FF8C42', completed: 21, total: 26 },
+    { name: 'Taylor B.', initials: 'TB', color: '#EC4899', completed: 23, total: 25 },
+  ],
+
+  burndown: [
+    [0,80,80],[1,74,76],[2,68,71],[3,62,65],[4,56,60],
+    [5,50,52],[6,44,50],[7,38,44],[8,32,38],[9,26,28],
+    [10,20,20],[11,14,12],[12,8,6],[13,0,0],
+  ],
+
+  projects: [
+    { name: 'ChronoLoop App',     status: 'In Progress', total: 32, done: 26, due: 'Dec 15', health: 'good' },
+    { name: 'Web 3 App',          status: 'In Progress', total: 28, done: 18, due: 'Nov 30', health: 'warn' },
+    { name: 'CareyCare Homepage', status: 'Completed',   total: 24, done: 24, due: 'Nov 12', health: 'good' },
+    { name: 'Eatz Landing Page',  status: 'Overdue',     total: 20, done: 12, due: 'Nov 5',  health: 'risk' },
+    { name: 'ChronoLoop V2',      status: 'In Progress', total: 18, done:  8, due: 'Jan 10', health: 'good' },
+    { name: 'Brand Refresh',      status: 'On Hold',     total: 15, done:  4, due: 'TBD',    health: 'warn' },
+  ],
+
+  sprints: [
+    { name: 'Auth & Onboarding',  start: 'Oct 1',  end: 'Oct 14', velocity: 32, target: 40, status: 'Completed' },
+    { name: 'Core Dashboard',     start: 'Oct 15', end: 'Oct 28', velocity: 38, target: 40, status: 'Completed' },
+    { name: 'Task Management',    start: 'Oct 29', end: 'Nov 11', velocity: 35, target: 40, status: 'Completed' },
+    { name: 'Projects & Sprints', start: 'Nov 12', end: 'Nov 25', velocity: 45, target: 40, status: 'Completed' },
+    { name: 'Team & Reports',     start: 'Nov 26', end: 'Dec 9',  velocity: 40, target: 40, status: 'Active'    },
+    { name: 'Integrations',       start: 'Dec 10', end: 'Dec 23', velocity: null, target: 40, status: 'Planned' },
+  ],
+};
+
+function renderReportsPage() {
+  renderRptKpis();
+  renderRptTrend();
+  renderRptDonut();
+  renderRptVelocity();
+  renderRptPriority();
+  renderRptTeamOutput();
+  renderRptBurndown();
+  renderRptProjTable();
+  renderRptSprintTable();
+  lucide.createIcons();
+}
+
+function renderRptKpis() {
+  const wrap = document.getElementById('rpt-kpi-grid');
+  if (!wrap) return;
+  wrap.innerHTML = RPT_DATA.kpis.map(k => {
+    const arrow = k.dir === 'up'
+      ? `<svg viewBox="0 0 10 10" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="2,8 5,2 8,8"/></svg>`
+      : k.dir === 'down'
+      ? `<svg viewBox="0 0 10 10" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="2,2 5,8 8,2"/></svg>`
+      : '';
+    const dc = k.dir === 'up' ? 'var(--accent-green)' : k.dir === 'down' ? 'var(--accent-red)' : 'var(--text-muted)';
+    return `<div class="stat-card">
+      <div class="stat-card-top">
+        <div class="stat-label">${k.label}</div>
+        <div class="stat-icon-wrap" style="background:${k.bg}">
+          <i data-lucide="${k.icon}" style="color:${k.color};width:15px;height:15px;"></i>
+        </div>
+      </div>
+      <div class="stat-value">${k.value}</div>
+      <div style="display:flex;align-items:center;gap:4px;">
+        <span style="display:flex;align-items:center;gap:2px;font-size:10px;color:${dc};">${arrow}${k.delta}</span>
+        <span style="font-size:10px;color:var(--text-muted);">${k.sub}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderRptTrend() {
+  const wrap = document.getElementById('rpt-trend-chart');
+  if (!wrap) return;
+  const data = RPT_DATA.weeklyTasks;
+  const labels = RPT_DATA.weekLabels;
+  const svgW = 560, svgH = 160, padL = 32, padR = 10, padT = 10, padB = 30;
+  const cW = svgW - padL - padR, cH = svgH - padT - padB;
+  const maxVal = 40, n = data.length;
+  const groupW = cW / n;
+  const bw = Math.max(8, Math.min(16, groupW * 0.38));
+  const gap = 3;
+
+  let grid = '';
+  [0, 10, 20, 30, 40].forEach(v => {
+    const y = (padT + cH - (v / maxVal) * cH).toFixed(1);
+    grid += `<line x1="${padL}" y1="${y}" x2="${svgW - padR}" y2="${y}" stroke="currentColor" stroke-opacity="0.06" stroke-width="1"/>`;
+    if (v > 0) grid += `<text x="${(padL - 4).toFixed(1)}" y="${(+y + 3).toFixed(1)}" text-anchor="end" font-size="8" fill="currentColor" opacity="0.4">${v}</text>`;
+  });
+  grid += `<line x1="${padL}" y1="${(padT + cH).toFixed(1)}" x2="${svgW - padR}" y2="${(padT + cH).toFixed(1)}" stroke="currentColor" stroke-opacity="0.18" stroke-width="1"/>`;
+
+  let bars = '', xlabels = '';
+  data.forEach(([total, comp], i) => {
+    const gx = padL + i * groupW;
+    const cx = gx + (groupW - bw * 2 - gap) / 2;
+    const th = ((total / maxVal) * cH).toFixed(1);
+    const ch2 = ((comp / maxVal) * cH).toFixed(1);
+    bars += `<rect x="${cx.toFixed(1)}" y="${(padT + cH - +th).toFixed(1)}" width="${bw}" height="${th}" rx="3" fill="#4A90FF" opacity="0.3"/>`;
+    bars += `<rect x="${(cx + bw + gap).toFixed(1)}" y="${(padT + cH - +ch2).toFixed(1)}" width="${bw}" height="${ch2}" rx="3" fill="#00D4AA" opacity="0.9"/>`;
+    if (i % 2 === 0) xlabels += `<text x="${(gx + groupW / 2).toFixed(1)}" y="${(svgH - 6).toFixed(1)}" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.38">${labels[i]}</text>`;
+  });
+
+  wrap.innerHTML = `<svg viewBox="0 0 ${svgW} ${svgH}" preserveAspectRatio="xMidYMid meet" style="color:var(--text-primary)">${grid}${bars}${xlabels}</svg>`;
+}
+
+function renderRptDonut() {
+  const wrap = document.getElementById('rpt-donut-wrap');
+  if (!wrap) return;
+  const data = RPT_DATA.projectStatus;
+  const total = data.reduce((s, d) => s + d.value, 0);
+  const r = 50, cx = 65, cy = 65, sw = 20;
+  const circ = 2 * Math.PI * r;
+  let segs = '', cumFrac = 0;
+  data.forEach(d => {
+    const frac = d.value / total;
+    const dash = (frac * circ).toFixed(2);
+    const gap = ((1 - frac) * circ + 0.5).toFixed(2);
+    const offset = (-(cumFrac * circ)).toFixed(2);
+    segs += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${d.color}" stroke-width="${sw}" stroke-dasharray="${dash} ${gap}" stroke-dashoffset="${offset}" transform="rotate(-90 ${cx} ${cy})" stroke-linecap="butt"/>`;
+    cumFrac += frac;
+  });
+  const svg = `<svg viewBox="0 0 130 130" width="130" height="130" style="flex-shrink:0;">${segs}<text x="${cx}" y="${cy - 5}" text-anchor="middle" font-family="Syne,sans-serif" font-size="22" font-weight="700" style="fill:var(--text-primary)">${total}</text><text x="${cx}" y="${cy + 11}" text-anchor="middle" font-size="9" style="fill:var(--text-secondary)">Projects</text></svg>`;
+  const legend = data.map(d => {
+    const pct = Math.round(d.value / total * 100);
+    return `<div class="rpt-donut-legend-item"><div class="rpt-donut-legend-swatch" style="background:${d.color}"></div><span>${d.label}</span><span class="rpt-donut-legend-pct">${pct}%</span></div>`;
+  }).join('');
+  wrap.innerHTML = svg + `<div class="rpt-donut-legend">${legend}</div>`;
+}
+
+function renderRptVelocity() {
+  const wrap = document.getElementById('rpt-velocity-chart');
+  if (!wrap) return;
+  const data = RPT_DATA.sprintVelocity;
+  const svgW = 280, svgH = 140, padL = 28, padR = 8, padT = 10, padB = 24;
+  const cW = svgW - padL - padR, cH = svgH - padT - padB;
+  const maxPts = 50, n = data.length;
+  const groupW = cW / n;
+  const bw = Math.min(24, groupW * 0.55);
+
+  let grid = '';
+  [0, 10, 20, 30, 40, 50].forEach(v => {
+    const y = (padT + cH - (v / maxPts) * cH).toFixed(1);
+    grid += `<line x1="${padL}" y1="${y}" x2="${svgW - padR}" y2="${y}" stroke="currentColor" stroke-opacity="0.05" stroke-width="1"/>`;
+    if (v > 0 && v % 20 === 0) grid += `<text x="${(padL - 3).toFixed(1)}" y="${(+y + 3).toFixed(1)}" text-anchor="end" font-size="8" fill="currentColor" opacity="0.38">${v}</text>`;
+  });
+  grid += `<line x1="${padL}" y1="${(padT + cH).toFixed(1)}" x2="${svgW - padR}" y2="${(padT + cH).toFixed(1)}" stroke="currentColor" stroke-opacity="0.18" stroke-width="1"/>`;
+
+  const targetY = (padT + cH - (40 / maxPts) * cH).toFixed(1);
+  const targetLine = `<line x1="${padL}" y1="${targetY}" x2="${svgW - padR}" y2="${targetY}" stroke="#EAB308" stroke-width="1" stroke-dasharray="4 3" opacity="0.55"/>`;
+  const targetLabel = `<text x="${svgW - padR - 2}" y="${(+targetY - 3).toFixed(1)}" text-anchor="end" font-size="8" fill="#EAB308" opacity="0.7">Target</text>`;
+
+  let bars = '', xlabels = '';
+  data.forEach((d, i) => {
+    const x = padL + i * groupW + (groupW - bw) / 2;
+    const h = ((d.pts / maxPts) * cH).toFixed(1);
+    const y = (padT + cH - +h).toFixed(1);
+    const fill = d.pts >= 40 ? '#4A90FF' : '#A855F7';
+    bars += `<rect x="${x.toFixed(1)}" y="${y}" width="${bw}" height="${h}" rx="4" fill="${fill}" opacity="0.88"/>`;
+    bars += `<text x="${(x + bw / 2).toFixed(1)}" y="${(+y - 4).toFixed(1)}" text-anchor="middle" font-size="8" fill="currentColor" opacity="0.65">${d.pts}</text>`;
+    xlabels += `<text x="${(padL + i * groupW + groupW / 2).toFixed(1)}" y="${(svgH - 5).toFixed(1)}" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.4">${d.name}</text>`;
+  });
+
+  wrap.innerHTML = `<svg viewBox="0 0 ${svgW} ${svgH}" style="color:var(--text-primary);width:100%;">${grid}${targetLine}${targetLabel}${bars}${xlabels}</svg>`;
+}
+
+function renderRptPriority() {
+  const wrap = document.getElementById('rpt-priority-chart');
+  if (!wrap) return;
+  const data = RPT_DATA.priorityBreakdown;
+  const max = Math.max(...data.map(d => d.count));
+  wrap.innerHTML = data.map(d => `
+    <div class="rpt-hbar-row">
+      <div class="rpt-hbar-label">${d.label}</div>
+      <div class="rpt-hbar-track"><div class="rpt-hbar-fill" style="width:${(d.count / max * 100).toFixed(1)}%;background:${d.color};"></div></div>
+      <div class="rpt-hbar-count">${d.count}</div>
+    </div>`).join('');
+}
+
+function renderRptTeamOutput() {
+  const wrap = document.getElementById('rpt-team-output');
+  if (!wrap) return;
+  const data = RPT_DATA.teamOutput;
+  const max = Math.max(...data.map(d => d.total));
+  wrap.innerHTML = data.map(d => `
+    <div class="rpt-team-row">
+      <div class="rpt-team-avatar" style="background:${d.color};">${d.initials}</div>
+      <div class="rpt-team-name">${d.name}</div>
+      <div class="rpt-team-track"><div class="rpt-team-fill" style="width:${(d.completed / max * 100).toFixed(1)}%;background:${d.color};opacity:0.85;"></div></div>
+      <div class="rpt-team-count">${d.completed}/${d.total}</div>
+    </div>`).join('');
+}
+
+function renderRptBurndown() {
+  const wrap = document.getElementById('rpt-burndown-chart');
+  if (!wrap) return;
+  const data = RPT_DATA.burndown;
+  const svgW = 560, svgH = 160, padL = 32, padR = 12, padT = 10, padB = 28;
+  const cW = svgW - padL - padR, cH = svgH - padT - padB;
+  const maxPts = 80, days = 13;
+  const xOf = d => padL + (d / days) * cW;
+  const yOf = v => padT + cH - (v / maxPts) * cH;
+
+  let grid = '';
+  [0, 20, 40, 60, 80].forEach(v => {
+    const y = yOf(v).toFixed(1);
+    grid += `<line x1="${padL}" y1="${y}" x2="${svgW - padR}" y2="${y}" stroke="currentColor" stroke-opacity="0.06" stroke-width="1"/>`;
+    grid += `<text x="${(padL - 4).toFixed(1)}" y="${(+y + 3).toFixed(1)}" text-anchor="end" font-size="8" fill="currentColor" opacity="0.38">${v}</text>`;
+  });
+  grid += `<line x1="${padL}" y1="${(padT + cH).toFixed(1)}" x2="${svgW - padR}" y2="${(padT + cH).toFixed(1)}" stroke="currentColor" stroke-opacity="0.18" stroke-width="1"/>`;
+
+  let xlabels = '';
+  for (let d = 0; d <= 13; d += 2) {
+    xlabels += `<text x="${xOf(d).toFixed(1)}" y="${(svgH - 6).toFixed(1)}" text-anchor="middle" font-size="8" fill="currentColor" opacity="0.38">D${d}</text>`;
+  }
+
+  const idealPts = `${xOf(0).toFixed(1)},${yOf(80).toFixed(1)} ${xOf(13).toFixed(1)},${yOf(0).toFixed(1)}`;
+  const idealLine = `<polyline points="${idealPts}" fill="none" stroke="#666" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+
+  const actualPts = data.map(([d, , a]) => `${xOf(d).toFixed(1)},${yOf(a).toFixed(1)}`).join(' ');
+  const areaPolygon = `<polygon points="${xOf(0).toFixed(1)},${yOf(0).toFixed(1)} ${actualPts} ${xOf(13).toFixed(1)},${yOf(0).toFixed(1)}" fill="#FF8C42" opacity="0.08"/>`;
+  const actualLine = `<polyline points="${actualPts}" fill="none" stroke="#FF8C42" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  const dots = data.map(([d, , a]) => `<circle cx="${xOf(d).toFixed(1)}" cy="${yOf(a).toFixed(1)}" r="3" fill="#FF8C42" stroke-width="1.5" style="stroke:var(--bg-card);"/>`).join('');
+
+  wrap.innerHTML = `<svg viewBox="0 0 ${svgW} ${svgH}" style="color:var(--text-primary);width:100%;">${grid}${xlabels}${idealLine}${areaPolygon}${actualLine}${dots}</svg>`;
+}
+
+function renderRptProjTable() {
+  const wrap = document.getElementById('rpt-proj-table');
+  if (!wrap) return;
+  const statusColors = { 'Completed': '#22C55E', 'In Progress': '#4A90FF', 'On Hold': '#EAB308', 'Overdue': '#FF4D4D' };
+  const rows = RPT_DATA.projects.map(p => {
+    const pct = Math.round(p.done / p.total * 100);
+    const barColor = p.health === 'good' ? '#00D4AA' : p.health === 'warn' ? '#EAB308' : '#FF4D4D';
+    return `<tr>
+      <td class="rpt-td-primary">${p.name}</td>
+      <td><span style="display:inline-flex;align-items:center;font-size:11px;"><span class="rpt-status-dot" style="background:${statusColors[p.status] || '#9a9a9a'}"></span>${p.status}</span></td>
+      <td style="min-width:110px;">
+        <div class="inline-progress-wrap">
+          <div class="inline-progress-track"><div class="inline-progress-fill" style="width:${pct}%;background:${barColor};"></div></div>
+          <div class="inline-progress-pct">${pct}%</div>
+        </div>
+      </td>
+      <td class="rpt-summary-number">${p.due}</td>
+      <td><span class="health-badge ${p.health}">${p.health === 'good' ? '● Good' : p.health === 'warn' ? '● At Risk' : '● Critical'}</span></td>
+    </tr>`;
+  }).join('');
+  wrap.innerHTML = `<table class="rpt-table"><thead><tr><th>Project</th><th>Status</th><th>Progress</th><th>Due</th><th>Health</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+function renderRptSprintTable() {
+  const wrap = document.getElementById('rpt-sprint-table');
+  if (!wrap) return;
+  const statusColors = { 'Completed': '#22C55E', 'Active': '#4A90FF', 'Planned': '#666' };
+  const rows = RPT_DATA.sprints.map(s => {
+    const vel = s.velocity !== null ? s.velocity : '—';
+    let vsTarget = '<span style="font-size:10px;color:var(--text-muted)">—</span>';
+    if (s.velocity !== null) {
+      const diff = s.velocity - s.target;
+      vsTarget = `<span style="font-size:10px;font-family:'DM Mono',monospace;color:${diff >= 0 ? 'var(--accent-green)' : 'var(--accent-red)'};">${diff >= 0 ? '+' : ''}${diff}</span>`;
+    }
+    return `<tr>
+      <td class="rpt-td-primary">${s.name}</td>
+      <td style="font-size:11px;white-space:nowrap;">${s.start} – ${s.end}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:11px;">${vel}</td>
+      <td>${vsTarget}</td>
+      <td><span style="display:inline-flex;align-items:center;font-size:11px;"><span class="rpt-status-dot" style="background:${statusColors[s.status] || '#9a9a9a'}"></span>${s.status}</span></td>
+    </tr>`;
+  }).join('');
+  wrap.innerHTML = `<table class="rpt-table"><thead><tr><th>Sprint</th><th>Duration</th><th>Velocity</th><th>vs Target</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+// Reports page button wiring
+document.getElementById('rpt-export-btn').addEventListener('click', () => {
+  showToast('Preparing report export…', 'info', 1500);
+  setTimeout(() => showToast('Report exported successfully!', 'success'), 1800);
+});
+document.getElementById('rpt-print-btn').addEventListener('click', () => {
+  showToast('Opening print dialog…', 'info', 1500);
+  setTimeout(() => window.print(), 800);
+});
+document.querySelectorAll('#rpt-range-tabs .rpt-range-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#rpt-range-tabs .rpt-range-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    showToast(`Showing data for last ${btn.dataset.range.toUpperCase()}`, 'info', 1500);
+  });
+});
 
 </script>
 </body>
