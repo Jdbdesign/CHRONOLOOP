@@ -763,6 +763,9 @@
   }
   .user-menu-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
   .user-menu-email { font-size: 11px; color: var(--text-muted); }
+  .user-menu-info { padding: 2px 4px 4px; }
+  .user-menu-email-display { font-size: 12px; font-weight: 600; color: var(--text-primary); word-break: break-all; }
+  .user-menu-position { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
 
   /* Filter panel */
   .filter-section-title { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; padding: 8px 12px 4px; }
@@ -5065,21 +5068,13 @@
   </div>
 </div>
 
-<div class="dd-panel" id="dd-user" style="min-width:200px;padding:0;overflow:hidden;">
-  <div class="user-menu-header">
-    <div class="user-menu-avatar">JA</div>
-    <div>
-      <div class="user-menu-name">Jacobs</div>
-      <div class="user-menu-email">jacobsolayinka19@gmail.com</div>
-    </div>
+<div class="dd-panel" id="dd-user" style="min-width:220px;padding:10px 10px 8px;">
+  <div class="user-menu-info">
+    <div class="user-menu-email-display">jacobsolayinka19@gmail.com</div>
+    <div class="user-menu-position">Product Manager · ChronoLoop</div>
   </div>
-  <div style="padding:4px;">
-    <button class="dd-item" data-action="profile"><i data-lucide="user"></i> Profile</button>
-    <button class="dd-item" data-action="settings"><i data-lucide="settings"></i> Account Settings</button>
-    <button class="dd-item" data-action="help"><i data-lucide="help-circle"></i> Help &amp; Support</button>
-    <div class="dd-divider"></div>
-    <button class="dd-item danger" data-action="logout"><i data-lucide="log-out"></i> Sign out</button>
-  </div>
+  <div class="dd-divider" style="margin:8px 0;"></div>
+  <button class="dd-item danger" id="btn-logout" type="button"><i data-lucide="log-out"></i> Log out</button>
 </div>
 
 <div class="dd-panel" id="dd-week-projects">
@@ -6055,16 +6050,22 @@ document.getElementById('notif-mark-all').addEventListener('click', () => {
   showToast('All notifications marked as read', 'success', 2000);
 });
 
-// User menu
-document.querySelectorAll('#dd-user .dd-item').forEach(item => {
-  item.addEventListener('click', () => {
-    const action = item.dataset.action;
-    closeAllDD();
-    if (action === 'profile') showToast('Opening profile...', 'info');
-    else if (action === 'settings') showToast('Opening account settings...', 'info');
-    else if (action === 'help') showToast('Opening Help & Support...', 'info');
-    else if (action === 'logout') showToast('Signing out...', 'info');
-  });
+// User menu logout
+document.getElementById('btn-logout').addEventListener('click', () => {
+  closeAllDD();
+  const overlay = document.createElement('div');
+  overlay.id = 'logout-screen';
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:var(--bg-base);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;';
+  overlay.innerHTML = `
+    <img src="Logo.svg" alt="ChronoLoop" style="height:48px;opacity:0.9;">
+    <div style="text-align:center;">
+      <div style="font-size:18px;font-weight:700;color:var(--text-primary);margin-bottom:6px;">You've been signed out</div>
+      <div style="font-size:13px;color:var(--text-muted);">jacobsolayinka19@gmail.com</div>
+    </div>
+    <button id="btn-login-again" style="padding:10px 28px;border-radius:8px;background:var(--accent-blue);color:#fff;font-size:13px;font-weight:600;border:none;cursor:pointer;">Sign in again</button>
+  `;
+  document.body.appendChild(overlay);
+  document.getElementById('btn-login-again').addEventListener('click', () => overlay.remove());
 });
 
 // Week pickers
