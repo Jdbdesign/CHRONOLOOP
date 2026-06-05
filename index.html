@@ -92,7 +92,8 @@
     gap: 10px;
   }
 
-  .sidebar-brand-logo { height: 38px; width: auto; flex-shrink: 0; display: block; }
+  .sidebar-brand-logo { height: 38px; width: auto; flex-shrink: 0; display: block; color: #ffffff; }
+  [data-theme="light"] .sidebar-brand-logo { color: #111111; }
 
   .sidebar-nav {
     flex: 1;
@@ -136,6 +137,7 @@
     .nav-item:nth-child(6) { animation-delay: 300ms; }
     .nav-item:nth-child(7) { animation-delay: 350ms; }
     .nav-item:nth-child(8) { animation-delay: 400ms; }
+    .nav-item:nth-child(9) { animation-delay: 450ms; }
   }
 
   @keyframes fadeInLeft {
@@ -2280,6 +2282,299 @@
     .int-kpi-grid { grid-template-columns: 1fr 1fr; }
   }
 
+  /* ===== CALENDAR PAGE ===== */
+  #page-calendar { display: flex; flex-direction: column; gap: 0; overflow: hidden; }
+
+  .cal-page-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 16px; flex-shrink: 0; padding-bottom: 14px;
+  }
+
+  .cal-view-switcher {
+    display: flex; background: var(--bg-card); border: 1px solid var(--border-subtle);
+    border-radius: 8px; overflow: hidden; padding: 2px; gap: 2px;
+  }
+  .cal-view-btn {
+    display: flex; align-items: center; gap: 5px; padding: 5px 14px;
+    border-radius: 6px; border: none; background: transparent;
+    color: var(--text-muted); font-size: 12px; font-weight: 500;
+    font-family: 'DM Sans', sans-serif; cursor: pointer;
+    transition: background var(--duration-fast), color var(--duration-fast);
+    white-space: nowrap;
+  }
+  .cal-view-btn.active { background: var(--accent-blue); color: #fff; }
+  .cal-view-btn:not(.active):hover { color: var(--text-primary); background: var(--bg-card-hover); }
+  .cal-view-btn svg { width: 13px; height: 13px; }
+
+  .cal-nav-row { display: flex; align-items: center; gap: 8px; }
+  .cal-nav-btn {
+    width: 30px; height: 30px; border-radius: 7px;
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    color: var(--text-secondary); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background var(--duration-fast), color var(--duration-fast);
+  }
+  .cal-nav-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .cal-nav-btn svg { width: 14px; height: 14px; }
+  .cal-today-btn {
+    height: 30px; padding: 0 12px; border-radius: 7px;
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    color: var(--text-secondary); font-size: 12px; font-weight: 500;
+    font-family: 'DM Sans', sans-serif; cursor: pointer;
+    transition: background var(--duration-fast), color var(--duration-fast);
+  }
+  .cal-today-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+
+  .cal-period-title {
+    font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700;
+    color: var(--text-primary); white-space: nowrap; min-width: 200px;
+  }
+
+  .cal-filter-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 12px; border-radius: 20px;
+    border: 1px solid var(--border-subtle); background: var(--bg-card);
+    font-size: 11px; font-weight: 500; color: var(--text-secondary);
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all var(--duration-fast);
+  }
+  .cal-filter-chip .chip-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cal-filter-chip.active { border-color: var(--accent-blue); background: var(--accent-blue-bg); color: var(--text-primary); }
+  .cal-filter-chip:not(.active):hover { border-color: var(--border-default); color: var(--text-primary); }
+
+  .cal-legend { display: flex; align-items: center; gap: 14px; font-size: 11px; color: var(--text-muted); }
+  .cal-legend-item { display: flex; align-items: center; gap: 5px; }
+  .cal-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* Month view */
+  .cal-month-wrap { flex: 1; overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
+  .cal-day-headers-row { display: grid; grid-template-columns: repeat(7, 1fr); border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; background: var(--bg-card); }
+  .cal-day-col-hdr {
+    padding: 9px 0; text-align: center;
+    font-size: 10px; font-weight: 700; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.08em; font-family: 'DM Mono', monospace;
+    border-right: 1px solid var(--border-subtle);
+  }
+  .cal-day-col-hdr:last-child { border-right: none; }
+
+  .cal-month-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    flex: 1; overflow-y: auto; min-height: 0; background: var(--bg-base);
+  }
+  .cal-month-grid::-webkit-scrollbar { width: 4px; }
+  .cal-month-grid::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 2px; }
+
+  .cal-day-cell {
+    border-right: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);
+    padding: 8px 7px 6px; min-height: 108px;
+    display: flex; flex-direction: column; gap: 3px;
+    cursor: pointer; transition: background var(--duration-fast);
+    position: relative; overflow: hidden;
+  }
+  .cal-day-cell:nth-child(7n) { border-right: none; }
+  .cal-day-cell:hover { background: var(--bg-card); }
+  .cal-day-cell.other-month .cal-day-num { opacity: 0.3; }
+  .cal-day-cell.today-cell { background: rgba(74,144,255,0.04); }
+  .cal-day-cell.today-cell .cal-day-num { background: var(--accent-blue); color: #fff; font-weight: 700; border-radius: 50%; }
+  .cal-day-cell.weekend-cell .cal-day-num { color: var(--text-muted); }
+
+  .cal-day-num {
+    font-size: 12px; font-weight: 500; color: var(--text-secondary); line-height: 1;
+    width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; flex-shrink: 0; margin-bottom: 1px;
+    transition: background var(--duration-fast), color var(--duration-fast);
+  }
+
+  .cal-ev-pill {
+    display: flex; align-items: center; gap: 4px;
+    padding: 2px 6px 2px 5px; border-radius: 4px; font-size: 10px;
+    font-weight: 500; color: #fff; cursor: pointer;
+    overflow: hidden; white-space: nowrap;
+    transition: opacity var(--duration-fast), transform var(--duration-fast);
+    max-width: 100%; flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .cal-ev-pill:hover { opacity: 0.88; transform: translateX(1px); }
+  .cal-ev-pill .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.65); flex-shrink: 0; }
+  .cal-ev-pill .pill-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
+
+  .cal-more-btn {
+    font-size: 10px; color: var(--accent-blue); cursor: pointer; padding: 1px 5px; border-radius: 3px;
+    transition: background var(--duration-fast); font-weight: 500; align-self: flex-start; background: none; border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .cal-more-btn:hover { background: var(--accent-blue-bg); }
+
+  /* Week view */
+  .cal-week-wrap { flex: 1; overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
+  .cal-week-hdr { display: grid; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; background: var(--bg-card); }
+  .cal-week-col-hdr {
+    padding: 10px 0; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    border-right: 1px solid var(--border-subtle);
+  }
+  .cal-week-col-hdr:last-child { border-right: none; }
+  .cal-week-dname { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; font-family: 'DM Mono', monospace; }
+  .cal-week-dnum {
+    width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 600; color: var(--text-secondary);
+    transition: background var(--duration-fast), color var(--duration-fast);
+  }
+  .cal-week-dnum.cal-wtoday { background: var(--accent-blue); color: #fff; }
+
+  .cal-week-scroll { flex: 1; overflow-y: auto; display: flex; min-height: 0; }
+  .cal-week-scroll::-webkit-scrollbar { width: 4px; }
+  .cal-week-scroll::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 2px; }
+  .cal-time-col { width: 52px; flex-shrink: 0; border-right: 1px solid var(--border-subtle); }
+  .cal-time-lbl {
+    height: 60px; display: flex; align-items: flex-start; justify-content: flex-end;
+    padding: 6px 8px 0; font-size: 10px; color: var(--text-muted);
+    font-family: 'DM Mono', monospace; letter-spacing: 0.03em;
+  }
+
+  .cal-week-cols-grid { flex: 1; display: grid; }
+  .cal-week-col { display: flex; flex-direction: column; position: relative; border-right: 1px solid var(--border-subtle); }
+  .cal-week-col:last-child { border-right: none; }
+  .cal-week-hslot { height: 60px; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; transition: background var(--duration-fast); }
+  .cal-week-hslot:hover { background: rgba(74,144,255,0.03); }
+  .cal-week-hslot:last-child { border-bottom: none; }
+  .cal-week-ev {
+    position: absolute; left: 3px; right: 3px;
+    border-radius: 5px; padding: 4px 7px; font-size: 10px; font-weight: 500;
+    color: #fff; cursor: pointer; z-index: 2; overflow: hidden;
+    transition: opacity var(--duration-fast), box-shadow var(--duration-fast);
+    border-left: 2px solid rgba(255,255,255,0.3);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+  .cal-week-ev:hover { opacity: 0.9; box-shadow: 0 4px 16px rgba(0,0,0,0.35); z-index: 3; }
+  .cal-week-ev-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3; }
+  .cal-week-ev-time { font-size: 9px; opacity: 0.8; margin-top: 1px; }
+
+  /* Day view */
+  .cal-day-wrap { flex: 1; overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
+  .cal-day-hero {
+    display: flex; align-items: center; gap: 16px; padding: 14px 0 16px;
+    border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; flex-wrap: wrap;
+  }
+  .cal-day-bignum { font-family: 'Syne', sans-serif; font-size: 52px; font-weight: 800; color: var(--text-primary); line-height: 1; }
+  .cal-day-bignum.cal-dtoday { color: var(--accent-blue); }
+  .cal-day-info-col { display: flex; flex-direction: column; gap: 3px; }
+  .cal-day-wname { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 600; color: var(--text-primary); }
+  .cal-day-fulldate { font-size: 12px; color: var(--text-muted); }
+  .cal-day-badgebar { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+  .cal-day-badge { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+
+  .cal-day-scroll { flex: 1; overflow-y: auto; display: flex; min-height: 0; }
+  .cal-day-scroll::-webkit-scrollbar { width: 4px; }
+  .cal-day-scroll::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 2px; }
+  .cal-day-tgutter { width: 60px; flex-shrink: 0; border-right: 1px solid var(--border-subtle); }
+  .cal-day-tlbl {
+    height: 66px; display: flex; align-items: flex-start; justify-content: flex-end;
+    padding: 6px 10px 0; font-size: 10px; color: var(--text-muted); font-family: 'DM Mono', monospace;
+  }
+  .cal-day-slots { flex: 1; display: flex; flex-direction: column; position: relative; }
+  .cal-day-hslot { height: 66px; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; transition: background var(--duration-fast); }
+  .cal-day-hslot:hover { background: rgba(74,144,255,0.03); }
+  .cal-day-hslot:last-child { border-bottom: none; }
+  .cal-day-ev {
+    position: absolute; left: 10px; right: 10px; border-radius: 9px;
+    padding: 9px 13px; font-size: 11px; color: #fff; cursor: pointer; z-index: 2;
+    display: flex; flex-direction: column; gap: 3px; overflow: hidden;
+    transition: opacity var(--duration-fast), transform var(--duration-fast), box-shadow var(--duration-fast);
+    border-left: 3px solid rgba(255,255,255,0.35);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+  }
+  .cal-day-ev:hover { opacity: 0.9; transform: translateX(3px); box-shadow: 0 6px 22px rgba(0,0,0,0.4); z-index: 3; }
+  .cal-day-ev-title { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px; }
+  .cal-day-ev-meta { font-size: 10px; opacity: 0.8; }
+  .cal-day-ev-proj { font-size: 10px; opacity: 0.65; }
+
+  /* Agenda view */
+  .cal-agenda-wrap { flex: 1; overflow-y: auto; min-height: 0; padding-right: 4px; }
+  .cal-agenda-wrap::-webkit-scrollbar { width: 4px; }
+  .cal-agenda-wrap::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 2px; }
+  .cal-agenda-date-hdr {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 0 8px; position: sticky; top: 0; z-index: 1;
+    background: var(--bg-base);
+  }
+  .cal-agenda-date-hdr.cal-ag-today .cal-agenda-dtext { color: var(--accent-blue); }
+  .cal-agenda-dtext { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--text-primary); }
+  .cal-agenda-dline { flex: 1; height: 1px; background: var(--border-subtle); }
+  .cal-agenda-dcount { font-size: 10px; color: var(--text-muted); }
+  .cal-agenda-ev {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 14px; border-radius: 9px; cursor: pointer;
+    background: var(--bg-card); border: 1px solid var(--border-subtle); margin-bottom: 6px;
+    transition: border-color var(--duration-fast), transform var(--duration-fast), box-shadow var(--duration-fast);
+  }
+  .cal-agenda-ev:hover { border-color: var(--border-default); transform: translateX(4px); box-shadow: 0 3px 14px rgba(0,0,0,0.2); }
+  .cal-agenda-ev-bar { width: 4px; border-radius: 2px; align-self: stretch; flex-shrink: 0; min-height: 30px; }
+  .cal-agenda-ev-time { font-size: 11px; color: var(--text-muted); font-family: 'DM Mono', monospace; white-space: nowrap; min-width: 44px; }
+  .cal-agenda-ev-title { flex: 1; font-size: 13px; font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cal-agenda-ev-type { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 10px; flex-shrink: 0; text-transform: uppercase; letter-spacing: 0.04em; }
+  .cal-agenda-ev-proj { font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; flex-shrink: 0; }
+
+  /* Custom date range bar */
+  .cal-custom-bar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0 12px; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; flex-wrap: wrap;
+  }
+  .cal-range-input {
+    height: 32px; padding: 0 12px; background: var(--bg-card);
+    border: 1px solid var(--border-subtle); border-radius: 7px;
+    color: var(--text-primary); font-size: 12px; font-family: 'DM Sans', sans-serif;
+    transition: border-color var(--duration-fast); cursor: pointer; color-scheme: dark;
+  }
+  .cal-range-input:focus { outline: none; border-color: var(--accent-blue); }
+
+  /* Event popup */
+  .cal-event-popup {
+    position: fixed; z-index: 450;
+    background: var(--bg-card); border: 1px solid var(--border-default);
+    border-radius: 13px; padding: 16px 18px; width: 300px;
+    box-shadow: 0 14px 44px rgba(0,0,0,0.55); display: none;
+    transition: background var(--duration-normal) var(--ease-out);
+  }
+  .cal-event-popup.open { display: block; animation: ddFadeIn 160ms var(--ease-out); }
+  .cal-popup-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+  .cal-popup-type { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .cal-popup-x { width: 26px; height: 26px; border-radius: 6px; background: none; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background var(--duration-fast), color var(--duration-fast); flex-shrink: 0; }
+  .cal-popup-x:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .cal-popup-x svg { width: 13px; height: 13px; }
+  .cal-popup-name { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-primary); line-height: 1.3; margin-bottom: 10px; }
+  .cal-popup-row { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: var(--text-secondary); margin-bottom: 5px; }
+  .cal-popup-row svg { width: 13px; height: 13px; color: var(--text-muted); flex-shrink: 0; margin-top: 1px; }
+  .cal-popup-row strong { color: var(--text-primary); font-weight: 500; }
+  .cal-popup-progress-bar { height: 5px; background: var(--border-subtle); border-radius: 3px; overflow: hidden; margin: 8px 0 3px; }
+  .cal-popup-progress-fill { height: 100%; border-radius: 3px; transition: width 600ms var(--ease-out); }
+  .cal-popup-footer { display: flex; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-subtle); }
+  .cal-popup-btn-p { flex: 1; height: 30px; border-radius: 7px; font-size: 11px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; background: var(--accent-blue); border: none; color: #fff; transition: opacity var(--duration-fast); }
+  .cal-popup-btn-p:hover { opacity: 0.88; }
+  .cal-popup-btn-s { flex: 1; height: 30px; border-radius: 7px; font-size: 11px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; background: transparent; border: 1px solid var(--border-subtle); color: var(--text-secondary); transition: background var(--duration-fast), color var(--duration-fast); }
+  .cal-popup-btn-s:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+
+  /* Add Event modal */
+  .cal-type-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .cal-type-card {
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+    padding: 10px 6px; border-radius: 8px;
+    border: 1px solid var(--border-subtle); background: var(--bg-input);
+    cursor: pointer; font-size: 11px; font-weight: 500; color: var(--text-secondary);
+    font-family: 'DM Sans', sans-serif; transition: all var(--duration-fast);
+  }
+  .cal-type-card:hover { border-color: var(--border-default); color: var(--text-primary); }
+  .cal-type-card.sel { border-color: var(--accent-blue); color: var(--accent-blue); background: var(--accent-blue-bg); }
+  .cal-type-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .cal-type-icon svg { width: 16px; height: 16px; }
+
+  /* Calendar empty */
+  .cal-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 60px 20px; text-align: center; }
+  .cal-empty svg { color: var(--text-muted); }
+  .cal-empty-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600; color: var(--text-primary); }
+  .cal-empty-sub { font-size: 12px; color: var(--text-muted); max-width: 260px; line-height: 1.5; }
+
   /* ===== SETTINGS PAGE ===== */
   #page-settings { display: flex; flex-direction: column; gap: 0; overflow: hidden; }
 
@@ -2675,7 +2970,7 @@
   <!-- ===== SIDEBAR ===== -->
   <aside class="sidebar">
     <div class="sidebar-logo">
-      <img src="Logo.svg" class="sidebar-brand-logo" alt="ChronoLoop">
+      <svg class="sidebar-brand-logo" width="159" height="76" viewBox="0 0 159 76" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="ChronoLoop" role="img"><g clip-path="url(#clip0_logo_main)"><path d="M26.7075 50.2517C25.4318 50.2517 24.3477 50.0263 23.4638 49.5713C22.5799 49.1206 21.9007 48.4712 21.4348 47.6273C20.9689 46.7835 20.7077 45.7717 20.6511 44.5877C20.638 44.0177 20.6293 43.4036 20.6293 42.7497C20.6293 42.0959 20.638 41.4685 20.6511 40.8676C20.7077 39.6968 20.9689 38.6851 21.4435 37.8368C21.9181 36.9886 22.5973 36.3347 23.4812 35.884C24.3651 35.4334 25.4405 35.2036 26.7032 35.2036C27.6393 35.2036 28.4753 35.3273 29.2155 35.5792C29.9556 35.831 30.587 36.1756 31.1095 36.613C31.6319 37.0504 32.0369 37.5629 32.3242 38.1505C32.6116 38.7337 32.764 39.3699 32.777 40.0547C32.7901 40.1784 32.7509 40.2844 32.6638 40.3684C32.5724 40.4523 32.4679 40.4921 32.346 40.4921H30.391C30.2387 40.4921 30.1167 40.4523 30.0209 40.3772C29.9252 40.3021 29.8555 40.174 29.8163 39.9929C29.5986 39.0739 29.2198 38.4465 28.6843 38.1107C28.1487 37.775 27.4826 37.6071 26.6858 37.6071C25.7671 37.6071 25.0312 37.8678 24.4826 38.3891C23.934 38.9104 23.638 39.772 23.5988 40.9693C23.5596 42.1135 23.5596 43.2843 23.5988 44.4816C23.638 45.6789 23.934 46.5405 24.4826 47.0618C25.0312 47.5831 25.7671 47.8438 26.6858 47.8438C27.4826 47.8438 28.1531 47.6715 28.693 47.3313C29.2372 46.9911 29.6117 46.3682 29.8163 45.4625C29.8555 45.2681 29.9252 45.1355 30.0209 45.0648C30.1167 44.9941 30.2387 44.9588 30.391 44.9588H32.346C32.4679 44.9588 32.5768 44.9986 32.6638 45.0825C32.7509 45.1664 32.7901 45.2725 32.777 45.3962C32.764 46.081 32.6116 46.7128 32.3242 47.3004C32.0369 47.8836 31.6319 48.3961 31.1095 48.8379C30.587 49.2753 29.9556 49.6199 29.2155 49.8717C28.4753 50.1235 27.6393 50.2517 26.7075 50.2517Z" fill="currentColor"/><path d="M35.7291 50.0437C35.5897 50.0437 35.4765 49.9995 35.3807 49.9067C35.285 49.8184 35.2371 49.6947 35.2371 49.54V35.9323C35.2371 35.7777 35.285 35.654 35.3807 35.5568C35.4765 35.4596 35.5941 35.411 35.7291 35.411H37.6056C37.758 35.411 37.8756 35.4596 37.967 35.5568C38.0585 35.654 38.102 35.7777 38.102 35.9323V41.3268H44.1802V35.9323C44.1802 35.7777 44.2281 35.654 44.3239 35.5568C44.4197 35.4596 44.5372 35.411 44.6722 35.411H46.527C46.6794 35.411 46.8013 35.4596 46.8971 35.5568C46.9929 35.654 47.0408 35.7777 47.0408 35.9323V49.54C47.0408 49.6814 46.9929 49.7963 46.8971 49.8935C46.8013 49.9907 46.6794 50.0393 46.527 50.0393H44.6722C44.5329 50.0393 44.4197 49.9907 44.3239 49.8935C44.2281 49.7963 44.1802 49.677 44.1802 49.54V43.9379H38.0976V49.54C38.0976 49.6814 38.0541 49.7963 37.9627 49.8935C37.8712 49.9907 37.7537 50.0393 37.6013 50.0393H35.7291V50.0437Z" fill="currentColor"/><path d="M50.7461 50.0437C50.6068 50.0437 50.4936 49.9951 50.3978 49.8979C50.302 49.8007 50.2541 49.6814 50.2541 49.5445V35.9367C50.2541 35.7821 50.302 35.6584 50.3978 35.5612C50.4936 35.464 50.6111 35.4154 50.7461 35.4154H56.0798C57.743 35.4154 59.0536 35.8042 60.0158 36.5862C60.978 37.3682 61.457 38.5036 61.457 39.9925C61.457 41.022 61.2044 41.8791 60.7037 42.5639C60.203 43.2487 59.5325 43.7435 58.6965 44.0484L61.7052 49.3766C61.7443 49.4605 61.7661 49.5356 61.7661 49.6063C61.7661 49.73 61.7226 49.8361 61.6311 49.92C61.5397 50.0039 61.4439 50.0437 61.3307 50.0437H59.4541C59.219 50.0437 59.0405 49.9818 58.9186 49.8537C58.7967 49.73 58.7009 49.6019 58.6312 49.4782L55.9753 44.5255H53.1103V49.5445C53.1103 49.6858 53.0668 49.8007 52.9754 49.8979C52.8839 49.9951 52.7664 50.0437 52.614 50.0437H50.7461ZM53.1147 42.1618H56.0188C56.8548 42.1618 57.4818 41.9718 57.8954 41.5875C58.309 41.2031 58.5137 40.6641 58.5137 39.966C58.5137 39.268 58.309 38.7246 57.9041 38.3269C57.4992 37.9293 56.8722 37.7305 56.0188 37.7305H53.1147V42.1618Z" fill="currentColor"/><path d="M69.6164 50.2513C68.3929 50.2513 67.3436 50.0437 66.4641 49.6328C65.5846 49.2219 64.8966 48.5857 64.4046 47.7286C63.9083 46.8715 63.6427 45.8023 63.6035 44.5211C63.5904 43.9202 63.5817 43.3282 63.5817 42.745C63.5817 42.1618 63.5904 41.561 63.6035 40.9468C63.6427 39.6789 63.917 38.6185 64.4264 37.7702C64.9358 36.922 65.6325 36.2769 66.5163 35.8484C67.4046 35.4154 68.4365 35.1989 69.6164 35.1989C70.7963 35.1989 71.8326 35.4154 72.7252 35.8484C73.6177 36.2813 74.3187 36.922 74.8282 37.7702C75.3376 38.6185 75.6119 39.6789 75.6511 40.9468C75.6772 41.561 75.6902 42.1574 75.6902 42.745C75.6902 43.3282 75.6772 43.9246 75.6511 44.5211C75.6119 45.8023 75.3419 46.8715 74.8456 47.7286C74.3492 48.5857 73.6613 49.2219 72.7774 49.6328C71.8935 50.0437 70.8399 50.2513 69.6164 50.2513ZM69.6164 47.8479C70.509 47.8479 71.2361 47.5784 71.8021 47.0438C72.3638 46.5092 72.6686 45.6344 72.7077 44.4195C72.7339 43.8054 72.7469 43.2398 72.7469 42.7141C72.7469 42.1928 72.7339 41.6317 72.7077 41.0308C72.6816 40.2223 72.5336 39.564 72.2636 39.0559C71.998 38.5478 71.6367 38.1767 71.1838 37.947C70.731 37.7172 70.2085 37.6024 69.6164 37.6024C69.0417 37.6024 68.5235 37.7172 68.0707 37.947C67.6179 38.1767 67.2565 38.5478 66.9909 39.0559C66.7253 39.564 66.5773 40.2223 66.5468 41.0308C66.5337 41.6317 66.525 42.1928 66.525 42.7141C66.525 43.2354 66.5337 43.8054 66.5468 44.4195C66.586 45.63 66.8908 46.5048 67.4524 47.0438C68.0185 47.5784 68.7369 47.8479 69.6164 47.8479Z" fill="currentColor"/><path d="M78.8861 50.0437C78.7468 50.0437 78.6336 49.9951 78.5378 49.8979C78.442 49.8007 78.3941 49.6814 78.3941 49.5445V35.9367C78.3941 35.7821 78.442 35.6584 78.5378 35.5612C78.6336 35.464 78.7511 35.4154 78.8861 35.4154H80.471C80.6625 35.4154 80.8019 35.4596 80.8933 35.5524C80.9804 35.6451 81.0413 35.707 81.0675 35.7512L87.002 45.1175V35.9323C87.002 35.7777 87.0455 35.654 87.137 35.5568C87.2284 35.4596 87.346 35.411 87.4984 35.411H89.2269C89.3793 35.411 89.5012 35.4596 89.597 35.5568C89.6928 35.654 89.7407 35.7777 89.7407 35.9323V49.5179C89.7407 49.6726 89.6928 49.7963 89.597 49.8935C89.5012 49.9907 89.3836 50.0393 89.2487 50.0393H87.642C87.4505 50.0393 87.3111 49.9907 87.2284 49.8935C87.1457 49.7963 87.0847 49.7344 87.0412 49.7035L81.1284 40.5492V49.5356C81.1284 49.677 81.0805 49.7919 80.9847 49.8891C80.889 49.9863 80.767 50.0349 80.6146 50.0349H78.8861V50.0437Z" fill="currentColor"/><path d="M98.4966 50.2513C97.2731 50.2513 96.2238 50.0437 95.3443 49.6328C94.4648 49.2219 93.7768 48.5857 93.2848 47.7286C92.7885 46.8715 92.5229 45.8023 92.4793 44.5211C92.4663 43.9202 92.4576 43.3282 92.4576 42.745C92.4576 42.1618 92.4663 41.561 92.4793 40.9468C92.5185 39.6789 92.7972 38.6185 93.3023 37.7702C93.8117 36.922 94.5083 36.2769 95.3922 35.8484C96.276 35.4154 97.3123 35.1989 98.4922 35.1989C99.6722 35.1989 100.708 35.4154 101.601 35.8484C102.494 36.2813 103.195 36.922 103.704 37.7702C104.213 38.6185 104.488 39.6789 104.527 40.9468C104.553 41.561 104.566 42.1574 104.566 42.745C104.566 43.3282 104.553 43.9246 104.527 44.5211C104.488 45.8023 104.218 46.8715 103.721 47.7286C103.225 48.5857 102.537 49.2219 101.653 49.6328C100.774 50.0437 99.7201 50.2513 98.4966 50.2513ZM98.4966 47.8479C99.3892 47.8479 100.116 47.5784 100.682 47.0438C101.244 46.5092 101.549 45.6344 101.588 44.4195C101.614 43.8054 101.627 43.2398 101.627 42.7141C101.627 42.1928 101.614 41.6317 101.588 41.0308C101.562 40.2223 101.414 39.564 101.144 39.0559C100.878 38.5478 100.517 38.1767 100.064 37.947C99.6112 37.7172 99.0887 37.6024 98.4966 37.6024C97.9219 37.6024 97.4037 37.7172 96.9509 37.947C96.4981 38.1767 96.1367 38.5478 95.8711 39.0559C95.6012 39.564 95.4531 40.2223 95.427 41.0308C95.414 41.6317 95.4052 42.1928 95.4052 42.7141C95.4052 43.2354 95.414 43.8054 95.427 44.4195C95.4662 45.63 95.771 46.5048 96.3327 47.0438C96.8987 47.5784 97.6171 47.8479 98.4966 47.8479Z" fill="currentColor"/><path d="M107.766 50.0437C107.627 50.0437 107.514 49.9951 107.418 49.8979C107.322 49.8007 107.274 49.6814 107.274 49.5445V35.9102C107.274 35.7688 107.322 35.654 107.418 35.5568C107.514 35.4596 107.631 35.411 107.766 35.411H109.682C109.821 35.411 109.935 35.4596 110.035 35.5568C110.131 35.654 110.178 35.7733 110.178 35.9102V47.5519H116.709C116.862 47.5519 116.984 47.6005 117.08 47.6977C117.175 47.7949 117.223 47.9186 117.223 48.0732V49.5356C117.223 49.677 117.175 49.7919 117.08 49.8891C116.984 49.9863 116.862 50.0349 116.709 50.0349H107.766V50.0437Z" fill="currentColor"/><path d="M124.577 50.2513C123.354 50.2513 122.304 50.0437 121.425 49.6328C120.545 49.2219 119.857 48.5857 119.365 47.7286C118.869 46.8715 118.603 45.8023 118.56 44.5211C118.547 43.9202 118.538 43.3282 118.538 42.745C118.538 42.1618 118.547 41.561 118.56 40.9468C118.599 39.6789 118.878 38.6185 119.383 37.7702C119.892 36.922 120.589 36.2769 121.473 35.8484C122.357 35.4154 123.393 35.1989 124.573 35.1989C125.753 35.1989 126.789 35.4154 127.682 35.8484C128.574 36.2813 129.275 36.922 129.785 37.7702C130.294 38.6185 130.568 39.6789 130.607 40.9468C130.634 41.561 130.647 42.1574 130.647 42.745C130.647 43.3282 130.634 43.9246 130.607 44.5211C130.568 45.8023 130.298 46.8715 129.802 47.7286C129.306 48.5857 128.618 49.2219 127.734 49.6328C126.854 50.0437 125.801 50.2513 124.577 50.2513ZM124.577 47.8479C125.47 47.8479 126.197 47.5784 126.763 47.0438C127.324 46.5092 127.629 45.6344 127.668 44.4195C127.695 43.8054 127.708 43.2398 127.708 42.7141C127.708 42.1928 127.695 41.6317 127.668 41.0308C127.642 40.2223 127.494 39.564 127.224 39.0559C126.959 38.5478 126.597 38.1767 126.145 37.947C125.692 37.7172 125.169 37.6024 124.577 37.6024C124.002 37.6024 123.484 37.7172 123.031 37.947C122.579 38.1767 122.217 38.5478 121.952 39.0559C121.682 39.564 121.538 40.2223 121.508 41.0308C121.494 41.6317 121.486 42.1928 121.486 42.7141C121.486 43.2354 121.494 43.8054 121.508 44.4195C121.547 45.63 121.851 46.5048 122.413 47.0438C122.979 47.5784 123.698 47.8479 124.577 47.8479Z" fill="currentColor"/><path d="M138.893 50.2513C137.67 50.2513 136.62 50.0437 135.741 49.6328C134.861 49.2219 134.173 48.5857 133.681 47.7286C133.185 46.8715 132.919 45.8023 132.876 44.5211C132.863 43.9202 132.854 43.3282 132.854 42.745C132.854 42.1618 132.863 41.561 132.876 40.9468C132.915 39.6789 133.194 38.6185 133.699 37.7702C134.208 36.922 134.905 36.2769 135.789 35.8484C136.673 35.4154 137.709 35.1989 138.889 35.1989C140.069 35.1989 141.105 35.4154 141.998 35.8484C142.89 36.2813 143.591 36.922 144.101 37.7702C144.61 38.6185 144.884 39.6789 144.923 40.9468C144.95 41.561 144.963 42.1574 144.963 42.745C144.963 43.3282 144.95 43.9246 144.923 44.5211C144.884 45.8023 144.614 46.8715 144.118 47.7286C143.622 48.5857 142.934 49.2219 142.05 49.6328C141.17 50.0437 140.117 50.2513 138.893 50.2513ZM138.893 47.8479C139.786 47.8479 140.513 47.5784 141.079 47.0438C141.641 46.5092 141.945 45.6344 141.984 44.4195C142.011 43.8054 142.024 43.2398 142.024 42.7141C142.024 42.1928 142.011 41.6317 141.984 41.0308C141.958 40.2223 141.81 39.564 141.54 39.0559C141.275 38.5478 140.913 38.1767 140.461 37.947C140.008 37.7172 139.485 37.6024 138.893 37.6024C138.318 37.6024 137.8 37.7172 137.347 37.947C136.895 38.1767 136.533 38.5478 136.268 39.0559C135.998 39.564 135.854 40.2223 135.824 41.0308C135.811 41.6317 135.802 42.1928 135.802 42.7141C135.802 43.2354 135.811 43.8054 135.824 44.4195C135.863 45.63 136.168 46.5048 136.729 47.0438C137.295 47.5784 138.014 47.8479 138.893 47.8479Z" fill="currentColor"/><path d="M148.163 50.0437C148.024 50.0437 147.91 49.9951 147.815 49.8979C147.719 49.8007 147.671 49.6814 147.671 49.5445V35.9367C147.671 35.7821 147.719 35.6584 147.815 35.5612C147.91 35.464 148.028 35.4154 148.163 35.4154H153.684C154.755 35.4154 155.691 35.5877 156.488 35.9279C157.285 36.2681 157.903 36.785 158.343 37.4742C158.782 38.1635 159 39.025 159 40.0544C159 41.1015 158.778 41.9586 158.343 42.6346C157.903 43.3105 157.285 43.8142 156.488 44.15C155.691 44.4857 154.759 44.6536 153.684 44.6536H150.614V49.5445C150.614 49.6858 150.571 49.8007 150.479 49.8979C150.388 49.9951 150.27 50.0437 150.118 50.0437H148.163ZM150.575 42.3297H153.584C154.38 42.3297 154.99 42.1397 155.417 41.7554C155.843 41.371 156.057 40.8055 156.057 40.05C156.057 39.3519 155.856 38.7908 155.46 38.3667C155.06 37.9425 154.437 37.7305 153.584 37.7305H150.575V42.3297Z" fill="currentColor"/><path d="M33.5956 76C37.4335 76 40.5446 72.843 40.5446 68.9487C40.5446 65.0544 37.4335 61.8975 33.5956 61.8975C29.7578 61.8975 26.6466 65.0544 26.6466 68.9487C26.6466 72.843 29.7578 76 33.5956 76Z" fill="#2F60DE"/><path d="M48.8608 76C52.6986 76 55.8098 72.843 55.8098 68.9487C55.8098 65.0544 52.6986 61.8975 48.8608 61.8975C45.0229 61.8975 41.9117 65.0544 41.9117 68.9487C41.9117 72.843 45.0229 76 48.8608 76Z" fill="#2F60DE"/><path d="M64.2218 71.8426C68.0596 71.8426 71.1708 68.6856 71.1708 64.7913C71.1708 60.897 68.0596 57.74 64.2218 57.74C60.3839 57.74 57.2728 60.897 57.2728 64.7913C57.2728 68.6856 60.3839 71.8426 64.2218 71.8426Z" fill="#2F60DE"/><path d="M19.4929 70.3228C23.3308 70.3228 26.4419 67.1658 26.4419 63.2715C26.4419 59.3772 23.3308 56.2202 19.4929 56.2202C15.6551 56.2202 12.5439 59.3772 12.5439 63.2715C12.5439 67.1658 15.6551 70.3228 19.4929 70.3228Z" fill="#2F60DE"/><path d="M9.77042 58.416C13.6083 58.416 16.7194 55.259 16.7194 51.3647C16.7194 47.4704 13.6083 44.3134 9.77042 44.3134C5.93259 44.3134 2.82141 47.4704 2.82141 51.3647C2.82141 55.259 5.93259 58.416 9.77042 58.416Z" fill="#2F60DE"/><path d="M8.05676 42.5569C11.8455 41.9361 14.4209 38.3164 13.8092 34.4719C13.1974 30.6274 9.63013 28.0141 5.84142 28.6348C2.05271 29.2556 -0.522724 32.8754 0.0890261 36.7198C0.700777 40.5643 4.26805 43.1776 8.05676 42.5569Z" fill="#2F60DE"/><path d="M11.8604 28.1432C15.6982 28.1432 18.8094 24.9863 18.8094 21.092C18.8094 17.1976 15.6982 14.0407 11.8604 14.0407C8.02253 14.0407 4.91135 17.1976 4.91135 21.092C4.91135 24.9863 8.02253 28.1432 11.8604 28.1432Z" fill="#2F60DE"/><path d="M22.9979 17.7828C26.8357 17.7828 29.9469 14.6259 29.9469 10.7315C29.9469 6.83723 26.8357 3.68027 22.9979 3.68027C19.1601 3.68027 16.0489 6.83723 16.0489 10.7315C16.0489 14.6259 19.1601 17.7828 22.9979 17.7828Z" fill="#2F60DE"/><path d="M38.3633 14.1025C42.2011 14.1025 45.3123 10.9456 45.3123 7.05127C45.3123 3.15696 42.2011 0 38.3633 0C34.5254 0 31.4142 3.15696 31.4142 7.05127C31.4142 10.9456 34.5254 14.1025 38.3633 14.1025Z" fill="#2F60DE"/><path d="M53.0145 18.3925C56.8523 18.3925 59.9635 15.2356 59.9635 11.3413C59.9635 7.44694 56.8523 4.28998 53.0145 4.28998C49.1767 4.28998 46.0655 7.44694 46.0655 11.3413C46.0655 15.2356 49.1767 18.3925 53.0145 18.3925Z" fill="#2F60DE"/><path d="M63.7776 29.2345C67.6155 29.2345 70.7266 26.0775 70.7266 22.1832C70.7266 18.2889 67.6155 15.132 63.7776 15.132C59.9398 15.132 56.8286 18.2889 56.8286 22.1832C56.8286 26.0775 59.9398 29.2345 63.7776 29.2345Z" fill="#2F60DE"/></g><defs><clipPath id="clip0_logo_main"><rect width="159" height="76" fill="white"/></clipPath></defs></svg>
     </div>
 
     <nav class="sidebar-nav">
@@ -2696,6 +2991,9 @@
       </button>
       <button class="nav-item" onclick="setActive(this,'Reports')" type="button">
         <i data-lucide="bar-chart-2"></i><span>Reports</span>
+      </button>
+      <button class="nav-item" onclick="setActive(this,'Calendar')" type="button">
+        <i data-lucide="calendar-days"></i><span>Calendar</span>
       </button>
       <button class="nav-item" onclick="setActive(this,'Integration')" type="button">
         <i data-lucide="git-merge"></i><span>Integration</span>
@@ -3528,6 +3826,74 @@
       </div>
 
     </div><!-- /page-integrations -->
+
+    <!-- ===== CALENDAR PAGE ===== -->
+    <div id="page-calendar" style="display:none;">
+      <!-- Page header -->
+      <div class="cal-page-header">
+        <div>
+          <div class="page-breadcrumb">ChronoLoop / Calendar</div>
+          <div class="page-heading">Calendar</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="cal-view-switcher">
+            <button class="cal-view-btn active" id="cal-btn-month" onclick="calSetView('month')" type="button">
+              <i data-lucide="calendar-days"></i><span>Month</span>
+            </button>
+            <button class="cal-view-btn" id="cal-btn-week" onclick="calSetView('week')" type="button">
+              <i data-lucide="layout-grid"></i><span>Week</span>
+            </button>
+            <button class="cal-view-btn" id="cal-btn-day" onclick="calSetView('day')" type="button">
+              <i data-lucide="calendar"></i><span>Day</span>
+            </button>
+            <button class="cal-view-btn" id="cal-btn-agenda" onclick="calSetView('agenda')" type="button">
+              <i data-lucide="list"></i><span>Agenda</span>
+            </button>
+          </div>
+          <button class="btn-primary" onclick="openModal('modal-cal-event')" type="button">
+            <i data-lucide="plus"></i> New Event
+          </button>
+        </div>
+      </div>
+
+      <!-- Sub-header: navigation + filters + legend -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border-subtle);gap:12px;flex-shrink:0;flex-wrap:wrap;">
+        <div class="cal-nav-row">
+          <button class="cal-nav-btn" onclick="calNavigate(-1)" type="button" title="Previous"><i data-lucide="chevron-left"></i></button>
+          <button class="cal-today-btn" onclick="calGoToday()" type="button">Today</button>
+          <button class="cal-nav-btn" onclick="calNavigate(1)" type="button" title="Next"><i data-lucide="chevron-right"></i></button>
+          <div class="cal-period-title" id="cal-period-title">November 2024</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <button class="cal-filter-chip active" id="cal-chip-all" onclick="calSetFilter('all')" type="button">All</button>
+            <button class="cal-filter-chip" id="cal-chip-task" onclick="calSetFilter('task')" type="button"><span class="chip-dot" style="background:#4A90FF"></span>Tasks</button>
+            <button class="cal-filter-chip" id="cal-chip-project" onclick="calSetFilter('project')" type="button"><span class="chip-dot" style="background:#A855F7"></span>Projects</button>
+            <button class="cal-filter-chip" id="cal-chip-sprint" onclick="calSetFilter('sprint')" type="button"><span class="chip-dot" style="background:#00D4AA"></span>Sprints</button>
+            <button class="cal-filter-chip" id="cal-chip-meeting" onclick="calSetFilter('meeting')" type="button"><span class="chip-dot" style="background:#FF8C42"></span>Meetings</button>
+          </div>
+          <div class="cal-legend" style="padding-left:10px;border-left:1px solid var(--border-subtle);">
+            <span class="cal-legend-item"><span class="cal-legend-dot" style="background:#4A90FF"></span>Tasks</span>
+            <span class="cal-legend-item"><span class="cal-legend-dot" style="background:#A855F7"></span>Projects</span>
+            <span class="cal-legend-item"><span class="cal-legend-dot" style="background:#00D4AA"></span>Sprints</span>
+            <span class="cal-legend-item"><span class="cal-legend-dot" style="background:#FF8C42"></span>Meetings</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agenda date-range bar (shown only in agenda view) -->
+      <div class="cal-custom-bar" id="cal-custom-bar" style="display:none;">
+        <i data-lucide="calendar-range" style="width:15px;height:15px;color:var(--text-muted);flex-shrink:0;"></i>
+        <span style="font-size:12px;color:var(--text-secondary);white-space:nowrap;">From</span>
+        <input type="date" class="cal-range-input" id="cal-range-start" onchange="renderCalendarPage()">
+        <span style="font-size:12px;color:var(--text-secondary);white-space:nowrap;">To</span>
+        <input type="date" class="cal-range-input" id="cal-range-end" onchange="renderCalendarPage()">
+        <button class="btn-secondary" onclick="calResetRange()" style="height:32px;" type="button">Reset</button>
+      </div>
+
+      <!-- Calendar content (rendered by JS) -->
+      <div id="cal-content" style="flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0;padding-top:12px;"></div>
+    </div><!-- /page-calendar -->
 
     <!-- ===== SETTINGS PAGE ===== -->
     <div id="page-settings" style="display:none;">
@@ -5004,6 +5370,9 @@
   <div class="task-popup-row"><i data-lucide="tag"></i> <span id="popup-badge"></span></div>
 </div>
 
+<!-- ===== CALENDAR EVENT POPUP ===== -->
+<div class="cal-event-popup" id="cal-event-popup"></div>
+
 <!-- ===== DROPDOWN PANELS ===== -->
 <div class="dd-panel" id="dd-addtask">
   <button class="dd-item" data-action="task"><i data-lucide="plus-circle"></i> New Task</button>
@@ -5284,6 +5653,98 @@
     </div>
     <div class="modal-footer">
       <button class="btn-secondary" onclick="closeModal('modal-share')">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ADD CALENDAR EVENT MODAL ===== -->
+<div class="modal-overlay" id="modal-cal-event" onclick="if(event.target===this)closeModal('modal-cal-event')">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">New Calendar Event</div>
+        <div class="modal-subtitle">Schedule a task, meeting, sprint, or project milestone</div>
+      </div>
+      <button class="modal-close-btn" onclick="closeModal('modal-cal-event')" type="button"><i data-lucide="x"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Event Type</label>
+        <div class="cal-type-grid" id="cal-modal-type-grid">
+          <button class="cal-type-card sel" data-type="task" onclick="calModalSelectType(this,'task')" type="button">
+            <div class="cal-type-icon" style="background:rgba(74,144,255,0.14)"><i data-lucide="check-square" style="color:#4A90FF"></i></div>
+            Task
+          </button>
+          <button class="cal-type-card" data-type="project" onclick="calModalSelectType(this,'project')" type="button">
+            <div class="cal-type-icon" style="background:rgba(168,85,247,0.14)"><i data-lucide="briefcase" style="color:#A855F7"></i></div>
+            Project
+          </button>
+          <button class="cal-type-card" data-type="sprint" onclick="calModalSelectType(this,'sprint')" type="button">
+            <div class="cal-type-icon" style="background:rgba(0,212,170,0.14)"><i data-lucide="zap" style="color:#00D4AA"></i></div>
+            Sprint
+          </button>
+          <button class="cal-type-card" data-type="meeting" onclick="calModalSelectType(this,'meeting')" type="button">
+            <div class="cal-type-icon" style="background:rgba(255,140,66,0.14)"><i data-lucide="video" style="color:#FF8C42"></i></div>
+            Meeting
+          </button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="cal-modal-title">Event Title</label>
+        <input type="text" class="form-input" id="cal-modal-title" placeholder="Enter event title...">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="cal-modal-date">Start Date</label>
+          <input type="date" class="form-input" id="cal-modal-date" style="color-scheme:dark">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cal-modal-time">Time</label>
+          <input type="time" class="form-input" id="cal-modal-time" value="09:00">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="cal-modal-end-date">End Date <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;">(optional — for multi-day spans)</span></label>
+        <input type="date" class="form-input" id="cal-modal-end-date" style="color-scheme:dark">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="cal-modal-project">Project</label>
+        <select class="form-select" id="cal-modal-project">
+          <option value="">None</option>
+          <option value="Web 3 App for Fxtrade">Web 3 App for Fxtrade</option>
+          <option value="Healthydog Landing Page">Healthydog Landing Page</option>
+          <option value="Redesign of Website">Redesign of Website</option>
+          <option value="ChronoLoop Launch">ChronoLoop Launch</option>
+          <option value="Internal">Internal</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="cal-modal-priority">Priority</label>
+          <select class="form-select" id="cal-modal-priority">
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cal-modal-assignee">Assignee</label>
+          <select class="form-select" id="cal-modal-assignee">
+            <option value="AS">Aspen H.</option>
+            <option value="MV">Marley V.</option>
+            <option value="RC">Ryan C.</option>
+            <option value="RD">Roger D.</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="cal-modal-notes">Notes</label>
+        <textarea class="form-textarea" id="cal-modal-notes" placeholder="Add notes or description..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modal-cal-event')" type="button">Cancel</button>
+      <button class="btn-primary" onclick="calSaveEvent()" type="button"><i data-lucide="calendar-plus"></i> Add to Calendar</button>
     </div>
   </div>
 </div>
@@ -5939,6 +6400,7 @@ function setActive(el, label) {
   document.getElementById('page-team').style.display = 'none';
   document.getElementById('page-reports').style.display = 'none';
   document.getElementById('page-integrations').style.display = 'none';
+  document.getElementById('page-calendar').style.display = 'none';
   document.getElementById('page-settings').style.display = 'none';
   closeMemberDetail();
   if (label === 'Dashboard') {
@@ -5958,6 +6420,9 @@ function setActive(el, label) {
   } else if (label === 'Reports') {
     document.getElementById('page-reports').style.display = 'flex';
     renderReportsPage();
+  } else if (label === 'Calendar') {
+    document.getElementById('page-calendar').style.display = 'flex';
+    renderCalendarPage();
   } else if (label === 'Integration') {
     document.getElementById('page-integrations').style.display = 'flex';
     renderIntegrationsPage();
@@ -9112,10 +9577,10 @@ const INT_APP_DATA = {
       { t:'Configure alert thresholds', d:'Choose which monitor priorities trigger task creation.' }
     ],
     reqs: ['Datadog account (any plan)', 'Datadog API Key + Application Key'],
-    errorMsg:'Authentication failed: the Datadog API token has expired or been revoked. Re-authorize to restore the connection.',
+    errorMsg:'',
     workspace:'app.datadoghq.com/chronoloop', connectedBy:'Roger Dokidis', connectedDate:'Nov 28, 2024',
     syncLog:[
-      { dot:'#FF4D4D', text:'API token expired — sync paused', time:'3h' },
+      { dot:'#22C55E', text:'Token refreshed — sync resumed successfully', time:'12 min ago' },
       { dot:'#22C55E', text:'Monitor "High CPU" alert → task created', time:'1 day ago' },
       { dot:'#22C55E', text:'Deploy v2.4.1 linked to sprint task', time:'2 days ago' }
     ],
@@ -9227,7 +9692,7 @@ const INT_APPS = [
   { id:'linear',           name:'Linear',          category:'Development',   emoji:'⚡', logoColor:'#5E6AD2', status:'beta',      users:0,  syncedAt:null,         calls:0,    perms:['Read teams & issues','Create issues','Receive webhook events'] },
   { id:'zoom',             name:'Zoom',            category:'Communication', emoji:'📹', logoColor:'#2D8CFF', status:'available', users:0,  syncedAt:null,         calls:0,    perms:['Create meetings','Read scheduled meetings','Access recordings'] },
   { id:'google-calendar',  name:'Google Calendar', category:'Productivity',  emoji:'📅', logoColor:'#4285F4', status:'connected',  users:14, syncedAt:'1 hr ago',   calls:288,  perms:['Read calendar events','Create & update events','Manage reminders'] },
-  { id:'datadog',          name:'Datadog',         category:'Analytics',     emoji:'📊', logoColor:'#774AA4', status:'error',     users:3,  syncedAt:'3 hr ago',   calls:94,   perms:['Read metrics & logs','Create monitors','Receive alert webhooks'] },
+  { id:'datadog',          name:'Datadog',         category:'Analytics',     emoji:'📊', logoColor:'#774AA4', status:'connected',  users:3,  syncedAt:'12 min ago',  calls:94,   perms:['Read metrics & logs','Create monitors','Receive alert webhooks'] },
   { id:'dropbox',          name:'Dropbox',         category:'Storage',       emoji:'📦', logoColor:'#0061FF', status:'available', users:0,  syncedAt:null,         calls:0,    perms:['Read shared folders','Upload files','Create shared links'] },
   { id:'zapier',           name:'Zapier',          category:'Productivity',  emoji:'⚡', logoColor:'#FF4A00', status:'available', users:0,  syncedAt:null,         calls:0,    perms:['Trigger zap events','Read task & project data','Create tasks via webhooks'] }
 ];
@@ -9238,7 +9703,7 @@ const INT_ACTIVITY = [
   { dot:'#F24E1E', text:'<strong>Figma</strong> design synced for "Landing Page Redesign"', time:'14m' },
   { dot:'#555555', text:'<strong>Notion</strong> page updated — Sprint 5 retrospective', time:'22m' },
   { dot:'#4285F4', text:'<strong>Google Calendar</strong> milestone "QA Sign-off" added', time:'1h' },
-  { dot:'#FF4D4D', text:'<strong>Datadog</strong> webhook failed — auth token expired', time:'3h' },
+  { dot:'#774AA4', text:'<strong>Datadog</strong> metrics synced — 94 API calls logged', time:'12m' },
   { dot:'#22C55E', text:'<strong>Slack</strong> task completion posted to #general', time:'4h' },
   { dot:'#4A90FF', text:'<strong>GitHub</strong> branch "feat/reports" merged — 3 tasks closed', time:'5h' }
 ];
@@ -9957,6 +10422,543 @@ function renderSettingsPage() {
   }
 
   lucide.createIcons();
+}
+
+// ============================================================
+// CALENDAR PAGE
+// ============================================================
+
+let calView = 'month';
+let calCurrentDate = new Date(2024, 10, 1); // Nov 2024
+let calFilter = 'all';
+let _calPopupEvId = null;
+
+const CAL_MEETINGS = [
+  { id:'m1',  type:'meeting', title:'Sprint Planning',        date:'2024-11-04', time:'10:00', duration:60,  project:'Web 3 App for Fxtrade',   assignee:'AS', color:'#FF8C42', notes:'Plan tasks for Sprint 04. Discuss backlog priorities.' },
+  { id:'m2',  type:'meeting', title:'Design Review',          date:'2024-11-06', time:'14:00', duration:45,  project:'Healthydog Landing Page',  assignee:'MV', color:'#FF8C42', notes:'Review latest Figma mockups with stakeholders.' },
+  { id:'m3',  type:'meeting', title:'Stakeholder Demo',       date:'2024-11-11', time:'11:00', duration:90,  project:'Redesign of Website',      assignee:'RC', color:'#FF8C42', notes:'Live demo for Artstyle Co. stakeholders.' },
+  { id:'m4',  type:'meeting', title:'Sprint Retrospective',   date:'2024-11-13', time:'15:00', duration:60,  project:'Web 3 App for Fxtrade',   assignee:'AS', color:'#FF8C42', notes:'Sprint 03 retrospective and lessons learned.' },
+  { id:'m5',  type:'meeting', title:'Client Sync — DogXpert', date:'2024-11-14', time:'10:30', duration:30,  project:'Healthydog Landing Page',  assignee:'RC', color:'#FF8C42', notes:'Weekly progress sync with DogXpert team.' },
+  { id:'m6',  type:'meeting', title:'All-Hands Meeting',      date:'2024-11-18', time:'09:00', duration:60,  project:'Internal',                 assignee:'AS', color:'#FF8C42', notes:'Company-wide quarterly review and roadmap.' },
+  { id:'m7',  type:'meeting', title:'Architecture Review',    date:'2024-11-20', time:'13:00', duration:90,  project:'Web 3 App for Fxtrade',   assignee:'RD', color:'#FF8C42', notes:'Review smart contract architecture decisions.' },
+  { id:'m8',  type:'meeting', title:'Design Handoff',         date:'2024-11-22', time:'11:00', duration:45,  project:'Redesign of Website',      assignee:'MV', color:'#FF8C42', notes:'Hand off latest designs to the development team.' },
+  { id:'m9',  type:'meeting', title:'Security Briefing',      date:'2024-11-25', time:'14:00', duration:60,  project:'Redesign of Website',      assignee:'RD', color:'#FF8C42', notes:'Review findings from the security audit report.' },
+  { id:'m10', type:'meeting', title:'Sprint 04 Kickoff',      date:'2024-11-26', time:'10:00', duration:60,  project:'Web 3 App for Fxtrade',   assignee:'AS', color:'#FF8C42', notes:'Kick off next sprint with full team.' },
+  { id:'m11', type:'meeting', title:'UX Walkthrough',         date:'2024-11-08', time:'15:30', duration:60,  project:'Redesign of Website',      assignee:'MV', color:'#FF8C42', notes:'Walk through updated UX flows with client.' },
+  { id:'m12', type:'meeting', title:'Budget Review',          date:'2024-11-19', time:'09:30', duration:45,  project:'Internal',                 assignee:'AS', color:'#FF8C42', notes:'Q4 budget review and resource planning.' },
+  { id:'m13', type:'meeting', title:'API Integration Sync',   date:'2024-11-27', time:'11:00', duration:60,  project:'Web 3 App for Fxtrade',   assignee:'RD', color:'#FF8C42', notes:'Sync on Stripe and wallet API integration.' },
+  { id:'m14', type:'meeting', title:'Content Strategy',       date:'2024-11-05', time:'14:30', duration:45,  project:'Healthydog Landing Page',  assignee:'RC', color:'#FF8C42', notes:'Finalize landing page copy and visuals.' },
+];
+
+let calUserEvents = [];
+
+function _calToISO(d) {
+  if (typeof d === 'string') return d;
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function _calFmtTime(t) {
+  if (!t) return '';
+  const [h, m] = t.split(':').map(Number);
+  const ap = h >= 12 ? 'pm' : 'am';
+  const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+  return h12 + (m > 0 ? ':' + String(m).padStart(2,'0') : '') + ap;
+}
+
+function getCalendarEvents() {
+  const events = [];
+  const timeMap = { 1:'09:00', 2:'10:00', 3:'11:00', 4:'13:00', 5:'14:00', 6:'15:00', 7:'16:00', 8:'09:30', 9:'10:30', 10:'11:30', 11:'13:30', 12:'14:30', 13:'15:30', 14:'16:30', 15:'17:00' };
+
+  tasksData.forEach(t => {
+    let color = '#4A90FF';
+    if (t.status === 'done') color = '#22C55E';
+    else if (t.status === 'overdue') color = '#FF4D4D';
+    else if (t.status === 'in-progress') color = '#EAB308';
+    events.push({
+      id:'task-'+t.id, type:'task', title:t.title, date:t.due,
+      time:timeMap[t.id]||'10:00', duration:60,
+      project:t.project, assignee:t.assignee, priority:t.priority, status:t.status,
+      color, progress:t.status==='done'?100:t.status==='in-progress'?50:0,
+      subtasks:t.subtasks, notes:t.description, sourceId:t.id,
+    });
+  });
+
+  PROJECTS.forEach(p => {
+    const due = new Date(p.dueDate);
+    const start = new Date(due); start.setDate(start.getDate() - 28);
+    events.push({
+      id:'proj-'+p.id, type:'project', title:p.name,
+      date:_calToISO(due), startDate:_calToISO(start), endDate:_calToISO(due),
+      time:'12:00', duration:120,
+      project:p.name, assignee:p.team[0]?.i||'AS', priority:p.priority, status:p.status,
+      color:p.color, progress:p.progress, notes:p.desc, sourceId:p.id, isMultiDay:true,
+    });
+  });
+
+  SPRINTS.forEach(s => {
+    const start = new Date(s.startDate);
+    const end   = new Date(s.endDate);
+    events.push({
+      id:'sprint-'+s.id, type:'sprint', title:s.name,
+      date:_calToISO(start), startDate:_calToISO(start), endDate:_calToISO(end),
+      time:'08:00', duration:480,
+      project:s.project, assignee:s.team[0]?.i||'AS', status:s.status,
+      color:'#00D4AA', progress:s.progress, notes:s.goal, sourceId:s.id,
+      isMultiDay:true, sprintNum:s.number,
+    });
+  });
+
+  CAL_MEETINGS.forEach(m => events.push(m));
+  calUserEvents.forEach(e => events.push(e));
+
+  if (calFilter !== 'all') return events.filter(e => e.type === calFilter);
+  return events;
+}
+
+function calSetView(v) {
+  calView = v;
+  document.querySelectorAll('.cal-view-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('cal-btn-'+v);
+  if (btn) btn.classList.add('active');
+  const bar = document.getElementById('cal-custom-bar');
+  if (bar) bar.style.display = v === 'agenda' ? '' : 'none';
+  renderCalendarPage();
+}
+
+function calSetFilter(f) {
+  calFilter = f;
+  document.querySelectorAll('.cal-filter-chip').forEach(c => c.classList.remove('active'));
+  const chip = document.getElementById('cal-chip-'+f);
+  if (chip) chip.classList.add('active');
+  renderCalendarPage();
+}
+
+function calNavigate(dir) {
+  if (calView === 'month') {
+    calCurrentDate = new Date(calCurrentDate.getFullYear(), calCurrentDate.getMonth() + dir, 1);
+  } else if (calView === 'week') {
+    calCurrentDate = new Date(calCurrentDate.getTime() + dir * 7 * 86400000);
+  } else if (calView === 'day') {
+    calCurrentDate = new Date(calCurrentDate.getTime() + dir * 86400000);
+  } else {
+    calCurrentDate = new Date(calCurrentDate.getFullYear(), calCurrentDate.getMonth() + dir, 1);
+  }
+  renderCalendarPage();
+}
+
+function calGoToday() {
+  calCurrentDate = new Date();
+  renderCalendarPage();
+}
+
+function calResetRange() {
+  const s = document.getElementById('cal-range-start');
+  const e = document.getElementById('cal-range-end');
+  if (s) s.value = '';
+  if (e) e.value = '';
+  renderCalendarPage();
+}
+
+function _calPeriodTitle() {
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const DAYS   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const d = calCurrentDate;
+  if (calView === 'month') return MONTHS[d.getMonth()] + ' ' + d.getFullYear();
+  if (calView === 'week') {
+    const ws = _calWeekStart(d);
+    const we = new Date(ws.getTime() + 6*86400000);
+    if (ws.getMonth() === we.getMonth()) return MONTHS[ws.getMonth()] + ' ' + ws.getDate() + ' – ' + we.getDate() + ', ' + ws.getFullYear();
+    return MONTHS[ws.getMonth()] + ' ' + ws.getDate() + ' – ' + MONTHS[we.getMonth()] + ' ' + we.getDate();
+  }
+  if (calView === 'day') return DAYS[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate();
+  return 'Agenda · ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear();
+}
+
+function _calWeekStart(d) {
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  return new Date(d.getFullYear(), d.getMonth(), diff);
+}
+
+function renderCalendarPage() {
+  const content = document.getElementById('cal-content');
+  if (!content) return;
+  calClosePopup();
+  const events = getCalendarEvents();
+  if (calView === 'month')  _calRenderMonth(content, events);
+  else if (calView === 'week')  _calRenderWeek(content, events);
+  else if (calView === 'day')   _calRenderDay(content, events);
+  else                          _calRenderAgenda(content, events);
+  const titleEl = document.getElementById('cal-period-title');
+  if (titleEl) titleEl.textContent = _calPeriodTitle();
+  lucide.createIcons();
+}
+
+// ---- MONTH ----
+function _calRenderMonth(container, events) {
+  const year = calCurrentDate.getFullYear(), month = calCurrentDate.getMonth();
+  const today = _calToISO(new Date());
+  const firstDay = new Date(year, month, 1);
+  const lastDay  = new Date(year, month + 1, 0);
+  let startOffset = firstDay.getDay() - 1; if (startOffset < 0) startOffset = 6;
+  const DAY_NAMES = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+  const cells = [];
+  for (let i = startOffset - 1; i >= 0; i--) cells.push({ date: new Date(year, month, -i), other: true });
+  for (let d = 1; d <= lastDay.getDate(); d++) cells.push({ date: new Date(year, month, d), other: false });
+  while (cells.length < 42) cells.push({ date: new Date(year, month + 1, cells.length - lastDay.getDate() - startOffset + 1), other: true });
+
+  const evMap = {};
+  events.forEach(ev => {
+    const addToMap = ds => { if (!evMap[ds]) evMap[ds] = []; evMap[ds].push(ev); };
+    if (ev.isMultiDay && ev.startDate && ev.endDate) {
+      let cur = new Date(ev.startDate), end = new Date(ev.endDate);
+      while (cur <= end) { addToMap(_calToISO(cur)); cur.setDate(cur.getDate()+1); }
+    } else addToMap(ev.date);
+  });
+
+  container.innerHTML = `
+    <div class="cal-month-wrap">
+      <div class="cal-day-headers-row">
+        ${DAY_NAMES.map(n => `<div class="cal-day-col-hdr">${n}</div>`).join('')}
+      </div>
+      <div class="cal-month-grid">
+        ${cells.map(cell => {
+          const ds = _calToISO(cell.date);
+          const isToday = ds === today;
+          const isWeekend = cell.date.getDay() === 0 || cell.date.getDay() === 6;
+          const dayEvs = evMap[ds] || [];
+          const visible = dayEvs.slice(0, 3);
+          const extra = dayEvs.length - 3;
+          return `<div class="cal-day-cell${cell.other?' other-month':''}${isToday?' today-cell':''}${isWeekend?' weekend-cell':''}" data-date="${ds}">
+            <div class="cal-day-num">${cell.date.getDate()}</div>
+            ${visible.map(ev => `<div class="cal-ev-pill" style="background:${ev.color}" data-evid="${ev.id}" onclick="event.stopPropagation();calOpenPopup('${ev.id}',this)"><div class="pill-dot"></div><div class="pill-text">${ev.title}</div></div>`).join('')}
+            ${extra > 0 ? `<button class="cal-more-btn" onclick="event.stopPropagation();calJumpToDay('${ds}')" type="button">+${extra} more</button>` : ''}
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+
+  container.querySelectorAll('.cal-day-cell').forEach(cell => {
+    cell.addEventListener('click', () => calJumpToDay(cell.dataset.date));
+  });
+}
+
+function calJumpToDay(ds) {
+  calCurrentDate = new Date(ds);
+  calSetView('day');
+}
+
+// ---- WEEK ----
+function _calRenderWeek(container, events) {
+  const ws = _calWeekStart(calCurrentDate);
+  const todayStr = _calToISO(new Date());
+  const DNAMES = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const HOURS  = Array.from({length:14}, (_,i) => i + 7); // 7am–8pm
+  const days   = DNAMES.map((_, i) => new Date(ws.getTime() + i * 86400000));
+
+  const weekEvMap = {};
+  days.forEach(d => { weekEvMap[_calToISO(d)] = []; });
+  events.forEach(ev => {
+    if (ev.isMultiDay) {
+      days.forEach(d => {
+        const ds = _calToISO(d);
+        const s = new Date(ev.startDate||ev.date), e2 = new Date(ev.endDate||ev.date);
+        if (d >= s && d <= e2 && weekEvMap[ds] !== undefined) weekEvMap[ds].push(ev);
+      });
+    } else if (weekEvMap[ev.date] !== undefined) weekEvMap[ev.date].push(ev);
+  });
+
+  const hdrStyle = `grid-template-columns:52px repeat(7,1fr)`;
+  const gridStyle = `grid-template-columns:repeat(7,1fr)`;
+
+  container.innerHTML = `
+    <div class="cal-week-wrap">
+      <div class="cal-week-hdr" style="${hdrStyle}">
+        <div style="border-right:1px solid var(--border-subtle)"></div>
+        ${days.map((d,i) => {
+          const ds = _calToISO(d);
+          return `<div class="cal-week-col-hdr">
+            <div class="cal-week-dname">${DNAMES[i]}</div>
+            <div class="cal-week-dnum${ds===todayStr?' cal-wtoday':''}">${d.getDate()}</div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="cal-week-scroll">
+        <div class="cal-time-col">${HOURS.map(h => `<div class="cal-time-lbl">${h===12?'12pm':h>12?(h-12)+'pm':h+'am'}</div>`).join('')}</div>
+        <div class="cal-week-cols-grid" style="${gridStyle};flex:1;">
+          ${days.map((d,di) => {
+            const ds = _calToISO(d);
+            const dayEvs = weekEvMap[ds] || [];
+            const isToday = ds === todayStr;
+            return `<div class="cal-week-col"${isToday?' style="background:rgba(74,144,255,0.025)"':''}>
+              ${HOURS.map(() => `<div class="cal-week-hslot"></div>`).join('')}
+              ${dayEvs.map((ev, ei) => {
+                const [hh, mm] = (ev.time||'09:00').split(':').map(Number);
+                if (hh < 7 || hh > 20) return '';
+                const top = (hh - 7) * 60 + (mm/60)*60;
+                const ht  = Math.max(24, ((ev.duration||60)/60)*60);
+                const left = ei > 0 ? Math.min(ei*18, 36) : 0;
+                return `<div class="cal-week-ev" style="background:${ev.color};top:${top}px;height:${ht}px;left:${3+left}px;" data-evid="${ev.id}" onclick="calOpenPopup('${ev.id}',this)">
+                  <div class="cal-week-ev-title">${ev.title}</div>
+                  <div class="cal-week-ev-time">${_calFmtTime(ev.time)}</div>
+                </div>`;
+              }).join('')}
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+    </div>`;
+}
+
+// ---- DAY ----
+function _calRenderDay(container, events) {
+  const ds = _calToISO(calCurrentDate);
+  const todayStr = _calToISO(new Date());
+  const isToday = ds === todayStr;
+  const MONTHS  = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const DAYNAMES= ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const HOURS   = Array.from({length:15}, (_,i) => i + 6); // 6am–8pm
+
+  const dayEvs = events.filter(ev => {
+    if (ev.isMultiDay) {
+      const s = new Date(ev.startDate||ev.date), e2 = new Date(ev.endDate||ev.date);
+      return calCurrentDate >= s && calCurrentDate <= e2;
+    }
+    return ev.date === ds;
+  });
+
+  const typeColors = { task:'rgba(74,144,255,0.12)', project:'rgba(168,85,247,0.12)', sprint:'rgba(0,212,170,0.12)', meeting:'rgba(255,140,66,0.12)' };
+  const typeText   = { task:'var(--accent-blue)', project:'var(--accent-purple)', sprint:'var(--accent-teal)', meeting:'var(--accent-orange)' };
+
+  container.innerHTML = `
+    <div class="cal-day-wrap">
+      <div class="cal-day-hero">
+        <div class="cal-day-bignum${isToday?' cal-dtoday':''}">${calCurrentDate.getDate()}</div>
+        <div class="cal-day-info-col">
+          <div class="cal-day-wname">${DAYNAMES[calCurrentDate.getDay()]}</div>
+          <div class="cal-day-fulldate">${MONTHS[calCurrentDate.getMonth()]} ${calCurrentDate.getDate()}, ${calCurrentDate.getFullYear()}</div>
+        </div>
+        <div class="cal-day-badgebar">
+          <span class="cal-day-badge" style="background:rgba(74,144,255,0.12);color:var(--accent-blue)">${dayEvs.length} event${dayEvs.length!==1?'s':''}</span>
+          ${dayEvs.filter(e=>e.type==='task').length?`<span class="cal-day-badge" style="background:rgba(74,144,255,0.07);color:var(--text-secondary)">${dayEvs.filter(e=>e.type==='task').length} tasks</span>`:''}
+          ${dayEvs.filter(e=>e.type==='meeting').length?`<span class="cal-day-badge" style="background:rgba(255,140,66,0.1);color:var(--accent-orange)">${dayEvs.filter(e=>e.type==='meeting').length} meetings</span>`:''}
+          ${dayEvs.filter(e=>e.type==='sprint').length?`<span class="cal-day-badge" style="background:rgba(0,212,170,0.1);color:var(--accent-teal)">${dayEvs.filter(e=>e.type==='sprint').length} sprints</span>`:''}
+        </div>
+      </div>
+      <div class="cal-day-scroll">
+        <div class="cal-day-tgutter">${HOURS.map(h=>`<div class="cal-day-tlbl">${h===12?'12pm':h>12?(h-12)+'pm':h+'am'}</div>`).join('')}</div>
+        <div class="cal-day-slots">
+          ${HOURS.map(()=>`<div class="cal-day-hslot"></div>`).join('')}
+          ${dayEvs.map((ev, ei) => {
+            const [hh, mm] = (ev.time||'09:00').split(':').map(Number);
+            if (hh < 6 || hh > 20) return '';
+            const top = (hh - 6) * 66 + (mm/60)*66;
+            const ht  = Math.max(44, ((ev.duration||60)/60)*66);
+            const typeLabel = ev.type.charAt(0).toUpperCase() + ev.type.slice(1);
+            return `<div class="cal-day-ev" style="background:${ev.color};top:${top}px;min-height:${ht}px;" data-evid="${ev.id}" onclick="calOpenPopup('${ev.id}',this)">
+              <div class="cal-day-ev-title">${ev.title}</div>
+              <div class="cal-day-ev-meta">${_calFmtTime(ev.time)}${ev.duration?' · '+ev.duration+'min':''} · ${typeLabel}</div>
+              ${ev.project?`<div class="cal-day-ev-proj">${ev.project}</div>`:''}
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+    </div>`;
+}
+
+// ---- AGENDA ----
+function _calRenderAgenda(container, events) {
+  const rsEl = document.getElementById('cal-range-start');
+  const reEl = document.getElementById('cal-range-end');
+  let startDate = new Date(calCurrentDate.getFullYear(), calCurrentDate.getMonth(), 1);
+  let endDate   = new Date(calCurrentDate.getFullYear(), calCurrentDate.getMonth() + 3, 0);
+  if (rsEl?.value) startDate = new Date(rsEl.value);
+  if (reEl?.value) endDate   = new Date(reEl.value);
+
+  const todayStr = _calToISO(new Date());
+  const MONTHS   = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const DNAMES   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+  const grouped = {};
+  events.forEach(ev => {
+    const getDates = () => {
+      if (ev.isMultiDay && ev.startDate && ev.endDate) {
+        const dates = [];
+        let cur = new Date(ev.startDate), end2 = new Date(ev.endDate);
+        while (cur <= end2) { dates.push(_calToISO(cur)); cur.setDate(cur.getDate()+1); }
+        return dates;
+      }
+      return [ev.date];
+    };
+    getDates().forEach(ds => {
+      const d = new Date(ds);
+      if (d >= startDate && d <= endDate) { if (!grouped[ds]) grouped[ds]=[]; grouped[ds].push(ev); }
+    });
+  });
+
+  const sorted = Object.keys(grouped).sort();
+  if (!sorted.length) {
+    container.innerHTML = `<div class="cal-agenda-wrap"><div class="cal-empty"><i data-lucide="calendar-x" width="44" height="44"></i><div class="cal-empty-title">No events in this range</div><div class="cal-empty-sub">Try adjusting the date range or adding a new event</div><button class="btn-primary" onclick="openModal('modal-cal-event')" style="margin-top:8px;" type="button"><i data-lucide="plus"></i> New Event</button></div></div>`;
+    return;
+  }
+
+  const typeColors = { task:'rgba(74,144,255,0.12)', project:'rgba(168,85,247,0.12)', sprint:'rgba(0,212,170,0.12)', meeting:'rgba(255,140,66,0.12)' };
+  const typeText   = { task:'var(--accent-blue)', project:'var(--accent-purple)', sprint:'var(--accent-teal)', meeting:'var(--accent-orange)' };
+
+  container.innerHTML = `<div class="cal-agenda-wrap">
+    ${sorted.map(ds => {
+      const d = new Date(ds);
+      const isToday = ds === todayStr;
+      const label = isToday ? 'Today' : `${DNAMES[d.getDay()]}, ${MONTHS[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+      const dayEvs = grouped[ds].sort((a,b)=>(a.time||'').localeCompare(b.time||''));
+      return `<div>
+        <div class="cal-agenda-date-hdr${isToday?' cal-ag-today':''}">
+          <div class="cal-agenda-dtext">${label}</div>
+          <div class="cal-agenda-dline"></div>
+          <div class="cal-agenda-dcount">${dayEvs.length} event${dayEvs.length!==1?'s':''}</div>
+        </div>
+        ${dayEvs.map(ev => {
+          const tl = ev.type.charAt(0).toUpperCase()+ev.type.slice(1);
+          return `<div class="cal-agenda-ev" data-evid="${ev.id}" onclick="calOpenPopup('${ev.id}',this)">
+            <div class="cal-agenda-ev-bar" style="background:${ev.color}"></div>
+            <div class="cal-agenda-ev-time">${_calFmtTime(ev.time)}</div>
+            <div class="cal-agenda-ev-title">${ev.title}</div>
+            <span class="cal-agenda-ev-type" style="background:${typeColors[ev.type]};color:${typeText[ev.type]}">${tl}</span>
+            ${ev.project?`<div class="cal-agenda-ev-proj">${ev.project}</div>`:''}
+          </div>`;
+        }).join('')}
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+// ---- EVENT POPUP ----
+function calOpenPopup(evId, triggerEl) {
+  closeAllDDs();
+  const allEvs = getCalendarEvents();
+  const ev = allEvs.find(e => e.id === evId);
+  if (!ev) return;
+  _calPopupEvId = evId;
+
+  const typeColors = { task:'rgba(74,144,255,0.14)', project:'rgba(168,85,247,0.14)', sprint:'rgba(0,212,170,0.14)', meeting:'rgba(255,140,66,0.14)' };
+  const typeText   = { task:'var(--accent-blue)', project:'var(--accent-purple)', sprint:'var(--accent-teal)', meeting:'var(--accent-orange)' };
+  const tl = ev.type.charAt(0).toUpperCase()+ev.type.slice(1);
+
+  let statusHtml = '';
+  if (ev.status && statusConfig[ev.status]) {
+    const sc = statusConfig[ev.status];
+    statusHtml = `<div class="cal-popup-row"><i data-lucide="circle-dot"></i><span>Status: <strong>${sc.label}</strong></span></div>`;
+  } else if (ev.status) {
+    statusHtml = `<div class="cal-popup-row"><i data-lucide="circle-dot"></i><span>Status: <strong>${ev.status}</strong></span></div>`;
+  }
+
+  let progressHtml = '';
+  if (ev.progress !== undefined) {
+    progressHtml = `<div><div class="cal-popup-progress-bar"><div class="cal-popup-progress-fill" id="cal-pfill" style="background:${ev.color};width:0%"></div></div><div style="font-size:10px;color:var(--text-muted);text-align:right">${ev.progress}% complete</div></div>`;
+  }
+
+  let subtasksHtml = '';
+  if (ev.subtasks?.length) {
+    const done = ev.subtasks.filter(s=>s.done).length;
+    subtasksHtml = `<div class="cal-popup-row"><i data-lucide="check-circle-2"></i><span>Subtasks: <strong>${done}/${ev.subtasks.length} done</strong></span></div>`;
+  }
+
+  let footerBtns = `<button class="cal-popup-btn-s" onclick="calClosePopup()" type="button">Close</button>`;
+  if (ev.type === 'task' && ev.sourceId)
+    footerBtns += `<button class="cal-popup-btn-p" onclick="calClosePopup();openTaskDetail(${ev.sourceId})" type="button">View Task</button>`;
+  else if (ev.type === 'project')
+    footerBtns += `<button class="cal-popup-btn-p" onclick="calClosePopup();setActive(document.querySelector('.nav-item[onclick*=\\'Projects\\']'),\\'Projects\\')" type="button">View Project</button>`;
+  else if (ev.type === 'sprint')
+    footerBtns += `<button class="cal-popup-btn-p" onclick="calClosePopup();setActive(document.querySelector('.nav-item[onclick*=\\'Sprints\\']'),\\'Sprints\\')" type="button">View Sprint</button>`;
+
+  const popup = document.getElementById('cal-event-popup');
+  popup.innerHTML = `
+    <div class="cal-popup-head">
+      <span class="cal-popup-type" style="background:${typeColors[ev.type]};color:${typeText[ev.type]}">${tl}</span>
+      <button class="cal-popup-x" onclick="calClosePopup()" type="button"><i data-lucide="x"></i></button>
+    </div>
+    <div class="cal-popup-name">${ev.title}</div>
+    ${ev.project?`<div class="cal-popup-row"><i data-lucide="folder"></i><span>${ev.project}</span></div>`:''}
+    <div class="cal-popup-row"><i data-lucide="calendar"></i><span><strong>${ev.isMultiDay?(ev.startDate+' → '+ev.endDate):ev.date}</strong></span></div>
+    ${ev.time?`<div class="cal-popup-row"><i data-lucide="clock"></i><span>${_calFmtTime(ev.time)}${ev.duration?' · '+ev.duration+' min':''}</span></div>`:''}
+    ${ev.assignee?`<div class="cal-popup-row"><i data-lucide="user"></i><span>Assignee: <strong>${ev.assignee}</strong></span></div>`:''}
+    ${ev.priority?`<div class="cal-popup-row"><i data-lucide="flag"></i><span>Priority: <strong style="text-transform:capitalize">${ev.priority}</strong></span></div>`:''}
+    ${statusHtml}${progressHtml}${subtasksHtml}
+    ${ev.notes?`<div class="cal-popup-row" style="align-items:flex-start"><i data-lucide="file-text"></i><span style="font-size:11px;color:var(--text-muted);line-height:1.5">${ev.notes.substring(0,110)}${ev.notes.length>110?'…':''}</span></div>`:''}
+    <div class="cal-popup-footer">${footerBtns}</div>`;
+
+  const rect = triggerEl.getBoundingClientRect();
+  popup.style.display = 'block';
+  popup.classList.add('open');
+  const pw = 304, ph = 320;
+  let left = rect.right + 10, top = rect.top;
+  if (left + pw > window.innerWidth - 10) left = rect.left - pw - 10;
+  if (top + ph > window.innerHeight - 10) top = window.innerHeight - ph - 10;
+  if (left < 10) left = 10;
+  if (top < 10) top = 10;
+  popup.style.left = left + 'px';
+  popup.style.top  = top  + 'px';
+
+  lucide.createIcons();
+  requestAnimationFrame(() => {
+    const fill = document.getElementById('cal-pfill');
+    if (fill && ev.progress !== undefined) fill.style.width = ev.progress + '%';
+  });
+}
+
+function calClosePopup() {
+  const p = document.getElementById('cal-event-popup');
+  if (p) { p.classList.remove('open'); p.style.display = 'none'; }
+  _calPopupEvId = null;
+}
+
+// Close popup when clicking outside
+document.addEventListener('click', (e) => {
+  if (_calPopupEvId && !e.target.closest('#cal-event-popup') && !e.target.closest('[data-evid]') && !e.target.closest('.cal-ev-pill') && !e.target.closest('.cal-week-ev') && !e.target.closest('.cal-day-ev') && !e.target.closest('.cal-agenda-ev')) {
+    calClosePopup();
+  }
+});
+
+// ---- MODAL ----
+function calModalSelectType(btn, type) {
+  document.querySelectorAll('#cal-modal-type-grid .cal-type-card').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+
+function calSaveEvent() {
+  const title    = document.getElementById('cal-modal-title')?.value.trim();
+  const date     = document.getElementById('cal-modal-date')?.value;
+  const time     = document.getElementById('cal-modal-time')?.value;
+  const endDate  = document.getElementById('cal-modal-end-date')?.value;
+  const project  = document.getElementById('cal-modal-project')?.value;
+  const notes    = document.getElementById('cal-modal-notes')?.value;
+  const priority = document.getElementById('cal-modal-priority')?.value;
+  const assignee = document.getElementById('cal-modal-assignee')?.value;
+  const typeBtn  = document.querySelector('#cal-modal-type-grid .cal-type-card.sel');
+  const type     = typeBtn?.dataset.type || 'task';
+
+  if (!title) { showToast('Please enter an event title', 'error', 2500); return; }
+  if (!date)  { showToast('Please select a start date', 'error', 2500); return; }
+
+  const typeColors = { task:'#4A90FF', project:'#A855F7', sprint:'#00D4AA', meeting:'#FF8C42' };
+  calUserEvents.push({
+    id:'user-'+Date.now(), type, title, date,
+    startDate:date, endDate:endDate||date,
+    time, duration:60, project, assignee, priority,
+    status:'todo', color:typeColors[type], progress:0, notes,
+    isMultiDay: !!(endDate && endDate !== date),
+  });
+
+  document.getElementById('cal-modal-title').value = '';
+  document.getElementById('cal-modal-date').value = '';
+  document.getElementById('cal-modal-end-date').value = '';
+  document.getElementById('cal-modal-notes').value = '';
+  document.getElementById('cal-modal-time').value = '09:00';
+  closeModal('modal-cal-event');
+  calCurrentDate = new Date(date);
+  renderCalendarPage();
+  showToast('Event added to calendar!', 'success', 2500);
 }
 
 </script>
