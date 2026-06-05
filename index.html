@@ -1569,6 +1569,713 @@
     .rpt-table-row-2col { grid-template-columns: 1fr; }
   }
   @media (max-width: 900px) { .rpt-chart-row-3col { grid-template-columns: 1fr; } }
+
+  /* ===== INTEGRATIONS PAGE ===== */
+  #page-integrations { display: flex; flex-direction: column; gap: 16px; }
+
+  .int-kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+  .int-kpi-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: background var(--duration-normal) var(--ease-out), border-color var(--duration-fast);
+    position: relative;
+    overflow: hidden;
+  }
+  .int-kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 10px 10px 0 0;
+  }
+  .int-kpi-card:nth-child(1)::before { background: var(--accent-blue); }
+  .int-kpi-card:nth-child(2)::before { background: var(--accent-teal); }
+  .int-kpi-card:nth-child(3)::before { background: var(--accent-orange); }
+  .int-kpi-card:nth-child(4)::before { background: var(--accent-purple); }
+
+  .int-kpi-label { font-size: 11px; color: var(--text-secondary); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
+  .int-kpi-value { font-family: 'DM Mono', monospace; font-size: 26px; font-weight: 700; color: var(--text-primary); line-height: 1; }
+  .int-kpi-sub { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+  .int-kpi-sub .int-up { color: var(--accent-green); }
+  .int-kpi-sub .int-down { color: var(--accent-red); }
+
+  .int-body-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 14px;
+    align-items: start;
+  }
+
+  .int-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 16px 18px;
+    transition: background var(--duration-normal) var(--ease-out);
+  }
+
+  .int-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .int-panel-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--text-primary); }
+  .int-panel-sub { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
+  .int-filter-tabs {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .int-filter-tab {
+    padding: 5px 12px;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
+  }
+  .int-filter-tab:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .int-filter-tab.active { background: var(--accent-blue); color: #fff; border-color: transparent; }
+
+  .int-search-wrap {
+    position: relative;
+    flex: 1;
+    max-width: 220px;
+  }
+  .int-search-wrap .search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); width: 13px; height: 13px; pointer-events: none; }
+  .int-search-input {
+    width: 100%;
+    height: 32px;
+    padding: 0 12px 0 30px;
+    background: var(--bg-base);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    transition: border-color var(--duration-fast);
+  }
+  .int-search-input::placeholder { color: var(--text-muted); }
+  .int-search-input:focus { border-color: var(--accent-blue); outline: none; }
+
+  .int-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .int-card {
+    background: var(--bg-base);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: pointer;
+    transition: border-color var(--duration-fast), background var(--duration-fast), transform var(--duration-fast);
+    position: relative;
+  }
+  .int-card:hover { border-color: var(--border-default); background: var(--bg-card-hover); transform: translateY(-1px); }
+  .int-card.connected { border-color: rgba(0,212,170,0.25); }
+  .int-card.connected:hover { border-color: rgba(0,212,170,0.5); }
+
+  .int-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .int-card-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    border: 1px solid var(--border-subtle);
+  }
+  .int-card-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+  .int-card-status.connected { background: rgba(34,197,94,0.12); color: var(--accent-green); }
+  .int-card-status.available { background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .int-card-status.beta { background: rgba(234,179,8,0.12); color: var(--accent-yellow); }
+  .int-card-status.error { background: rgba(255,77,77,0.12); color: var(--accent-red); }
+  .int-card-status-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  .int-card-name { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--text-primary); }
+  .int-card-category { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+  .int-card-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.5; flex: 1; }
+
+  .int-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; }
+  .int-card-meta { font-size: 10px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+  .int-card-meta svg { width: 11px; height: 11px; }
+
+  .int-connect-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 28px;
+    padding: 0 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background var(--duration-fast), color var(--duration-fast);
+  }
+  .int-connect-btn.add { background: var(--accent-blue); color: #fff; }
+  .int-connect-btn.add:hover { background: #3a7ae8; }
+  .int-connect-btn.manage { background: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border-subtle); }
+  .int-connect-btn.manage:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .int-connect-btn.disconnect { background: rgba(255,77,77,0.1); color: var(--accent-red); border: 1px solid rgba(255,77,77,0.2); }
+  .int-connect-btn.disconnect:hover { background: rgba(255,77,77,0.18); }
+  .int-connect-btn svg { width: 12px; height: 12px; }
+
+  /* right sidebar */
+  .int-sidebar-stack { display: flex; flex-direction: column; gap: 14px; }
+
+  .int-activity-list { display: flex; flex-direction: column; gap: 1px; }
+  .int-activity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .int-activity-item:last-child { border-bottom: none; }
+  .int-activity-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+  .int-activity-text { font-size: 12px; color: var(--text-secondary); flex: 1; line-height: 1.45; }
+  .int-activity-text strong { color: var(--text-primary); font-weight: 600; }
+  .int-activity-time { font-size: 10px; color: var(--text-muted); font-family: 'DM Mono', monospace; white-space: nowrap; }
+
+  .int-apikey-section { display: flex; flex-direction: column; gap: 10px; }
+  .int-apikey-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: var(--bg-base);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    transition: border-color var(--duration-fast);
+  }
+  .int-apikey-row:hover { border-color: var(--border-default); }
+  .int-apikey-label { font-size: 11px; font-weight: 600; color: var(--text-primary); flex: 1; }
+  .int-apikey-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    background: var(--bg-card);
+    padding: 3px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+  }
+  .int-apikey-icon-btn {
+    width: 24px; height: 24px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 5px;
+    transition: background var(--duration-fast), color var(--duration-fast);
+  }
+  .int-apikey-icon-btn:hover { background: var(--bg-card); color: var(--text-primary); }
+  .int-apikey-icon-btn svg { width: 13px; height: 13px; }
+
+  .int-usage-row { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+  .int-usage-item { display: flex; align-items: center; gap: 8px; }
+  .int-usage-name { font-size: 11px; color: var(--text-secondary); width: 80px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .int-usage-track { flex: 1; height: 6px; background: var(--border-subtle); border-radius: 3px; overflow: hidden; }
+  .int-usage-fill { height: 100%; border-radius: 3px; transition: width 700ms var(--ease-out); }
+  .int-usage-count { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--text-muted); min-width: 34px; text-align: right; }
+
+  .int-webhook-list { display: flex; flex-direction: column; gap: 8px; }
+  .int-webhook-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--bg-base);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+  }
+  .int-webhook-status { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .int-webhook-url { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-secondary); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .int-webhook-event { font-size: 10px; padding: 2px 7px; background: var(--bg-card); color: var(--text-muted); border-radius: 4px; flex-shrink: 0; }
+  .int-webhook-icon-btn { width: 22px; height: 22px; border: none; background: transparent; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: background var(--duration-fast), color var(--duration-fast); }
+  .int-webhook-icon-btn:hover { background: var(--bg-card); color: var(--text-primary); }
+  .int-webhook-icon-btn svg { width: 12px; height: 12px; }
+
+  /* ===== INTEGRATION MODALS ===== */
+  .int-modal-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(5px);
+    padding: 20px;
+  }
+  .int-modal-overlay.open { display: flex; }
+
+  .int-modal-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-default);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    animation: scaleIn 220ms var(--ease-out) forwards;
+    max-height: 90vh;
+    overflow: hidden;
+  }
+
+  .int-connect-box { width: 780px; max-width: 100%; }
+  .int-manage-box  { width: 820px; max-width: 100%; }
+  .int-newkey-box  { width: 520px; max-width: 100%; }
+
+  .int-modal-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 22px 24px 18px;
+    border-bottom: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+
+  .int-modal-logo {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    border: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+
+  .int-modal-cat-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 20px;
+    background: var(--bg-base);
+    color: var(--text-muted);
+    border: 1px solid var(--border-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .int-oauth-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--text-primary); }
+  .int-oauth-subtitle { font-size: 12px; color: var(--text-secondary); margin-top: 3px; }
+
+  .int-modal-body {
+    display: grid;
+    overflow-y: auto;
+    flex: 1;
+  }
+  .int-connect-box .int-modal-body { grid-template-columns: 1.1fr 0.9fr; }
+  .int-manage-box .int-modal-body  { grid-template-columns: 1.1fr 0.9fr; }
+  .int-newkey-box .int-modal-body  { grid-template-columns: 1fr; }
+
+  .int-connect-left, .int-connect-right,
+  .int-manage-left,  .int-manage-right {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .int-connect-right, .int-manage-right {
+    border-left: 1px solid var(--border-subtle);
+  }
+
+  .int-modal-section { display: flex; flex-direction: column; gap: 10px; }
+  .int-modal-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .int-modal-footer {
+    display: flex;
+    gap: 10px;
+    padding: 16px 24px;
+    border-top: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+  .int-oauth-cancel {
+    flex: 1;
+    height: 40px;
+    border: 1px solid var(--border-default);
+    border-radius: 9px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background var(--duration-fast), color var(--duration-fast);
+  }
+  .int-oauth-cancel:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .int-oauth-confirm {
+    flex: 2;
+    height: 40px;
+    border: none;
+    border-radius: 9px;
+    background: var(--accent-blue);
+    color: #fff;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--duration-fast);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .int-oauth-confirm:hover { background: #3a7ae8; }
+  .int-oauth-confirm svg { width: 15px; height: 15px; }
+
+  .int-close-btn {
+    margin-left: auto;
+    width: 30px; height: 30px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 7px;
+    transition: background var(--duration-fast), color var(--duration-fast);
+    flex-shrink: 0;
+  }
+  .int-close-btn:hover { background: var(--bg-base); color: var(--text-primary); }
+  .int-close-btn svg { width: 16px; height: 16px; }
+
+  @keyframes scaleIn { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: scale(1); } }
+
+  /* Connect modal specifics */
+  .int-feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--bg-base);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+  }
+  .int-feature-icon {
+    width: 30px; height: 30px;
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .int-feature-icon svg { width: 15px; height: 15px; }
+  .int-feature-name { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+  .int-feature-desc { font-size: 11px; color: var(--text-secondary); margin-top: 1px; line-height: 1.4; }
+
+  .int-step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .int-step-num {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--accent-blue-bg);
+    border: 1px solid rgba(74,144,255,0.3);
+    color: var(--accent-blue);
+    font-size: 10px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .int-step-text { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+  .int-step-text strong { color: var(--text-primary); }
+
+  .int-perm-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 10px;
+    background: var(--bg-base);
+    border-radius: 7px;
+    border: 1px solid var(--border-subtle);
+  }
+  .int-perm-icon { width: 26px; height: 26px; border-radius: 6px; background: rgba(74,144,255,0.1); border: 1px solid rgba(74,144,255,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .int-perm-icon svg { width: 13px; height: 13px; color: var(--accent-blue); }
+  .int-perm-text { font-size: 11px; color: var(--text-secondary); flex: 1; }
+
+  .int-req-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .int-req-item:last-child { border-bottom: none; }
+  .int-req-item svg { width: 13px; height: 13px; color: var(--accent-teal); flex-shrink: 0; }
+
+  .int-error-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    background: rgba(255,77,77,0.08);
+    border: 1px solid rgba(255,77,77,0.25);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--accent-red);
+    line-height: 1.5;
+  }
+  .int-error-notice svg { width: 15px; height: 15px; flex-shrink: 0; margin-top: 1px; }
+
+  /* Manage modal specifics */
+  .int-manage-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .int-manage-info-cell {
+    padding: 10px 12px;
+    background: var(--bg-base);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+  }
+  .int-manage-info-label { font-size: 10px; color: var(--text-muted); font-weight: 500; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .int-manage-info-val { font-size: 12px; color: var(--text-primary); font-weight: 500; display: flex; align-items: center; gap: 5px; }
+  .int-manage-info-val svg { width: 12px; height: 12px; color: var(--accent-blue); }
+
+  .int-manage-stats-row { display: flex; gap: 10px; }
+  .int-manage-stat-card {
+    flex: 1;
+    padding: 12px;
+    background: var(--bg-base);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    text-align: center;
+  }
+  .int-manage-stat-num { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 700; color: var(--text-primary); }
+  .int-manage-stat-lbl { font-size: 10px; color: var(--text-muted); margin-top: 3px; }
+
+  .int-config-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .int-config-row:last-child { border-bottom: none; }
+  .int-config-label { font-size: 12px; color: var(--text-primary); font-weight: 500; }
+  .int-config-sub   { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+  .int-config-input {
+    background: var(--bg-base);
+    border: 1px solid var(--border-subtle);
+    border-radius: 7px;
+    padding: 5px 10px;
+    color: var(--text-primary);
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    min-width: 120px;
+    transition: border-color var(--duration-fast);
+  }
+  .int-config-input:focus { outline: none; border-color: var(--accent-blue); }
+
+  .int-log-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .int-log-item:last-child { border-bottom: none; }
+  .int-log-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+  .int-log-text { font-size: 11px; color: var(--text-secondary); flex: 1; line-height: 1.45; }
+  .int-log-time { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--text-muted); white-space: nowrap; }
+
+  .int-danger-zone {
+    padding: 14px;
+    background: rgba(255,77,77,0.05);
+    border: 1px solid rgba(255,77,77,0.2);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .int-danger-label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 700; color: var(--accent-red);
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .int-danger-label svg { width: 13px; height: 13px; }
+  .int-danger-text { font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
+  .int-disconnect-btn {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    height: 34px;
+    border: 1px solid rgba(255,77,77,0.35);
+    border-radius: 8px;
+    background: rgba(255,77,77,0.1);
+    color: var(--accent-red);
+    font-size: 12px; font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background var(--duration-fast), border-color var(--duration-fast);
+  }
+  .int-disconnect-btn:hover { background: rgba(255,77,77,0.2); border-color: rgba(255,77,77,0.5); }
+  .int-disconnect-btn svg { width: 13px; height: 13px; }
+
+  /* New API Key modal */
+  .int-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 20px 24px 0; }
+  .int-form-group { display: flex; flex-direction: column; gap: 6px; }
+  .int-form-label { font-size: 11px; font-weight: 600; color: var(--text-secondary); }
+  .int-form-input {
+    height: 36px;
+    padding: 0 12px;
+    background: var(--bg-base);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    transition: border-color var(--duration-fast);
+  }
+  .int-form-input:focus { outline: none; border-color: var(--accent-blue); }
+  select.int-form-input { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
+
+  .int-scope-options { display: flex; flex-direction: column; gap: 6px; }
+  .int-scope-option { display: block; cursor: pointer; }
+  .int-scope-option input { display: none; }
+  .int-scope-card {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px;
+    background: var(--bg-base);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    transition: border-color var(--duration-fast), background var(--duration-fast);
+  }
+  .int-scope-option input:checked + .int-scope-card {
+    border-color: var(--accent-blue);
+    background: var(--accent-blue-bg);
+  }
+  .int-scope-card:hover { border-color: var(--border-default); }
+  .int-scope-icon { width: 28px; height: 28px; border-radius: 7px; background: var(--bg-card); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .int-scope-icon svg { width: 14px; height: 14px; color: var(--accent-blue); }
+  .int-scope-name { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+  .int-scope-desc { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+
+  .int-key-success-wrap {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 10px;
+    padding: 28px 24px 0;
+    text-align: center;
+  }
+  .int-key-success-icon { width: 52px; height: 52px; border-radius: 50%; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); display: flex; align-items: center; justify-content: center; }
+  .int-key-success-icon svg { width: 26px; height: 26px; color: var(--accent-green); }
+  .int-key-success-title { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; color: var(--text-primary); }
+  .int-key-success-sub { font-size: 12px; color: var(--text-secondary); }
+  .int-key-display {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--bg-base);
+    border: 1px solid var(--border-default);
+    border-radius: 8px;
+    padding: 10px 14px;
+    width: 100%;
+    margin-top: 4px;
+  }
+  .int-key-display code { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent-teal); flex: 1; word-break: break-all; text-align: left; }
+
+  .int-toggle {
+    position: relative;
+    width: 32px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+  .int-toggle input { opacity: 0; width: 0; height: 0; }
+  .int-toggle-slider {
+    position: absolute;
+    inset: 0;
+    background: var(--border-default);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background var(--duration-fast);
+  }
+  .int-toggle-slider::before {
+    content: '';
+    position: absolute;
+    width: 12px; height: 12px;
+    left: 3px; top: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform var(--duration-fast);
+  }
+  .int-toggle input:checked + .int-toggle-slider { background: var(--accent-teal); }
+  .int-toggle input:checked + .int-toggle-slider::before { transform: translateX(14px); }
+
+  .int-sync-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .int-sync-row:last-child { border-bottom: none; }
+  .int-sync-info { display: flex; flex-direction: column; gap: 2px; }
+  .int-sync-name { font-size: 12px; color: var(--text-primary); font-weight: 500; }
+  .int-sync-detail { font-size: 10px; color: var(--text-muted); }
+
+  .int-add-webhook-btn {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    height: 32px;
+    width: 100%;
+    border: 1px dashed var(--border-default);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: border-color var(--duration-fast), color var(--duration-fast), background var(--duration-fast);
+    margin-top: 4px;
+  }
+  .int-add-webhook-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); background: rgba(74,144,255,0.04); }
+  .int-add-webhook-btn svg { width: 13px; height: 13px; }
+
+  @media (max-width: 1280px) {
+    .int-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .int-body-grid { grid-template-columns: 1fr; }
+    .int-sidebar-stack { flex-direction: row; flex-wrap: wrap; }
+    .int-sidebar-stack > * { flex: 1 1 300px; }
+    .int-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 900px) {
+    .int-grid { grid-template-columns: 1fr; }
+    .int-kpi-grid { grid-template-columns: 1fr 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -2314,6 +3021,362 @@
       </div>
 
     </div><!-- /page-reports -->
+
+    <!-- ===== INTEGRATIONS PAGE ===== -->
+    <div id="page-integrations" style="display:none;">
+
+      <!-- Header -->
+      <div class="tasks-page-header">
+        <div>
+          <div class="page-breadcrumb">Overview / Integrations</div>
+          <div class="page-heading">Integrations</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <button class="btn-secondary" id="int-docs-btn" type="button">
+            <i data-lucide="book-open"></i> API Docs
+          </button>
+          <button class="btn-primary" id="int-newkey-btn" type="button">
+            <i data-lucide="plus"></i> New API Key
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI strip -->
+      <div class="int-kpi-grid" id="int-kpi-grid"></div>
+
+      <!-- Body grid: main grid + right sidebar -->
+      <div class="int-body-grid">
+
+        <!-- LEFT: catalogue + connected -->
+        <div style="display:flex;flex-direction:column;gap:14px;">
+
+          <!-- Catalogue panel -->
+          <div class="int-panel">
+            <div class="int-panel-header">
+              <div>
+                <div class="int-panel-title">App Catalogue</div>
+                <div class="int-panel-sub">Connect your tools to supercharge your workflow</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div class="int-search-wrap">
+                  <i data-lucide="search" class="search-icon"></i>
+                  <input class="int-search-input" id="int-search" placeholder="Search apps…" type="text">
+                </div>
+              </div>
+            </div>
+            <div class="int-filter-tabs" id="int-filter-tabs" style="margin-bottom:14px;">
+              <button class="int-filter-tab active" data-cat="All" type="button">All</button>
+              <button class="int-filter-tab" data-cat="Communication" type="button">Communication</button>
+              <button class="int-filter-tab" data-cat="Development" type="button">Development</button>
+              <button class="int-filter-tab" data-cat="Productivity" type="button">Productivity</button>
+              <button class="int-filter-tab" data-cat="Design" type="button">Design</button>
+              <button class="int-filter-tab" data-cat="Analytics" type="button">Analytics</button>
+              <button class="int-filter-tab" data-cat="Storage" type="button">Storage</button>
+            </div>
+            <div class="int-grid" id="int-cards-grid"></div>
+          </div>
+
+          <!-- Sync settings panel -->
+          <div class="int-panel">
+            <div class="int-panel-header">
+              <div>
+                <div class="int-panel-title">Sync Settings</div>
+                <div class="int-panel-sub">Control what data flows between your integrations</div>
+              </div>
+            </div>
+            <div id="int-sync-list"></div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT sidebar -->
+        <div class="int-sidebar-stack">
+
+          <!-- Recent activity -->
+          <div class="int-panel">
+            <div class="int-panel-header">
+              <div>
+                <div class="int-panel-title">Recent Activity</div>
+                <div class="int-panel-sub">Last 24 hours</div>
+              </div>
+              <button class="btn-secondary" style="font-size:10px;padding:0 10px;height:26px;" type="button" onclick="showToast('Cleared activity log','success')">
+                <i data-lucide="trash-2"></i>
+              </button>
+            </div>
+            <div class="int-activity-list" id="int-activity-list"></div>
+          </div>
+
+          <!-- API Keys -->
+          <div class="int-panel">
+            <div class="int-panel-header">
+              <div>
+                <div class="int-panel-title">API Keys</div>
+                <div class="int-panel-sub">Manage access credentials</div>
+              </div>
+            </div>
+            <div class="int-apikey-section" id="int-apikey-list"></div>
+          </div>
+
+          <!-- API Usage -->
+          <div class="int-panel">
+            <div class="int-panel-header">
+              <div>
+                <div class="int-panel-title">API Usage</div>
+                <div class="int-panel-sub">Calls today by integration</div>
+              </div>
+              <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);" id="int-usage-total"></div>
+            </div>
+            <div class="int-usage-row" id="int-usage-list"></div>
+          </div>
+
+          <!-- Webhooks -->
+          <div class="int-panel">
+            <div class="int-panel-header">
+              <div>
+                <div class="int-panel-title">Webhooks</div>
+                <div class="int-panel-sub">Outbound event listeners</div>
+              </div>
+              <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);" id="int-wh-count"></span>
+            </div>
+            <div class="int-webhook-list" id="int-webhook-list"></div>
+            <button class="int-add-webhook-btn" onclick="showToast('Webhook editor coming soon','info')">
+              <i data-lucide="plus"></i> Add Webhook
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div><!-- /page-integrations -->
+
+    <!-- OAuth Connect Modal -->
+    <!-- ===== CONNECT MODAL ===== -->
+    <div class="int-modal-overlay" id="int-connect-modal">
+      <div class="int-modal-box int-connect-box">
+        <!-- Header -->
+        <div class="int-modal-head">
+          <div class="int-modal-logo" id="icm-logo"></div>
+          <div style="flex:1;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div class="int-oauth-title" id="icm-title"></div>
+              <div class="int-modal-cat-badge" id="icm-cat"></div>
+            </div>
+            <div class="int-oauth-subtitle" id="icm-subtitle"></div>
+          </div>
+          <button class="int-close-btn" onclick="closeIntModal('int-connect-modal')"><i data-lucide="x"></i></button>
+        </div>
+
+        <div class="int-modal-body">
+          <!-- Left column -->
+          <div class="int-connect-left">
+            <!-- Features -->
+            <div class="int-modal-section">
+              <div class="int-modal-section-label">What you get</div>
+              <div id="icm-features"></div>
+            </div>
+            <!-- Setup steps -->
+            <div class="int-modal-section">
+              <div class="int-modal-section-label">How it works</div>
+              <div id="icm-steps"></div>
+            </div>
+          </div>
+          <!-- Right column -->
+          <div class="int-connect-right">
+            <!-- Permissions -->
+            <div class="int-modal-section">
+              <div class="int-modal-section-label">Permissions requested</div>
+              <div id="icm-perms"></div>
+            </div>
+            <!-- Requirements -->
+            <div class="int-modal-section" id="icm-req-section">
+              <div class="int-modal-section-label">Requirements</div>
+              <div id="icm-reqs"></div>
+            </div>
+            <!-- Error notice for broken connections -->
+            <div class="int-error-notice" id="icm-error-notice" style="display:none;">
+              <i data-lucide="alert-triangle"></i>
+              <div id="icm-error-text"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="int-modal-footer">
+          <button class="int-oauth-cancel" onclick="closeIntModal('int-connect-modal')">Cancel</button>
+          <button class="int-oauth-confirm" id="icm-confirm-btn">
+            <i data-lucide="link"></i><span id="icm-confirm-label">Authorize &amp; Connect</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== MANAGE MODAL ===== -->
+    <div class="int-modal-overlay" id="int-manage-modal">
+      <div class="int-modal-box int-manage-box">
+        <!-- Header -->
+        <div class="int-modal-head">
+          <div class="int-modal-logo" id="imm-logo"></div>
+          <div style="flex:1;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div class="int-oauth-title" id="imm-title"></div>
+              <div class="int-card-status connected" style="font-size:10px;padding:3px 8px;border-radius:20px;display:inline-flex;align-items:center;gap:4px;"><div style="width:6px;height:6px;border-radius:50%;background:currentColor;"></div>Connected</div>
+            </div>
+            <div class="int-oauth-subtitle" id="imm-subtitle"></div>
+          </div>
+          <button class="int-close-btn" onclick="closeIntModal('int-manage-modal')"><i data-lucide="x"></i></button>
+        </div>
+
+        <div class="int-modal-body">
+          <!-- Left -->
+          <div class="int-manage-left">
+            <!-- Connection info -->
+            <div class="int-modal-section">
+              <div class="int-modal-section-label">Connection Details</div>
+              <div class="int-manage-info-grid" id="imm-info-grid"></div>
+            </div>
+            <!-- Stats -->
+            <div class="int-modal-section">
+              <div class="int-modal-section-label">Usage Stats</div>
+              <div class="int-manage-stats-row" id="imm-stats"></div>
+            </div>
+            <!-- App-specific settings -->
+            <div class="int-modal-section">
+              <div class="int-modal-section-label">Configuration</div>
+              <div id="imm-config"></div>
+            </div>
+          </div>
+          <!-- Right -->
+          <div class="int-manage-right">
+            <!-- Sync log -->
+            <div class="int-modal-section">
+              <div class="int-modal-section-label">Sync Log</div>
+              <div id="imm-log"></div>
+            </div>
+            <!-- Danger zone -->
+            <div class="int-danger-zone">
+              <div class="int-danger-label"><i data-lucide="alert-triangle"></i> Danger Zone</div>
+              <div class="int-danger-text">Disconnecting will stop all sync rules and webhooks associated with this integration. This cannot be undone.</div>
+              <button class="int-disconnect-btn" id="imm-disconnect-btn">
+                <i data-lucide="unlink"></i> Disconnect <span id="imm-appname-label"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="int-modal-footer">
+          <button class="int-oauth-cancel" onclick="closeIntModal('int-manage-modal')">Close</button>
+          <button class="int-oauth-confirm" id="imm-save-btn">
+            <i data-lucide="save"></i> Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== NEW API KEY MODAL ===== -->
+    <div class="int-modal-overlay" id="int-newkey-modal">
+      <div class="int-modal-box int-newkey-box">
+        <div class="int-modal-head">
+          <div class="int-modal-logo" style="background:rgba(74,144,255,0.15);border-color:rgba(74,144,255,0.3);font-size:22px;">🔑</div>
+          <div style="flex:1;">
+            <div class="int-oauth-title">Generate API Key</div>
+            <div class="int-oauth-subtitle">Create a new credential for external access</div>
+          </div>
+          <button class="int-close-btn" onclick="closeIntModal('int-newkey-modal')"><i data-lucide="x"></i></button>
+        </div>
+
+        <!-- Form state -->
+        <div id="int-newkey-form">
+          <div class="int-form-grid">
+            <div class="int-form-group" style="grid-column:1/-1;">
+              <label class="int-form-label">Key Name <span style="color:var(--accent-red)">*</span></label>
+              <input class="int-form-input" id="nk-name" type="text" placeholder="e.g. Production Key, CI/CD Pipeline…" maxlength="60">
+            </div>
+            <div class="int-form-group">
+              <label class="int-form-label">Permission Scope</label>
+              <div class="int-scope-options" id="nk-scope">
+                <label class="int-scope-option">
+                  <input type="radio" name="nk-scope-r" value="full" checked>
+                  <div class="int-scope-card">
+                    <div class="int-scope-icon"><i data-lucide="shield"></i></div>
+                    <div>
+                      <div class="int-scope-name">Full Access</div>
+                      <div class="int-scope-desc">Read + write all resources</div>
+                    </div>
+                  </div>
+                </label>
+                <label class="int-scope-option">
+                  <input type="radio" name="nk-scope-r" value="read">
+                  <div class="int-scope-card">
+                    <div class="int-scope-icon"><i data-lucide="eye"></i></div>
+                    <div>
+                      <div class="int-scope-name">Read Only</div>
+                      <div class="int-scope-desc">Fetch data, no mutations</div>
+                    </div>
+                  </div>
+                </label>
+                <label class="int-scope-option">
+                  <input type="radio" name="nk-scope-r" value="write">
+                  <div class="int-scope-card">
+                    <div class="int-scope-icon"><i data-lucide="edit-3"></i></div>
+                    <div>
+                      <div class="int-scope-name">Write Only</div>
+                      <div class="int-scope-desc">Create &amp; update, no reads</div>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div class="int-form-group">
+              <label class="int-form-label">Expiration</label>
+              <select class="int-form-input" id="nk-expiry">
+                <option value="30">30 days</option>
+                <option value="90" selected>90 days</option>
+                <option value="180">180 days</option>
+                <option value="365">1 year</option>
+                <option value="0">Never</option>
+              </select>
+            </div>
+            <div class="int-form-group">
+              <label class="int-form-label">Rate Limit <span style="color:var(--text-muted);font-weight:400;">(requests/min)</span></label>
+              <input class="int-form-input" id="nk-rate" type="number" placeholder="1000" min="10" max="10000" value="1000">
+            </div>
+            <div class="int-form-group" style="grid-column:1/-1;">
+              <label class="int-form-label">IP Whitelist <span style="color:var(--text-muted);font-weight:400;">(optional, comma-separated)</span></label>
+              <input class="int-form-input" id="nk-ips" type="text" placeholder="0.0.0.0/0 (all IPs)">
+            </div>
+          </div>
+          <div class="int-modal-footer" style="margin-top:20px;padding-top:0;border:none;">
+            <button class="int-oauth-cancel" onclick="closeIntModal('int-newkey-modal')">Cancel</button>
+            <button class="int-oauth-confirm" id="nk-generate-btn">
+              <i data-lucide="key"></i> Generate Key
+            </button>
+          </div>
+        </div>
+
+        <!-- Success state -->
+        <div id="int-newkey-success" style="display:none;">
+          <div class="int-key-success-wrap">
+            <div class="int-key-success-icon"><i data-lucide="check-circle"></i></div>
+            <div class="int-key-success-title">Key Generated!</div>
+            <div class="int-key-success-sub">Copy your API key now — it will only be shown once.</div>
+            <div class="int-key-display">
+              <code id="nk-generated-val"></code>
+              <button class="int-apikey-icon-btn" id="nk-copy-btn" title="Copy key"><i data-lucide="copy"></i></button>
+            </div>
+            <div style="font-size:11px;color:var(--accent-yellow);display:flex;align-items:center;gap:5px;margin-top:4px;">
+              <i data-lucide="alert-triangle" style="width:12px;height:12px;"></i>
+              Store this key securely. You cannot retrieve it again.
+            </div>
+          </div>
+          <div class="int-modal-footer" style="margin-top:20px;padding-top:0;border:none;">
+            <button class="int-oauth-confirm" onclick="closeIntModal('int-newkey-modal');renderIntAPIKeys();lucide.createIcons();" style="flex:1;">
+              <i data-lucide="check"></i> Done
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     </div>
   </main>
@@ -3266,6 +4329,7 @@ function setActive(el, label) {
   document.getElementById('page-sprints').style.display = 'none';
   document.getElementById('page-team').style.display = 'none';
   document.getElementById('page-reports').style.display = 'none';
+  document.getElementById('page-integrations').style.display = 'none';
   closeMemberDetail();
   if (label === 'Dashboard') {
     document.getElementById('page-dashboard').style.display = 'flex';
@@ -3284,6 +4348,9 @@ function setActive(el, label) {
   } else if (label === 'Reports') {
     document.getElementById('page-reports').style.display = 'flex';
     renderReportsPage();
+  } else if (label === 'Integration') {
+    document.getElementById('page-integrations').style.display = 'flex';
+    renderIntegrationsPage();
   } else {
     document.getElementById('page-dashboard').style.display = 'flex';
     showToast('Navigating to ' + label, 'info', 2000);
@@ -6211,6 +7278,758 @@ document.querySelectorAll('#rpt-range-tabs .rpt-range-tab').forEach(btn => {
     showToast(`Showing data for last ${btn.dataset.range.toUpperCase()}`, 'info', 1500);
   });
 });
+
+// ============================================================
+// INTEGRATIONS PAGE
+// ============================================================
+
+// ---- per-app rich data ----
+const INT_APP_DATA = {
+  slack: {
+    features: [
+      { icon:'bell',       color:'#4A154B', bg:'rgba(74,21,75,0.15)', title:'Real-time Notifications', desc:'Get task updates, completions, and mentions sent instantly to any channel.' },
+      { icon:'calendar',   color:'#4A90FF', bg:'rgba(74,144,255,0.12)', title:'Sprint Digests',           desc:'Daily and weekly digest of progress, blockers, and team velocity.' },
+      { icon:'git-branch', color:'#00D4AA', bg:'rgba(0,212,170,0.12)', title:'GitHub Round-trips',      desc:'PR status and code review reminders loop back to the right Slack thread.' }
+    ],
+    steps: [
+      { t:'Authorize with Slack OAuth', d:'Click Connect and grant ChronoLoop permission to post in your workspace.' },
+      { t:'Pick your notification channel', d:'Choose <strong>#dev-team</strong> or any channel to receive task updates.' },
+      { t:'Configure digest schedule', d:'Set daily/weekly summaries. You\'re live within 30 seconds.' }
+    ],
+    reqs: ['Slack workspace admin or channel manager role', 'Slack plan: Free, Pro, or Business+'],
+    workspace:'chronoloop-team.slack.com', connectedBy:'Aspen Herwitz', connectedDate:'Jan 8, 2025',
+    syncLog:[
+      { dot:'#22C55E', text:'Sprint digest delivered to #dev-team', time:'2m' },
+      { dot:'#22C55E', text:'Task "Auth Flow" marked complete — posted to #general', time:'4h' },
+      { dot:'#22C55E', text:'Daily standup digest sent to 12 members', time:'Yesterday' },
+      { dot:'#FF4D4D', text:'Rate limit hit — 1 message queued', time:'2 days ago' }
+    ],
+    config:[
+      { label:'Notification Channel', sub:'Where task updates are posted', type:'text', val:'#dev-team' },
+      { label:'Digest Schedule',      sub:'Frequency of summary messages', type:'select', val:'Daily', opts:['Off','Daily','Weekly'] },
+      { label:'@mention on overdue',  sub:'Ping assignee when task goes overdue', type:'toggle', val:true }
+    ]
+  },
+  github: {
+    features: [
+      { icon:'git-pull-request', color:'#24292e', bg:'rgba(255,255,255,0.06)', title:'PR → Task Linking', desc:'Pull requests are automatically linked to tasks by branch name or commit message.' },
+      { icon:'git-commit',       color:'#4A90FF', bg:'rgba(74,144,255,0.12)', title:'Commit Tracking',   desc:'Every push event records progress on the linked task timeline.' },
+      { icon:'check-circle',     color:'#22C55E', bg:'rgba(34,197,94,0.12)',  title:'Auto-close Tasks',  desc:'Merging a PR can automatically mark its linked task as completed.' }
+    ],
+    steps: [
+      { t:'Install the GitHub App', d:'Authorize ChronoLoop as a GitHub App in your organization settings.' },
+      { t:'Select repositories', d:'Choose which repos to monitor — you can add more later.' },
+      { t:'Set branch naming convention', d:'Use pattern <strong>task/TASK-ID</strong> or configure a custom prefix.' }
+    ],
+    reqs: ['GitHub organization owner or repo admin', 'Public or private repos on any plan'],
+    workspace:'github.com/chronoloop-org', connectedBy:'Roger Dokidis', connectedDate:'Dec 14, 2024',
+    syncLog:[
+      { dot:'#4A90FF', text:'PR #412 "feat/auth-flow" linked to task', time:'6m' },
+      { dot:'#22C55E', text:'Branch "feat/reports" merged — 3 tasks closed', time:'5h' },
+      { dot:'#4A90FF', text:'Commit 8f3c pushed to "fix/calendar-bug"', time:'Yesterday' },
+      { dot:'#22C55E', text:'PR #408 merged — task auto-completed', time:'2 days ago' }
+    ],
+    config:[
+      { label:'Org / Username',      sub:'GitHub org or personal account', type:'text',   val:'chronoloop-org' },
+      { label:'Branch prefix',       sub:'Pattern to match task branches',  type:'text',   val:'task/' },
+      { label:'Auto-close on merge', sub:'Complete task when PR is merged', type:'toggle', val:true }
+    ]
+  },
+  figma: {
+    features: [
+      { icon:'image',        color:'#F24E1E', bg:'rgba(242,78,30,0.12)', title:'Frame Previews',    desc:'Latest Figma frame thumbnails appear inline on task cards.' },
+      { icon:'link',         color:'#4A90FF', bg:'rgba(74,144,255,0.12)', title:'Design Linking',   desc:'Paste any Figma URL and it\'s embedded with live preview in the task.' },
+      { icon:'palette',      color:'#A855F7', bg:'rgba(168,85,247,0.12)', title:'Token Sync',       desc:'Design tokens (colors, spacing) can be exported as a JSON snapshot.' }
+    ],
+    steps: [
+      { t:'Authorize Figma OAuth', d:'Grant ChronoLoop read access to your Figma projects and files.' },
+      { t:'Select team workspace', d:'Pick which Figma team\'s files to enable for linking.' },
+      { t:'Paste Figma URLs in tasks', d:'Any figma.com link in a task description auto-embeds the frame.' }
+    ],
+    reqs: ['Figma account (Starter, Professional, or Organization)', 'Edit access to target files'],
+    workspace:'figma.com/team/chronoloop-design', connectedBy:'Marley Vaccaro', connectedDate:'Jan 20, 2025',
+    syncLog:[
+      { dot:'#F24E1E', text:'Frame "Landing Hero v3" synced to task', time:'12m' },
+      { dot:'#F24E1E', text:'Component library exported — 42 tokens', time:'3h' },
+      { dot:'#22C55E', text:'Design review approved — task updated', time:'Yesterday' }
+    ],
+    config:[
+      { label:'Team Workspace', sub:'Which Figma team to pull files from', type:'text',   val:'ChronoLoop Design' },
+      { label:'Auto-refresh',   sub:'Re-sync frame thumbnails every hour', type:'toggle', val:true },
+      { label:'Token export',   sub:'Include design tokens in task exports', type:'toggle', val:false }
+    ]
+  },
+  notion: {
+    features: [
+      { icon:'database',   color:'#000000', bg:'rgba(255,255,255,0.06)', title:'Database Sync', desc:'Mirror tasks to a Notion database — status, assignee, and due date stay in sync.' },
+      { icon:'file-text',  color:'#4A90FF', bg:'rgba(74,144,255,0.12)', title:'Doc Embedding', desc:'Notion pages are embedded directly inside project detail panels.' },
+      { icon:'search',     color:'#00D4AA', bg:'rgba(0,212,170,0.12)', title:'Workspace Search', desc:'Search Notion from ChronoLoop\'s universal search bar.' }
+    ],
+    steps: [
+      { t:'Connect Notion workspace', d:'Authorize ChronoLoop via Notion\'s official OAuth integration page.' },
+      { t:'Select your task database', d:'Pick the Notion database that maps to ChronoLoop tasks.' },
+      { t:'Map properties', d:'Align Notion properties (Status, Owner, Due) to ChronoLoop fields.' }
+    ],
+    reqs: ['Notion workspace member (Guest access is insufficient)', 'Notion plan: Free or above'],
+    workspace:'chronoloop.notion.site', connectedBy:'Aspen Herwitz', connectedDate:'Feb 2, 2025',
+    syncLog:[
+      { dot:'#22C55E', text:'Sprint 5 retro page updated in Notion', time:'22m' },
+      { dot:'#22C55E', text:'14 task statuses synced to "Active Tasks" DB', time:'1h' },
+      { dot:'#22C55E', text:'New project "Web 3 App" created in Notion', time:'Yesterday' }
+    ],
+    config:[
+      { label:'Task Database',  sub:'Notion DB to mirror tasks into', type:'text',   val:'Active Tasks' },
+      { label:'Two-way sync',   sub:'Changes in Notion update ChronoLoop too', type:'toggle', val:true },
+      { label:'Auto-archive',   sub:'Archive Notion page when task is closed', type:'toggle', val:false }
+    ]
+  },
+  'google-calendar': {
+    features: [
+      { icon:'calendar',   color:'#4285F4', bg:'rgba(66,133,244,0.12)', title:'Sprint Events',   desc:'Sprint start and end dates automatically appear as calendar events.' },
+      { icon:'clock',      color:'#00D4AA', bg:'rgba(0,212,170,0.12)', title:'Deadline Alerts',  desc:'Task due dates create reminders visible across the whole team.' },
+      { icon:'users',      color:'#EAB308', bg:'rgba(234,179,8,0.12)', title:'Shared Calendars', desc:'Events sync to a shared ChronoLoop calendar your whole team can subscribe to.' }
+    ],
+    steps: [
+      { t:'Sign in with Google', d:'Authorize ChronoLoop to create and update Google Calendar events.' },
+      { t:'Choose target calendar', d:'Select or create a "ChronoLoop" calendar in your Google account.' },
+      { t:'Enable event types', d:'Choose which events to sync: sprints, milestones, task deadlines.' }
+    ],
+    reqs: ['Google account', 'Google Workspace or personal Google Calendar'],
+    workspace:'calendar.google.com (jacob@chronoloop)', connectedBy:'Jacob Solayinka', connectedDate:'Mar 1, 2025',
+    syncLog:[
+      { dot:'#4285F4', text:'Milestone "QA Sign-off" event created', time:'1h' },
+      { dot:'#4285F4', text:'Sprint 5 end event updated to Dec 6', time:'3h' },
+      { dot:'#22C55E', text:'Sprint 6 kickoff event sent to 14 attendees', time:'2 days ago' }
+    ],
+    config:[
+      { label:'Target Calendar',  sub:'Calendar to write events into', type:'text',   val:'ChronoLoop' },
+      { label:'Include weekends', sub:'Show sprint events on weekend days', type:'toggle', val:false },
+      { label:'Reminders',        sub:'Minutes before due date to alert', type:'text',   val:'30' }
+    ]
+  },
+  datadog: {
+    features: [
+      { icon:'activity',    color:'#774AA4', bg:'rgba(119,74,164,0.12)', title:'Incident → Tasks',   desc:'Critical Datadog alerts auto-create tasks assigned to the on-call engineer.' },
+      { icon:'bar-chart-2', color:'#4A90FF', bg:'rgba(74,144,255,0.12)', title:'Deploy Tracking',    desc:'Deployment markers link to the sprint task that triggered the deploy.' },
+      { icon:'bell',        color:'#FF8C42', bg:'rgba(255,140,66,0.12)', title:'Alert Webhooks',     desc:'Datadog monitor alerts appear in the ChronoLoop activity feed.' }
+    ],
+    steps: [
+      { t:'Generate a Datadog API key', d:'In Datadog, go to Organization Settings → API Keys and create a new key.' },
+      { t:'Paste key in ChronoLoop', d:'Enter the API key and Application key below to authenticate.' },
+      { t:'Configure alert thresholds', d:'Choose which monitor priorities trigger task creation.' }
+    ],
+    reqs: ['Datadog account (any plan)', 'Datadog API Key + Application Key'],
+    errorMsg:'Authentication failed: the Datadog API token has expired or been revoked. Re-authorize to restore the connection.',
+    workspace:'app.datadoghq.com/chronoloop', connectedBy:'Roger Dokidis', connectedDate:'Nov 28, 2024',
+    syncLog:[
+      { dot:'#FF4D4D', text:'API token expired — sync paused', time:'3h' },
+      { dot:'#22C55E', text:'Monitor "High CPU" alert → task created', time:'1 day ago' },
+      { dot:'#22C55E', text:'Deploy v2.4.1 linked to sprint task', time:'2 days ago' }
+    ],
+    config:[
+      { label:'API Key',          sub:'Datadog API key for read access', type:'text', val:'••••••••••••9e40' },
+      { label:'App Key',          sub:'Datadog Application key',         type:'text', val:'••••••••••••b1c2' },
+      { label:'Min alert level',  sub:'Minimum priority to create tasks', type:'select', val:'Critical', opts:['Warning','Error','Critical'] }
+    ]
+  },
+  'google-drive': {
+    features: [
+      { icon:'folder',    color:'#1DA462', bg:'rgba(29,164,98,0.12)', title:'File Attachments', desc:'Attach any Drive file to a task or project — team members see a live preview.' },
+      { icon:'upload',    color:'#4A90FF', bg:'rgba(74,144,255,0.12)', title:'Auto-upload',      desc:'Exported reports and sprint summaries are automatically saved to a Drive folder.' },
+      { icon:'share-2',   color:'#EAB308', bg:'rgba(234,179,8,0.12)', title:'Shared Folders',   desc:'Create shared project folders in Drive directly from the Projects page.' }
+    ],
+    steps: [
+      { t:'Sign in with Google', d:'Authorize ChronoLoop to access Drive files you select.' },
+      { t:'Pick a root folder', d:'Choose or create a "ChronoLoop" folder where exports will be saved.' },
+      { t:'Start attaching files', d:'Use the paperclip icon on any task card to browse and attach Drive files.' }
+    ],
+    reqs: ['Google account', 'Google Drive (free 15 GB or Workspace storage)'],
+    workspace:null, connectedBy:null, connectedDate:null,
+    syncLog:[], config:[]
+  },
+  jira: {
+    features: [
+      { icon:'refresh-cw',  color:'#0052CC', bg:'rgba(0,82,204,0.12)', title:'Two-way Issue Sync', desc:'Issues created in Jira appear as tasks in ChronoLoop — and vice versa.' },
+      { icon:'layout',      color:'#4A90FF', bg:'rgba(74,144,255,0.12)', title:'Sprint Mirroring',  desc:'Jira sprints mirror to ChronoLoop sprint boards with full status visibility.' },
+      { icon:'sliders',     color:'#00D4AA', bg:'rgba(0,212,170,0.12)', title:'Custom Field Map',  desc:'Map Jira\'s custom fields to ChronoLoop properties with point-and-click config.' }
+    ],
+    steps: [
+      { t:'Enter your Jira domain', d:'Provide your <strong>company.atlassian.net</strong> URL to start the OAuth flow.' },
+      { t:'Authorize Atlassian OAuth', d:'Grant ChronoLoop access to your Jira projects and issues.' },
+      { t:'Select projects to sync', d:'Pick which Jira projects map to ChronoLoop. Others remain unlinked.' }
+    ],
+    reqs: ['Jira Software account (Cloud or Server)', 'Project Admin role on target projects'],
+    workspace:null, connectedBy:null, connectedDate:null,
+    syncLog:[], config:[]
+  },
+  linear: {
+    features: [
+      { icon:'zap',       color:'#5E6AD2', bg:'rgba(94,106,210,0.12)', title:'Cycle Sync',      desc:'Linear cycles sync as ChronoLoop sprints — velocity and points included.' },
+      { icon:'tag',       color:'#4A90FF', bg:'rgba(74,144,255,0.12)', title:'Label Mapping',   desc:'Linear labels translate to ChronoLoop priority and category tags.' },
+      { icon:'git-merge', color:'#00D4AA', bg:'rgba(0,212,170,0.12)', title:'Team Import',     desc:'Linear teams map to ChronoLoop project groups with member access preserved.' }
+    ],
+    steps: [
+      { t:'Connect Linear workspace', d:'Authorize ChronoLoop via Linear\'s OAuth — no API key needed.' },
+      { t:'Map teams to projects', d:'Align Linear teams with ChronoLoop projects in the mapping UI.' },
+      { t:'Import existing issues', d:'Optionally import open issues from the last 30 days.' }
+    ],
+    reqs: ['Linear workspace (Member role or above)', 'Beta feature — submit feedback to improve it'],
+    workspace:null, connectedBy:null, connectedDate:null,
+    syncLog:[], config:[]
+  },
+  zoom: {
+    features: [
+      { icon:'video',     color:'#2D8CFF', bg:'rgba(45,140,255,0.12)', title:'Meeting Scheduler', desc:'Schedule standups and reviews directly from task cards — invite links auto-added.' },
+      { icon:'mic',       color:'#4A90FF', bg:'rgba(74,144,255,0.12)', title:'Recordings',        desc:'Meeting recordings are linked to the task or sprint they were scheduled from.' },
+      { icon:'clock',     color:'#00D4AA', bg:'rgba(0,212,170,0.12)', title:'Calendar Sync',     desc:'Zoom meetings appear in Google Calendar integration events automatically.' }
+    ],
+    steps: [
+      { t:'Sign in with Zoom', d:'OAuth handshake grants ChronoLoop permission to schedule meetings.' },
+      { t:'Set default meeting settings', d:'Choose recurrence, waiting room, and recording preferences.' },
+      { t:'Add meetings to tasks', d:'Use the camera icon on any task to schedule or join a Zoom call.' }
+    ],
+    reqs: ['Zoom account (Basic, Pro, or Business)', 'Host role in Zoom account'],
+    workspace:null, connectedBy:null, connectedDate:null,
+    syncLog:[], config:[]
+  },
+  dropbox: {
+    features: [
+      { icon:'folder',    color:'#0061FF', bg:'rgba(0,97,255,0.12)', title:'File Browsing',    desc:'Browse your Dropbox folders from the file picker inside tasks and projects.' },
+      { icon:'share-2',   color:'#4A90FF', bg:'rgba(74,144,255,0.12)', title:'Shared Links',    desc:'Generate Dropbox shared links from ChronoLoop without switching tabs.' },
+      { icon:'download',  color:'#EAB308', bg:'rgba(234,179,8,0.12)', title:'Bulk Downloads',   desc:'Download all files attached to a completed sprint as a single Dropbox ZIP.' }
+    ],
+    steps: [
+      { t:'Connect Dropbox account', d:'Authorize ChronoLoop to read selected files and create shared links.' },
+      { t:'Set root folder', d:'Pick a "ChronoLoop" folder in Dropbox as the default for uploads.' },
+      { t:'Attach files to tasks', d:'Use the attachment menu on any task to browse and link Dropbox files.' }
+    ],
+    reqs: ['Dropbox account (Basic or Business)', 'Folder sharing enabled in account settings'],
+    workspace:null, connectedBy:null, connectedDate:null,
+    syncLog:[], config:[]
+  },
+  zapier: {
+    features: [
+      { icon:'zap',       color:'#FF4A00', bg:'rgba(255,74,0,0.12)', title:'5,000+ Apps',      desc:'Connect ChronoLoop to any app in Zapier\'s catalog — no code required.' },
+      { icon:'settings',  color:'#4A90FF', bg:'rgba(74,144,255,0.12)', title:'Trigger Events',  desc:'Task created, status changed, sprint started — all available as Zap triggers.' },
+      { icon:'plus',      color:'#22C55E', bg:'rgba(34,197,94,0.12)', title:'Action Support',  desc:'Create tasks, update statuses, and add comments from external Zaps.' }
+    ],
+    steps: [
+      { t:'Get your Zapier API key', d:'Copy the ChronoLoop API key and paste it into the Zapier app setup.' },
+      { t:'Create a Zap', d:'In Zapier, search for "ChronoLoop" and choose a trigger or action.' },
+      { t:'Test and activate', d:'Run a test event, verify it works, then switch the Zap to live.' }
+    ],
+    reqs: ['Zapier account (Free tier supports 5 Zaps)', 'ChronoLoop API key (available in API Keys panel)'],
+    workspace:null, connectedBy:null, connectedDate:null,
+    syncLog:[], config:[]
+  }
+};
+
+const INT_APPS = [
+  { id:'slack',            name:'Slack',           category:'Communication', emoji:'💬', logoColor:'#4A154B', status:'connected',  users:12, syncedAt:'2 min ago',  calls:847,  perms:['Read channel messages','Post messages to channels','Manage webhooks'] },
+  { id:'github',           name:'GitHub',          category:'Development',   emoji:'🐙', logoColor:'#24292e', status:'connected',  users:8,  syncedAt:'5 min ago',  calls:2341, perms:['Read repository data','Create issues','Receive push events'] },
+  { id:'figma',            name:'Figma',           category:'Design',        emoji:'🎨', logoColor:'#F24E1E', status:'connected',  users:5,  syncedAt:'12 min ago', calls:412,  perms:['Read file contents','List projects','Access design tokens'] },
+  { id:'notion',           name:'Notion',          category:'Productivity',  emoji:'📝', logoColor:'#000000', status:'connected',  users:9,  syncedAt:'18 min ago', calls:619,  perms:['Read database items','Create & update pages','Search workspace'] },
+  { id:'google-drive',     name:'Google Drive',    category:'Storage',       emoji:'📁', logoColor:'#1DA462', status:'available', users:0,  syncedAt:null,         calls:0,    perms:['Read files you select','Upload files','Create shared folders'] },
+  { id:'jira',             name:'Jira',            category:'Development',   emoji:'🔵', logoColor:'#0052CC', status:'available', users:0,  syncedAt:null,         calls:0,    perms:['Read issues & projects','Create & update issues','Manage sprints'] },
+  { id:'linear',           name:'Linear',          category:'Development',   emoji:'⚡', logoColor:'#5E6AD2', status:'beta',      users:0,  syncedAt:null,         calls:0,    perms:['Read teams & issues','Create issues','Receive webhook events'] },
+  { id:'zoom',             name:'Zoom',            category:'Communication', emoji:'📹', logoColor:'#2D8CFF', status:'available', users:0,  syncedAt:null,         calls:0,    perms:['Create meetings','Read scheduled meetings','Access recordings'] },
+  { id:'google-calendar',  name:'Google Calendar', category:'Productivity',  emoji:'📅', logoColor:'#4285F4', status:'connected',  users:14, syncedAt:'1 hr ago',   calls:288,  perms:['Read calendar events','Create & update events','Manage reminders'] },
+  { id:'datadog',          name:'Datadog',         category:'Analytics',     emoji:'📊', logoColor:'#774AA4', status:'error',     users:3,  syncedAt:'3 hr ago',   calls:94,   perms:['Read metrics & logs','Create monitors','Receive alert webhooks'] },
+  { id:'dropbox',          name:'Dropbox',         category:'Storage',       emoji:'📦', logoColor:'#0061FF', status:'available', users:0,  syncedAt:null,         calls:0,    perms:['Read shared folders','Upload files','Create shared links'] },
+  { id:'zapier',           name:'Zapier',          category:'Productivity',  emoji:'⚡', logoColor:'#FF4A00', status:'available', users:0,  syncedAt:null,         calls:0,    perms:['Trigger zap events','Read task & project data','Create tasks via webhooks'] }
+];
+
+const INT_ACTIVITY = [
+  { dot:'#22C55E', text:'<strong>Slack</strong> delivered sprint digest to #dev-team', time:'2m' },
+  { dot:'#4A90FF', text:'<strong>GitHub</strong> PR #412 linked to task "Auth Flow"', time:'6m' },
+  { dot:'#F24E1E', text:'<strong>Figma</strong> design synced for "Landing Page Redesign"', time:'14m' },
+  { dot:'#555555', text:'<strong>Notion</strong> page updated — Sprint 5 retrospective', time:'22m' },
+  { dot:'#4285F4', text:'<strong>Google Calendar</strong> milestone "QA Sign-off" added', time:'1h' },
+  { dot:'#FF4D4D', text:'<strong>Datadog</strong> webhook failed — auth token expired', time:'3h' },
+  { dot:'#22C55E', text:'<strong>Slack</strong> task completion posted to #general', time:'4h' },
+  { dot:'#4A90FF', text:'<strong>GitHub</strong> branch "feat/reports" merged — 3 tasks closed', time:'5h' }
+];
+
+const INT_KEYS = [
+  { id:'k1', label:'Production Key', val:'ck_live_••••••••••••4f9a', scope:'Full Access',  created:'Jan 12', expires:'Jul 12' },
+  { id:'k2', label:'Staging Key',    val:'ck_test_••••••••••••b2c1', scope:'Read Only',    created:'Feb 3',  expires:'May 3'  },
+  { id:'k3', label:'CI/CD Key',      val:'ck_ci_••••••••••••9e40',   scope:'Write Only',   created:'Apr 18', expires:'Oct 18' }
+];
+
+const INT_USAGE = [
+  { name:'GitHub',   count:2341, color:'var(--accent-blue)',    max:3000 },
+  { name:'Slack',    count:847,  color:'#9E6BA4',               max:3000 },
+  { name:'Figma',    count:412,  color:'#F24E1E',               max:3000 },
+  { name:'Notion',   count:619,  color:'var(--text-secondary)',  max:3000 },
+  { name:'Calendar', count:288,  color:'#4285F4',               max:3000 },
+  { name:'Datadog',  count:94,   color:'var(--accent-purple)',   max:3000 }
+];
+
+const INT_WEBHOOKS = [
+  { active:true,  url:'https://hooks.slack.com/services/T01…XYZ',  event:'task.completed'  },
+  { active:true,  url:'https://api.chronoloop.io/wh/github-push',  event:'sprint.started'  },
+  { active:false, url:'https://notify.zapier.com/hooks/catch/…',   event:'project.created' },
+  { active:true,  url:'https://datadog.intake.app/api/v1/events',  event:'task.overdue'    }
+];
+
+const INT_SYNC_ROWS = [
+  { name:'Task status → Slack',         detail:'Post message on every status change',     on:true  },
+  { name:'GitHub commits → Tasks',      detail:'Auto-link commits by branch name',        on:true  },
+  { name:'Sprint start/end → Calendar', detail:'Create calendar events for sprint dates', on:true  },
+  { name:'Notion docs → Projects',      detail:'Embed Notion pages in project detail',    on:false },
+  { name:'Figma frames → Tasks',        detail:'Attach latest frame thumbnail to task',   on:true  },
+  { name:'Datadog alerts → Tasks',      detail:'Create tasks from critical monitors',     on:false }
+];
+
+let intActiveCat = 'All';
+let intSearchVal = '';
+let intConnectTarget = null;
+let intManageTarget = null;
+
+function renderIntegrationsPage() {
+  renderIntKPIs();
+  renderIntCards();
+  renderIntActivity();
+  renderIntAPIKeys();
+  renderIntUsage();
+  renderIntWebhooks();
+  renderIntSync();
+  bindIntEvents();
+  lucide.createIcons();
+}
+
+function renderIntKPIs() {
+  const connected = INT_APPS.filter(a => a.status === 'connected').length;
+  const totalCalls = INT_USAGE.reduce((s,u) => s+u.count, 0);
+  const webhooks = INT_WEBHOOKS.filter(w => w.active).length;
+  const errors = INT_APPS.filter(a => a.status === 'error').length;
+  document.getElementById('int-kpi-grid').innerHTML = `
+    <div class="int-kpi-card">
+      <div class="int-kpi-label">Connected Apps</div>
+      <div class="int-kpi-value">${connected}</div>
+      <div class="int-kpi-sub"><span class="int-up">▲ 2</span>&nbsp;this month</div>
+    </div>
+    <div class="int-kpi-card">
+      <div class="int-kpi-label">API Calls Today</div>
+      <div class="int-kpi-value">${totalCalls.toLocaleString()}</div>
+      <div class="int-kpi-sub"><span class="int-up">▲ 14%</span>&nbsp;vs yesterday</div>
+    </div>
+    <div class="int-kpi-card">
+      <div class="int-kpi-label">Active Webhooks</div>
+      <div class="int-kpi-value">${webhooks}</div>
+      <div class="int-kpi-sub">${INT_WEBHOOKS.length - webhooks} inactive endpoint${INT_WEBHOOKS.length - webhooks !== 1 ? 's' : ''}</div>
+    </div>
+    <div class="int-kpi-card">
+      <div class="int-kpi-label">Sync Errors</div>
+      <div class="int-kpi-value" style="color:${errors ? 'var(--accent-red)' : 'var(--accent-green)'}">${errors}</div>
+      <div class="int-kpi-sub">${errors ? '<span class="int-down">●</span>&nbsp;Datadog token expired' : '<span class="int-up">●</span>&nbsp;All systems operational'}</div>
+    </div>
+  `;
+}
+
+function renderIntCards() {
+  const grid = document.getElementById('int-cards-grid');
+  const apps = INT_APPS.filter(a => {
+    const catMatch = intActiveCat === 'All' || a.category === intActiveCat;
+    const searchMatch = !intSearchVal || a.name.toLowerCase().includes(intSearchVal.toLowerCase()) || a.category.toLowerCase().includes(intSearchVal.toLowerCase());
+    return catMatch && searchMatch;
+  });
+  if (!apps.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;padding:40px;text-align:center;color:var(--text-muted);font-size:13px;">No integrations found</div>`;
+    return;
+  }
+  grid.innerHTML = apps.map(a => {
+    const statusLabel = { connected:'Connected', available:'Available', beta:'Beta', error:'Error' }[a.status];
+    const btnClass   = a.status === 'connected' ? 'manage' : a.status === 'error' ? 'disconnect' : 'add';
+    const btnLabel   = a.status === 'connected' ? 'Manage'  : a.status === 'error' ? 'Fix Auth'   : 'Connect';
+    const btnIcon    = a.status === 'connected' ? 'settings': a.status === 'error' ? 'alert-triangle' : 'plus';
+    return `
+      <div class="int-card ${a.status === 'connected' ? 'connected' : ''}" data-id="${a.id}">
+        <div class="int-card-top">
+          <div class="int-card-logo" style="background:${a.logoColor}20;border-color:${a.logoColor}30;">${a.emoji}</div>
+          <div class="int-card-status ${a.status}"><div class="int-card-status-dot"></div>${statusLabel}</div>
+        </div>
+        <div>
+          <div class="int-card-name">${a.name}</div>
+          <div class="int-card-category">${a.category}</div>
+        </div>
+        <div class="int-card-desc">${INT_APP_DATA[a.id]?.features?.[0]?.desc || ''}</div>
+        <div class="int-card-footer">
+          <div class="int-card-meta">
+            ${a.status === 'connected'
+              ? `<i data-lucide="refresh-cw"></i> Synced ${a.syncedAt}`
+              : `<i data-lucide="users"></i> Not connected`}
+          </div>
+          <button class="int-connect-btn ${btnClass}" data-id="${a.id}" type="button">
+            <i data-lucide="${btnIcon}"></i> ${btnLabel}
+          </button>
+        </div>
+      </div>`;
+  }).join('');
+
+  grid.querySelectorAll('.int-connect-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const app = INT_APPS.find(a => a.id === btn.dataset.id);
+      if (!app) return;
+      if (app.status === 'connected') {
+        openManageModal(app);
+      } else {
+        openConnectModal(app);
+      }
+    });
+  });
+}
+
+function renderIntActivity() {
+  document.getElementById('int-activity-list').innerHTML = INT_ACTIVITY.map(a => `
+    <div class="int-activity-item">
+      <div class="int-activity-dot" style="background:${a.dot}"></div>
+      <div class="int-activity-text">${a.text}</div>
+      <div class="int-activity-time">${a.time}</div>
+    </div>`).join('');
+}
+
+function renderIntAPIKeys() {
+  document.getElementById('int-apikey-list').innerHTML = INT_KEYS.map(k => `
+    <div class="int-apikey-row">
+      <div style="flex:1;min-width:0;">
+        <div class="int-apikey-label">${k.label}</div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:1px;">${k.scope} · Created ${k.created} · Expires ${k.expires}</div>
+      </div>
+      <div class="int-apikey-val">${k.val}</div>
+      <button class="int-apikey-icon-btn" title="Copy key" onclick="navigator.clipboard&&navigator.clipboard.writeText('${k.val}');showToast('Key copied to clipboard','success')"><i data-lucide="copy"></i></button>
+      <button class="int-apikey-icon-btn" title="Revoke key" onclick="showToast('Revoke &quot;${k.label}&quot;? This cannot be undone.','warning',3000)"><i data-lucide="trash-2"></i></button>
+    </div>`).join('');
+}
+
+function renderIntUsage() {
+  const total = INT_USAGE.reduce((s,u) => s+u.count, 0);
+  document.getElementById('int-usage-total').textContent = total.toLocaleString() + ' / 10k';
+  document.getElementById('int-usage-list').innerHTML = INT_USAGE.map(u => `
+    <div class="int-usage-item">
+      <div class="int-usage-name">${u.name}</div>
+      <div class="int-usage-track">
+        <div class="int-usage-fill" style="width:${Math.round((u.count/u.max)*100)}%;background:${u.color}"></div>
+      </div>
+      <div class="int-usage-count">${u.count.toLocaleString()}</div>
+    </div>`).join('');
+}
+
+function renderIntWebhooks() {
+  const active = INT_WEBHOOKS.filter(w => w.active).length;
+  document.getElementById('int-wh-count').textContent = active + '/' + INT_WEBHOOKS.length + ' active';
+  document.getElementById('int-webhook-list').innerHTML = INT_WEBHOOKS.map((w,i) => `
+    <div class="int-webhook-row">
+      <div class="int-webhook-status" style="background:${w.active ? 'var(--accent-green)' : 'var(--text-muted)'}"></div>
+      <div class="int-webhook-url" title="${w.url}">${w.url}</div>
+      <div class="int-webhook-event">${w.event}</div>
+      <label class="int-toggle" title="${w.active ? 'Disable' : 'Enable'}">
+        <input type="checkbox" ${w.active ? 'checked' : ''} onchange="INT_WEBHOOKS[${i}].active=this.checked;renderIntWebhooks();lucide.createIcons();showToast('Webhook ${w.active?'disabled':'enabled'}','${w.active?'warning':'success'}')">
+        <span class="int-toggle-slider"></span>
+      </label>
+      <button class="int-webhook-icon-btn" onclick="INT_WEBHOOKS.splice(${i},1);renderIntWebhooks();lucide.createIcons();showToast('Webhook removed','warning')"><i data-lucide="trash-2"></i></button>
+    </div>`).join('');
+}
+
+function renderIntSync() {
+  document.getElementById('int-sync-list').innerHTML = INT_SYNC_ROWS.map((r,i) => `
+    <div class="int-sync-row">
+      <div class="int-sync-info">
+        <div class="int-sync-name">${r.name}</div>
+        <div class="int-sync-detail">${r.detail}</div>
+      </div>
+      <label class="int-toggle">
+        <input type="checkbox" ${r.on ? 'checked' : ''} onchange="INT_SYNC_ROWS[${i}].on=this.checked;showToast('Sync rule ${r.on?'disabled':'enabled'}','${r.on?'warning':'success'}')">
+        <span class="int-toggle-slider"></span>
+      </label>
+    </div>`).join('');
+}
+
+// ---------- CONNECT MODAL ----------
+function openConnectModal(app) {
+  intConnectTarget = app;
+  const d = INT_APP_DATA[app.id] || {};
+  const isError = app.status === 'error';
+
+  document.getElementById('icm-logo').textContent = app.emoji;
+  document.getElementById('icm-logo').style.cssText = `background:${app.logoColor}20;border-color:${app.logoColor}30;`;
+  document.getElementById('icm-title').textContent = isError ? 'Re-authorize ' + app.name : 'Connect ' + app.name;
+  document.getElementById('icm-cat').textContent = app.category;
+  document.getElementById('icm-subtitle').textContent = isError
+    ? 'Your previous connection has an error — re-authorize to restore sync'
+    : 'Authorize ChronoLoop to connect with your ' + app.name + ' workspace';
+  document.getElementById('icm-confirm-label').textContent = isError ? 'Re-authorize' : 'Authorize & Connect';
+
+  // Features
+  document.getElementById('icm-features').innerHTML = (d.features || []).map(f => `
+    <div class="int-feature-item">
+      <div class="int-feature-icon" style="background:${f.bg};"><i data-lucide="${f.icon}" style="width:15px;height:15px;color:${f.color};"></i></div>
+      <div><div class="int-feature-name">${f.title}</div><div class="int-feature-desc">${f.desc}</div></div>
+    </div>`).join('');
+
+  // Steps
+  document.getElementById('icm-steps').innerHTML = (d.steps || []).map((s,i) => `
+    <div class="int-step-item">
+      <div class="int-step-num">${i+1}</div>
+      <div class="int-step-text"><strong>${s.t}</strong><br>${s.d}</div>
+    </div>`).join('');
+
+  // Permissions
+  document.getElementById('icm-perms').innerHTML = (app.perms || []).map(p => `
+    <div class="int-perm-item">
+      <div class="int-perm-icon"><i data-lucide="check"></i></div>
+      <div class="int-perm-text">${p}</div>
+    </div>`).join('');
+
+  // Requirements
+  document.getElementById('icm-reqs').innerHTML = (d.reqs || []).map(r => `
+    <div class="int-req-item"><i data-lucide="check-circle"></i>${r}</div>`).join('');
+
+  // Error notice
+  const errEl = document.getElementById('icm-error-notice');
+  if (isError && d.errorMsg) {
+    errEl.style.display = 'flex';
+    errEl.querySelector('#icm-error-text') && (errEl.querySelector('#icm-error-text').textContent = d.errorMsg);
+  } else {
+    errEl.style.display = 'none';
+  }
+
+  openIntModal('int-connect-modal');
+}
+
+// ---------- MANAGE MODAL ----------
+function openManageModal(app) {
+  intManageTarget = app;
+  const d = INT_APP_DATA[app.id] || {};
+
+  document.getElementById('imm-logo').textContent = app.emoji;
+  document.getElementById('imm-logo').style.cssText = `background:${app.logoColor}20;border-color:${app.logoColor}30;`;
+  document.getElementById('imm-title').textContent = app.name;
+  document.getElementById('imm-subtitle').textContent = d.workspace || ('Connected to ' + app.name);
+  document.getElementById('imm-appname-label').textContent = app.name;
+
+  // Info grid
+  document.getElementById('imm-info-grid').innerHTML = `
+    <div class="int-manage-info-cell">
+      <div class="int-manage-info-label">Workspace</div>
+      <div class="int-manage-info-val"><i data-lucide="globe"></i>${d.workspace || '—'}</div>
+    </div>
+    <div class="int-manage-info-cell">
+      <div class="int-manage-info-label">Connected By</div>
+      <div class="int-manage-info-val"><i data-lucide="user"></i>${d.connectedBy || '—'}</div>
+    </div>
+    <div class="int-manage-info-cell">
+      <div class="int-manage-info-label">Connected Date</div>
+      <div class="int-manage-info-val"><i data-lucide="calendar"></i>${d.connectedDate || '—'}</div>
+    </div>
+    <div class="int-manage-info-cell">
+      <div class="int-manage-info-label">Last Sync</div>
+      <div class="int-manage-info-val"><i data-lucide="refresh-cw"></i>${app.syncedAt || '—'}</div>
+    </div>`;
+
+  // Stats
+  document.getElementById('imm-stats').innerHTML = `
+    <div class="int-manage-stat-card">
+      <div class="int-manage-stat-num" style="color:var(--accent-blue)">${app.calls.toLocaleString()}</div>
+      <div class="int-manage-stat-lbl">API Calls Today</div>
+    </div>
+    <div class="int-manage-stat-card">
+      <div class="int-manage-stat-num" style="color:var(--accent-teal)">${app.users}</div>
+      <div class="int-manage-stat-lbl">Team Members</div>
+    </div>
+    <div class="int-manage-stat-card">
+      <div class="int-manage-stat-num" style="color:var(--accent-green)">99%</div>
+      <div class="int-manage-stat-lbl">Sync Success</div>
+    </div>`;
+
+  // Config
+  document.getElementById('imm-config').innerHTML = (d.config || []).map((c,ci) => {
+    let ctrl = '';
+    if (c.type === 'toggle') {
+      ctrl = `<label class="int-toggle"><input type="checkbox" ${c.val?'checked':''} onchange="showToast('Setting updated','success')"><span class="int-toggle-slider"></span></label>`;
+    } else if (c.type === 'select') {
+      ctrl = `<select class="int-config-input" onchange="showToast('Setting updated','info',1200)">${(c.opts||[]).map(o=>`<option ${o===c.val?'selected':''}>${o}</option>`).join('')}</select>`;
+    } else {
+      ctrl = `<input class="int-config-input" type="text" value="${c.val}" onchange="showToast('Setting updated','info',1200)">`;
+    }
+    return `<div class="int-config-row">
+      <div><div class="int-config-label">${c.label}</div><div class="int-config-sub">${c.sub}</div></div>
+      ${ctrl}
+    </div>`;
+  }).join('') || '<div style="font-size:12px;color:var(--text-muted);padding:8px 0;">No configuration options for this integration.</div>';
+
+  // Sync log
+  document.getElementById('imm-log').innerHTML = (d.syncLog && d.syncLog.length)
+    ? d.syncLog.map(l => `
+      <div class="int-log-item">
+        <div class="int-log-dot" style="background:${l.dot}"></div>
+        <div class="int-log-text">${l.text}</div>
+        <div class="int-log-time">${l.time}</div>
+      </div>`).join('')
+    : '<div style="font-size:12px;color:var(--text-muted);padding:8px 0;">No recent sync events.</div>';
+
+  openIntModal('int-manage-modal');
+}
+
+// ---------- MODAL OPEN/CLOSE ----------
+function openIntModal(id) {
+  document.getElementById(id).classList.add('open');
+  lucide.createIcons();
+}
+
+function closeIntModal(id) {
+  document.getElementById(id).classList.remove('open');
+  intConnectTarget = null;
+  intManageTarget = null;
+}
+
+// ---------- BIND EVENTS ----------
+function bindIntEvents() {
+  // Filter tabs
+  const filterTabsEl = document.getElementById('int-filter-tabs');
+  if (filterTabsEl && !filterTabsEl._bound) {
+    filterTabsEl._bound = true;
+    filterTabsEl.addEventListener('click', e => {
+      const tab = e.target.closest('.int-filter-tab');
+      if (!tab) return;
+      document.querySelectorAll('.int-filter-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      intActiveCat = tab.dataset.cat;
+      renderIntCards();
+      lucide.createIcons();
+    });
+  }
+
+  // Search
+  const searchEl = document.getElementById('int-search');
+  if (searchEl && !searchEl._bound) {
+    searchEl._bound = true;
+    searchEl.addEventListener('input', () => {
+      intSearchVal = searchEl.value;
+      renderIntCards();
+      lucide.createIcons();
+    });
+  }
+
+  // Connect modal confirm
+  const icmConfirm = document.getElementById('icm-confirm-btn');
+  if (icmConfirm && !icmConfirm._bound) {
+    icmConfirm._bound = true;
+    icmConfirm.addEventListener('click', () => {
+      const app = intConnectTarget;
+      if (!app) return;
+      closeIntModal('int-connect-modal');
+      showToast('Connecting to ' + app.name + '…', 'info', 1500);
+      setTimeout(() => {
+        app.status = 'connected';
+        app.syncedAt = 'just now';
+        showToast(app.name + ' connected successfully!', 'success');
+        renderIntKPIs();
+        renderIntCards();
+        lucide.createIcons();
+      }, 1600);
+    });
+  }
+
+  // Manage modal save
+  const immSave = document.getElementById('imm-save-btn');
+  if (immSave && !immSave._bound) {
+    immSave._bound = true;
+    immSave.addEventListener('click', () => {
+      showToast('Settings saved successfully', 'success');
+      closeIntModal('int-manage-modal');
+    });
+  }
+
+  // Manage modal disconnect
+  const immDisconnect = document.getElementById('imm-disconnect-btn');
+  if (immDisconnect && !immDisconnect._bound) {
+    immDisconnect._bound = true;
+    immDisconnect.addEventListener('click', () => {
+      const app = intManageTarget;
+      if (!app) return;
+      closeIntModal('int-manage-modal');
+      showToast('Disconnecting ' + app.name + '…', 'warning', 1500);
+      setTimeout(() => {
+        app.status = 'available';
+        app.syncedAt = null;
+        app.users = 0;
+        showToast(app.name + ' disconnected', 'warning');
+        renderIntKPIs();
+        renderIntCards();
+        lucide.createIcons();
+      }, 1600);
+    });
+  }
+
+  // New API Key button
+  const newKeyBtn = document.getElementById('int-newkey-btn');
+  if (newKeyBtn && !newKeyBtn._bound) {
+    newKeyBtn._bound = true;
+    newKeyBtn.addEventListener('click', () => {
+      // Reset modal to form state
+      document.getElementById('int-newkey-form').style.display = 'block';
+      document.getElementById('int-newkey-success').style.display = 'none';
+      document.getElementById('nk-name').value = '';
+      document.getElementById('nk-rate').value = '1000';
+      document.getElementById('nk-ips').value = '';
+      openIntModal('int-newkey-modal');
+    });
+  }
+
+  // New API Key generate
+  const nkGenBtn = document.getElementById('nk-generate-btn');
+  if (nkGenBtn && !nkGenBtn._bound) {
+    nkGenBtn._bound = true;
+    nkGenBtn.addEventListener('click', () => {
+      const name = document.getElementById('nk-name').value.trim();
+      if (!name) { showToast('Please enter a key name', 'warning'); return; }
+      const scope = document.querySelector('input[name="nk-scope-r"]:checked')?.value || 'full';
+      const expiry = document.getElementById('nk-expiry').value;
+      const scopeLabel = {full:'Full Access', read:'Read Only', write:'Write Only'}[scope];
+      const expLabel = expiry === '0' ? 'Never' : 'in ' + expiry + ' days';
+      // Generate fake key
+      const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+      const rand = Array.from({length:32}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
+      const prefix = scope === 'full' ? 'ck_live_' : scope === 'read' ? 'ck_ro_' : 'ck_wo_';
+      const newKey = prefix + rand;
+      // Add to list
+      INT_KEYS.push({ id:'k'+Date.now(), label:name, val:prefix+'••••••••••••'+rand.slice(-4), scope:scopeLabel, created:'Jun 5', expires:expiry==='0'?'Never':'Dec 5' });
+      document.getElementById('nk-generated-val').textContent = newKey;
+      document.getElementById('int-newkey-form').style.display = 'none';
+      document.getElementById('int-newkey-success').style.display = 'block';
+      lucide.createIcons();
+    });
+  }
+
+  // New API Key copy button
+  const nkCopyBtn = document.getElementById('nk-copy-btn');
+  if (nkCopyBtn && !nkCopyBtn._bound) {
+    nkCopyBtn._bound = true;
+    nkCopyBtn.addEventListener('click', () => {
+      const val = document.getElementById('nk-generated-val').textContent;
+      navigator.clipboard && navigator.clipboard.writeText(val);
+      showToast('API key copied to clipboard!', 'success');
+    });
+  }
+
+  // API Docs button
+  const docsBtn = document.getElementById('int-docs-btn');
+  if (docsBtn && !docsBtn._bound) {
+    docsBtn._bound = true;
+    docsBtn.addEventListener('click', () => showToast('Opening API documentation…', 'info', 1500));
+  }
+
+  // Overlay click-to-close for all modals
+  ['int-connect-modal','int-manage-modal','int-newkey-modal'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && !el._bound) {
+      el._bound = true;
+      el.addEventListener('click', e => { if (e.target === el) closeIntModal(id); });
+    }
+  });
+}
 
 </script>
 </body>
