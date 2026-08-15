@@ -31,15 +31,15 @@
 
 ## Flags for Product Owner
 
-1. **Filter dropdown is entirely decorative** — the original's Apply/Clear buttons show toasts ("Filters applied" / "Team filters cleared") but never actually filter the member list. Only the department tabs and search perform real filtering. Preserving this as-is (same as Projects/Sprints filter dropdown pattern from earlier phases).
+1. **Filter dropdown is entirely decorative** — the original's Apply/Clear buttons show toasts ("Filters applied" / "Team filters cleared") but never actually filter the member list. Only the department tabs and search perform real filtering. Preserving as-is for now — **logged in backlog as a real functionality gap** to be wired up in a future pass (a filter control that looks functional but does nothing is misleading UX).
 
 2. **"Message" buttons everywhere show a toast ("Opening message composer…") but do nothing else** — matches original exactly. No message composer exists.
 
-3. **Member Profile modal hardcodes "92%" completion** regardless of which member is viewed (`index.html:5850`) — the original never reads `m.completion` for this modal's completion cell. Preserving as literal parity.
+3. **Member Profile modal shows the actual member's `completion` field** — the original hardcodes "92%" (`index.html:5850`) regardless of member, but this is fake data, not a preserved quirk. Since `TEAM_MEMBERS` has per-member `completion` values (94/87/91/96/88/85/90/79), the modal will show the real value. Deliberate improvement over parity.
 
 4. **Context menu "Remove from Team" shows a toast but doesn't actually remove** — matches original. No destructive mutation.
 
-5. **Activity feed shows first 8 activities from all members unsorted** — the original collects all members' activities in declaration order, flattens them, and takes `.slice(0,8)` (`index.html:8837-8839`). This means the feed order depends on `TEAM_MEMBERS` array order, not on timestamp. Preserving as-is.
+5. **Activity feed is sorted by approximate chronological order** — the original shows activities in declaration order (array position, not time-sorted). The mock data uses relative time strings ("30m ago", "2h ago", "Yesterday", "2 days ago") which aren't real timestamps. A sort-weight function parses these relative strings into approximate minutes-ago values and sorts the flattened feed chronologically (most recent first). This is a deliberate improvement over parity — declaration order was misleading, not intentional.
 
 6. **Workload Distribution legend dots use `border-radius: 2px`** (rounded squares, not circles) — matches the original's `.tm-workload-legend-dot` CSS. Not a bug.
 
@@ -162,7 +162,7 @@ src/pages/TeamPage.tsx                               — MODIFIED: replaces stub
 
 **Behavior (from `index.html:8837-8858` + `:3569-3582`):**
 - Two panels side by side (2-column grid)
-- Activity Feed: title "Team Activity" + "Today" dropdown (decorative), first 8 activity items with avatar + text + time
+- Activity Feed: title "Team Activity" + "Today" dropdown (decorative), all members' activities flattened and sorted by approximate chronological order (parse relative time strings like "30m ago", "2h ago", "Yesterday", "2 days ago" into sort weights), take first 8, render with avatar + text + time
 - Performance Leaderboard: title + "This Sprint" dropdown (decorative), members sorted by completion descending, rank + avatar + name + bar + percentage
 
 ---
@@ -194,7 +194,7 @@ src/pages/TeamPage.tsx                               — MODIFIED: replaces stub
 
 **Member Profile modal (from `index.html:5836-5865`):**
 - Centered, narrower (360px max-width)
-- Avatar (initials on gradient), name, role, email, 2-cell grid (Active Tasks from member data, 92% Completion hardcoded)
+- Avatar (initials on gradient), name, role, email, 2-cell grid (Active Tasks from member data, Completion % from member's `completion` field — NOT hardcoded 92%)
 - Footer: Close + Message (toast)
 
 ---
