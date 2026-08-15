@@ -24,7 +24,14 @@ Confirmed inventory from `index.html`:
 
 ## 4. Stack (specified by product owner, not re-litigated here)
 
-Vite + React 18 + TypeScript (strict) · React Router · Zustand · CSS Modules over the existing `:root` token system (no Tailwind, no token rewrite) · Radix UI primitives (Dialog, DropdownMenu, Popover) under existing styling · lucide-react · date-fns.
+Vite + React 18 + TypeScript (strict) · React Router · Zustand · CSS Modules over the existing `:root` token system (no Tailwind, no token rewrite) · Radix UI primitives (Dialog, DropdownMenu, Popover) under existing styling · lucide-react · date-fns · Vitest + React Testing Library for the test harness.
+
+## 4a. Code quality standards (non-negotiable, carried forward from the original brief)
+
+- **TypeScript strict mode**, no `any` — if an `any` is truly unavoidable, it must carry a comment explaining why.
+- **Accessibility by default**: semantic HTML, ARIA attributes on custom components (dropdowns, modals, tabs), full keyboard navigation (tab order, Escape to close, Enter/Space to activate), visible focus states that match the current `:focus-visible` styling (`outline: 2px solid var(--accent-blue); outline-offset: 2px`).
+- **Test harness from day one**: Vitest + React Testing Library scaffolded in Phase 1, not bolted on later. Coverage doesn't need to be heavy yet, but the tooling and a first passing test must exist before Phase 1 is considered done.
+- **Error resilience**: a top-level React error boundary wraps `AppShell` so an unhandled render error surfaces a fallback UI instead of a blank white screen.
 
 ## 5. Folder structure
 
@@ -52,7 +59,7 @@ One clear owner per concern; no file becomes a dumping ground the way the curren
 
 Work proceeds in checkpointed phases; each gets its own `writing-plans` implementation plan when we reach it, not planned in bulk now (avoids a plan that goes stale before we're 3 pages in):
 
-1. **Scaffold** — Vite/React/TS project, ESLint+Prettier, `tokens.css` ported verbatim from the current `:root`/`[data-theme="light"]` block, base AppShell (Sidebar + TopBar) with routing to all 9 nav items (empty page stubs OK). Checkpoint: dev server up, layout looks right.
+1. **Scaffold** — Vite/React/TS project, ESLint+Prettier, Vitest+React Testing Library harness with one passing smoke test, `tokens.css` ported verbatim from the current `:root`/`[data-theme="light"]` block, base AppShell (Sidebar + TopBar) wrapped in a top-level error boundary, with routing to all 9 nav items (empty page stubs OK). Checkpoint: dev server up, layout looks right, `npm test` passes.
 2. **Design-system primitives** — Button, Modal, Dropdown, Toast, Card, Chip, Avatar, built once against Radix, styled to match exactly. Everything after this point consumes these instead of raw markup.
 3. **Pages, one at a time**, in order: Dashboard → Tasks → Projects → Sprints → Calendar → Team → Reports → Integrations → Settings. Each page's plan starts by re-reading that page's section of `index.html` (render function + its modals + its slice of mock data) so the plan reflects actual current behavior, not an assumption. Checkpoint after each: dev server running, page reviewable.
 4. **Cross-cutting verification** — theme persistence, toasts, Escape/outside-click handling, search, confirmed working across all ported pages together (not just per-page).
@@ -65,4 +72,4 @@ Work proceeds in checkpointed phases; each gets its own `writing-plans` implemen
 
 ## 8. Testing / verification per phase
 
-No test framework specified yet — each phase's checkpoint is a running dev server the product owner reviews visually against the old `index.html` side by side. `flutter analyze`-equivalent for this stack is `tsc --noEmit` + `eslint`, run before considering any phase done.
+Vitest + React Testing Library harness exists from Phase 1 onward (see §4a). Coverage grows incrementally per phase — not exhaustive yet, but every phase that adds interactive logic (dropdown positioning, modal open/close, form validation) adds at least one test for it. Each phase's checkpoint is still a running dev server the product owner reviews visually against the old `index.html` side by side. `tsc --noEmit` + `eslint` + `vitest run` all pass before considering any phase done.
