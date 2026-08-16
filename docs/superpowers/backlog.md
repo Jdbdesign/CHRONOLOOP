@@ -127,3 +127,15 @@ Each item: what, where it was noticed, why it was parked instead of fixed inline
 - [ ] **`CalendarSubHeader.module.css` still contains `.legend`, `.legendItem`, `.legendDot` rules** — dead CSS left over from the legend removal. Should be cleaned up in a follow-up pass.
 
 - [ ] **A dedicated follow-up visual review pass is planned for this page** — the initial implementation had no browser access, and subsequent fixes were verified structurally but not fully walked through interactively across all states (e.g., creating a user event via the modal, verifying it appears in all 4 views, clicking it to open the Dialog, using "View Task" navigation, filter interaction after adding events, Today button after navigating away). Recommend a focused 10-minute click-through before starting Phase 3.7.
+
+## From Phase 3.7 (Team page)
+
+- [ ] **Filter dropdown is a real functionality gap, not just a parity quirk** — the Filter button opens a dropdown with Status (Online/Offline) and Department checkboxes plus Apply/Clear buttons, but Apply/Clear only show toasts and never actually filter the list. The only real filters are the department tabs and search. This is preserved as-is from the original but flagged as a genuine UX gap: a control that looks functional but does nothing is misleading. Wire it up in a future pass (apply checkbox selections as real filters, OR remove the decorative Filter button if it's not going to be functional).
+
+- [ ] **Activity feed sorting uses approximate time parsing** — relative time strings ("30m ago", "2h ago", "Yesterday", "2 days ago") are parsed into sort weights via `parseRelativeTime()`. This produces correct relative ordering within the mock data but would break for any activity with a truly ambiguous time string. If real timestamps are ever added to the activity data, switch to proper ISO-based sorting.
+
+- [ ] **"Message" and "Assign Task" buttons show toasts but perform no real action** — preserved as parity. Message shows "Opening message composer…", Assign Task shows "Opening task assignment…". These are placeholder interactions awaiting real features.
+
+- [ ] **Team page detail panel uses inline styles for some elements** (online status dot, completion progress bar, hero section layout) rather than CSS Module classes — expedient for shipping but inconsistent with the project's CSS Module convention. Consider extracting to the module in a polish pass.
+
+- [ ] **Phase 3.7 2 test failures in full-suite run appear to be timeout flakes** — all 110 test files pass when run individually or in small batches; the 2 failures only appear in the 148-second full-suite run under heavy process load. Same pattern as prior phases. Not a code defect.
