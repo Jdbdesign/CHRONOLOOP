@@ -177,3 +177,15 @@ Each item: what, where it was noticed, why it was parked instead of fixed inline
 - [ ] **Activity panel uses `dangerouslySetInnerHTML`** for activity text containing `<strong>` tags — safe since the data is static/hardcoded mock data, but would need sanitization if ever wired to user-generated content.
 
 - [x] **Page headings were `<div>` instead of `<h1>` — fixed cross-page** — Calendar, Team, Reports, and Integrations page headers all used `<div className={styles.heading}>` instead of `<h1>`. This was caught via `App.test.tsx`'s navigation test for Integrations (which asserts `getByRole('heading')`), then proactively found to affect 3 other already-merged pages. Fixed: all 4 pages now use `<h1 className={styles.heading}>` for their main title. The global CSS reset (`* { margin: 0 }`) prevents the `<h1>` from adding unwanted default spacing. Earlier pages (Dashboard, Tasks, Projects, Sprints) already used the correct pattern.
+
+## From Phase 3.10 (Settings page — final page)
+
+- [ ] **Settings is a UI shell — only theme switching is functional** — all form inputs, toggles, radio cards, selects accept user input but nothing persists or affects the app beyond the current render. The entire Settings page (Profile, Workspace, Notifications, Appearance, Security, Billing, Team & Roles) awaits a backend + persistence layer. Theme switching (Appearance tab) is the only real mutation — it wires to `themeStore` and changes the app's `data-theme` attribute.
+
+- [ ] **Team & Roles tab sources from `TEAM_MEMBERS` store — deliberate deviation from original** — the original had a separate 8-person roster with no overlap with the Team page (different names, domains). This was determined to be an accidental mock-data artifact. Fixed: Team & Roles now shows Jacob Solayinka (Owner) + the same 8 members from `teamStore` with assigned workspace roles. This keeps the roster consistent across pages.
+
+- [ ] **Accent color swatches are decorative** — selecting a color changes the active highlight but doesn't update any CSS variable or persist. The original has the same stub behavior. Would need a `themeStore` extension or CSS custom property mutation to be functional.
+
+- [ ] **Password strength indicator is visual-only** — 4 bars fill based on character count (0-3/4-6/7-9/10+). No real password validation rules (min length, complexity, etc.) are enforced.
+
+- [ ] **Settings page uses inline styles extensively** rather than CSS Module classes for form layouts, cards, and tab content. Expedient for shipping this final page but inconsistent with the project's CSS Module convention. Consider extracting to modules in a polish pass.
