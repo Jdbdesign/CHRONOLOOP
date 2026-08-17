@@ -191,3 +191,21 @@ Each item: what, where it was noticed, why it was parked instead of fixed inline
 - [ ] **Settings page uses inline styles extensively** rather than CSS Module classes for form layouts, cards, and tab content. Expedient for shipping this final page but inconsistent with the project's CSS Module convention. Consider extracting to modules in a polish pass.
 
 - [ ] **Interface Density, Font Size, and Sidebar Behavior toggles need a frontend refactor to be functional** — these are NOT waiting on a backend. They need: (1) new CSS custom properties (e.g. `--spacing-unit`, `--font-base-size`) added to `tokens.css`, (2) every component that uses hardcoded spacing/font values to reference these variables instead, (3) the Sidebar component to read a "show labels" / "animate" flag from the settings store. This is a frontend-only task, distinct from the backend-dependent placeholders (password, billing, etc.).
+
+## Responsive Phase R.1 — polish items
+
+- [ ] **Drawer transition timing may feel slow at 300ms** — the 300ms ease-out matches detail panel transitions elsewhere in the app, but mobile drawer interactions typically feel snappier at 200–250ms. Worth testing with real users/devices before adjusting — may be fine on actual hardware where touch feedback makes it feel faster.
+
+- [ ] **Search overlay expand on mobile uses `onBlur` to close** — this means if the user taps a search result (once search is functional), the blur fires before the click registers, potentially closing search prematurely. Currently not an issue since search doesn't do anything (no results dropdown), but will need revisiting when search becomes functional. Consider `onMouseDown` prevention or a brief delay.
+
+- [ ] **Drawer overlay has no transition on open** — the overlay goes from `opacity: 0` to `opacity: 1` with a CSS transition, but since `display: block` can't be transitioned and `pointer-events` swap is instant, the scrim may appear abruptly on some browsers. Consider using `visibility` + `opacity` instead of `display` + `pointer-events` for a smoother fade.
+
+- [ ] **TopBar padding jump at breakpoint edges** — padding changes from 28px (desktop) → 20px (tablet) → 12px (mobile) in discrete jumps at exactly 1024px and 640px. A user resizing their browser across these boundaries sees a layout shift. Not a real-world issue (users don't resize; they're at a fixed device width), but worth noting.
+
+- [ ] **Hamburger button has no aria-expanded attribute** — it should reflect `isDrawerOpen` state for screen readers: `aria-expanded={isDrawerOpen}`. Small accessibility gap.
+
+- [ ] **Sidebar drawer doesn't trap focus when open** — a screen reader user could tab past the drawer into the content behind it. Consider adding `inert` to the main content area when drawer is open, or a focus-trap. Same pattern as detail panels (already noted as a latent gap there too).
+
+- [ ] **Mobile search icon uses `onClick` on the SVG element** — this works but the tap target is only the 14px icon, not the full 44px wrapper. Should move the click handler to the `.searchWrap` container div for a proper 44px touch target on mobile.
+
+- [ ] **ChevronDown on user avatar button renders at mobile** — the arrow indicator is unnecessary on mobile where there's no dropdown menu wired. Consider hiding it at <640px to save space.
