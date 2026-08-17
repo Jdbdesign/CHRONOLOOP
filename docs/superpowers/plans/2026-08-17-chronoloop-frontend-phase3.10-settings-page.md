@@ -27,7 +27,7 @@
 
 1. **All settings except theme are decorative** — forms accept input, toggles toggle, radio cards select, but nothing persists or affects the app. Same pattern as other decorative controls, but here it's the entire page. Preserve as-is? (The Settings page is a UI shell awaiting a backend — same category as Reports' placeholder data.)
 
-2. **Team & Roles tab has a member table with different members than `TEAM_MEMBERS`** — Jacob Solayinka (owner), Amara Mensah, Kwame Cobbina, Nadia Okafor, Tunde Adeyemi, Sena Owusu, Blessing Nwosu, Femi Adeola. These are not the same 8 people as the Team page. This is the original's behavior — Settings has its own separate team roster representing "workspace members" vs. the Team page's "project team." Preserve as-is?
+2. **Team & Roles tab sources from `TEAM_MEMBERS` + the logged-in user** — the original had a completely separate 8-person roster with no overlap with the Team page (different names, different email domains). This was determined to be an accidental mock-data artifact, not an intentional design distinction. Fix: the Team & Roles table will show Jacob Solayinka (Owner, the logged-in user — first row, non-removable) + the 8 members from `TEAM_MEMBERS` with assigned workspace roles (based on job title: developers/designers → Member, Product Manager → Admin). This keeps the member roster consistent across the app.
 
 3. **Role Permissions table body is rendered by JS** (`id="role-perms-tbody"` populated by `renderSettingsPage`). The original fills it with a matrix of checkmarks. Port as static JSX since the data never changes.
 
