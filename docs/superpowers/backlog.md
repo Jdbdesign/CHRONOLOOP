@@ -151,3 +151,15 @@ Each item: what, where it was noticed, why it was parked instead of fixed inline
 - [ ] **"Today" and "This Sprint" buttons on Activity Feed and Leaderboard panels are decorative** — they render as plain styled buttons with no dropdown or click behavior. The original has the same: they open dropdown panels but the selections never change the displayed data. Preserved as decorative.
 
 - [ ] **Responsive breakpoints from the original not ported** — the original has `@media (max-width: 1280px)` (3-col KPI, 1-col bottom panels) and `@media (max-width: 900px)` / `(max-width: 640px)` (2-col/1-col card grid). Not implemented in this phase since the project is desktop-only per the design doc. Would need adding if a responsive pass is ever scoped.
+
+## From Phase 3.8 (Reports page)
+
+- [ ] **Reports page data is a self-contained placeholder dataset disconnected from real stores** — `RPT_DATA` uses different project names ("ChronoLoop App", "CareyCare Homepage", "Eatz Landing Page") and different team members ("Jordan K.", "Sam R.", "Taylor B.") than the actual `projectsStore`/`teamStore`. None of the chart values are computed from real task/project/sprint/team data. This is a known limitation: the Reports page will need real cross-sprint/cross-store analytics computation once a backend exists to aggregate from. Until then, it's a static visual placeholder.
+
+- [ ] **Range tabs (7D/30D/90D/12M) are decorative** — they change the active styling and show a toast but never change the displayed chart data. Logged as a real functionality gap (same category as Team page's decorative filter — a control that looks functional but does nothing).
+
+- [ ] **Table filter dropdowns (Project Performance / Sprint Summary) are decorative** — they change the trigger label and show a toast but never filter the table rows. Same category as above.
+
+- [ ] **Export button shows toast sequence but produces no real file** — "Preparing report export…" then "Report exported successfully!" with no actual file download. Placeholder behavior.
+
+- [ ] **Chart tooltips use a single shared state at page level** — this means mousing quickly between charts could flash stale content briefly before the new content renders. Not a bug in practice with the current layout (charts are visually separated) but worth noting if charts are ever moved closer together.
