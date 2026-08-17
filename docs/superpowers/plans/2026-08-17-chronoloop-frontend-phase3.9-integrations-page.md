@@ -27,7 +27,7 @@
 
 3. **Manage modal "Disconnect" button (Danger Zone) shows a toast and changes status to 'available'** — no real disconnection. Parity.
 
-4. **API Key "Copy" button uses `navigator.clipboard.writeText`** — this works in secure contexts (HTTPS/localhost). On HTTP it would fail silently. Acceptable for dev?
+4. **API Key "Copy" button feature-detects `navigator.clipboard`** — if available, copies and shows success toast. If unavailable (plain HTTP without secure context), shows a toast telling the user to copy manually ("Clipboard unavailable — copy the key manually") instead of failing silently. This is a deliberate improvement over the original's unconditional `navigator.clipboard.writeText` call.
 
 5. **Webhook toggles and deletions mutate local state** — in the original, these directly mutate the `INT_WEBHOOKS` array and re-render. In React, this means a Zustand store with `toggleWebhook(index)` and `removeWebhook(index)` actions. Same for `INT_SYNC_ROWS` toggle. These mutations persist only within the session (page refresh resets them). Acceptable?
 
