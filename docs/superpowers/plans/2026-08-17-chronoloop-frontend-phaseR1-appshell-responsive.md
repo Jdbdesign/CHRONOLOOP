@@ -102,6 +102,8 @@ Simple boolean store. The sidebar drawer reads `isOpen` to control its transform
 **Changes to `Sidebar.module.css`:**
 
 ```css
+/* Remove the pre-existing @media (max-width: 1024px) icon-only rule entirely */
+
 @media (max-width: 1023px) {
   .sidebar {
     position: fixed;
@@ -119,7 +121,7 @@ Simple boolean store. The sidebar drawer reads `isOpen` to control its transform
     transform: translateX(0);
   }
 
-  /* Restore full nav text (override the 1024px collapse that hides labels) */
+  /* Full nav labels visible inside drawer */
   .navItem span,
   .sidebarBottom {
     display: flex;
@@ -127,6 +129,7 @@ Simple boolean store. The sidebar drawer reads `isOpen` to control its transform
   .navItem {
     justify-content: flex-start;
     padding: 0 16px;
+    min-height: 44px; /* touch target */
   }
   .logo {
     justify-content: flex-start;
@@ -138,9 +141,9 @@ Simple boolean store. The sidebar drawer reads `isOpen` to control its transform
 }
 ```
 
-Key point: the existing `@media (max-width: 1024px)` rule hides nav labels and makes the sidebar icon-only. The new `@media (max-width: 1023px)` rule (one pixel below) overrides that to RESTORE labels inside the drawer. This means:
-- At exactly 1024px: icon-only sidebar (existing behavior)
-- At <1024px: full-label drawer (slides in from left)
+Key point: the existing `@media (max-width: 1024px)` rule hides nav labels and makes the sidebar icon-only. **This rule is removed entirely** in this phase — it was a pre-responsive ad-hoc rule that conflicts with the approved breakpoint scheme. The new responsive behavior is:
+- ≥1024px: full 240px sidebar, always visible (desktop)
+- <1024px: sidebar completely hidden, rendered as off-canvas drawer (tablet + mobile)
 
 ---
 
@@ -179,18 +182,6 @@ Key point: the existing `@media (max-width: 1024px)` rule hides nav labels and m
     display: flex;
   }
 
-  .searchWrap {
-    /* Collapse search to icon-only on mobile */
-    max-width: 44px;
-    overflow: hidden;
-  }
-
-  .searchInput {
-    opacity: 0;
-    width: 0;
-    padding: 0;
-  }
-
   .avatarCluster {
     display: none;
   }
@@ -201,11 +192,47 @@ Key point: the existing `@media (max-width: 1024px)` rule hides nav labels and m
 }
 
 @media (max-width: 639px) {
+  /* Search collapses to icon-only trigger on phones */
   .searchWrap {
-    display: none; /* Hide search entirely on phones — too narrow */
+    max-width: 44px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .searchInput {
+    opacity: 0;
+    width: 0;
+    padding: 0;
+    pointer-events: none;
+  }
+
+  /* When expanded (via JS toggle), search takes full width */
+  .searchExpanded {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    max-width: none;
+    z-index: 10;
+    background: var(--bg-base);
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+  }
+
+  .searchExpanded .searchInput {
+    opacity: 1;
+    width: 100%;
+    padding: 0 12px 0 34px;
+    pointer-events: auto;
   }
 }
 ```
+
+**Search on mobile (<640px):** The search input collapses to an icon-only button. Tapping it toggles `searchExpanded` state which renders the search as a full-width overlay bar within the TopBar (position absolute, covers the TopBar content). An X button dismisses it. This preserves search functionality on mobile without permanently occupying space.
+
+**Avatar cluster and Share button:** Hidden at <1024px. These are non-critical (decorative team avatars, toast-only Share). No functionality regression.
 
 ---
 
