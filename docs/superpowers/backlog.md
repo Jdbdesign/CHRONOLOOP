@@ -189,3 +189,5 @@ Each item: what, where it was noticed, why it was parked instead of fixed inline
 - [ ] **Password strength indicator is visual-only** — 4 bars fill based on character count (0-3/4-6/7-9/10+). No real password validation rules (min length, complexity, etc.) are enforced.
 
 - [ ] **Settings page uses inline styles extensively** rather than CSS Module classes for form layouts, cards, and tab content. Expedient for shipping this final page but inconsistent with the project's CSS Module convention. Consider extracting to modules in a polish pass.
+
+- [ ] **Interface Density, Font Size, and Sidebar Behavior toggles need a frontend refactor to be functional** — these are NOT waiting on a backend. They need: (1) new CSS custom properties (e.g. `--spacing-unit`, `--font-base-size`) added to `tokens.css`, (2) every component that uses hardcoded spacing/font values to reference these variables instead, (3) the Sidebar component to read a "show labels" / "animate" flag from the settings store. This is a frontend-only task, distinct from the backend-dependent placeholders (password, billing, etc.).
