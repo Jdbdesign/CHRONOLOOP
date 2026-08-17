@@ -175,3 +175,5 @@ Each item: what, where it was noticed, why it was parked instead of fixed inline
 - [ ] **Manage modal uses inline styles for tab content** rather than CSS Module classes — expedient for shipping but inconsistent with project convention. Consider extracting to a module in a polish pass.
 
 - [ ] **Activity panel uses `dangerouslySetInnerHTML`** for activity text containing `<strong>` tags — safe since the data is static/hardcoded mock data, but would need sanitization if ever wired to user-generated content.
+
+- [x] **Page headings were `<div>` instead of `<h1>` — fixed cross-page** — Calendar, Team, Reports, and Integrations page headers all used `<div className={styles.heading}>` instead of `<h1>`. This was caught via `App.test.tsx`'s navigation test for Integrations (which asserts `getByRole('heading')`), then proactively found to affect 3 other already-merged pages. Fixed: all 4 pages now use `<h1 className={styles.heading}>` for their main title. The global CSS reset (`* { margin: 0 }`) prevents the `<h1>` from adding unwanted default spacing. Earlier pages (Dashboard, Tasks, Projects, Sprints) already used the correct pattern.
