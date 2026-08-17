@@ -139,3 +139,15 @@ Each item: what, where it was noticed, why it was parked instead of fixed inline
 - [ ] **Team page detail panel uses inline styles for some elements** (online status dot, completion progress bar, hero section layout) rather than CSS Module classes — expedient for shipping but inconsistent with the project's CSS Module convention. Consider extracting to the module in a polish pass.
 
 - [ ] **Phase 3.7 2 test failures in full-suite run appear to be timeout flakes** — all 110 test files pass when run individually or in small batches; the 2 failures only appear in the 148-second full-suite run under heavy process load. Same pattern as prior phases. Not a code defect.
+
+### Phase 3.7 — remaining polish
+
+- [ ] **List view is a deliberate departure from the original** — the original's "List" toggle just sets `gridTemplateColumns: 1fr` (stacked cards). This port replaces it with a proper compact row view (avatar, name, active tasks, dept badge, completion bar, status, context menu). The original's full-card-in-a-column behavior was not a designed list view, it was a lazy toggle. Flagged as a deliberate improvement.
+
+- [ ] **TeamMemberRow is inlined in TeamMemberGrid rather than being a separate component import** — after a browser rendering failure caused by HMR not picking up the new file, the row JSX was inlined directly in `TeamMemberGrid.tsx`. The separate `TeamMemberRow.tsx` file still exists but is unused. Clean up: either delete the file or switch back to importing it (the underlying issue was Vite module graph stale cache, not a code defect).
+
+- [ ] **Detail panel uses inline styles for several sub-sections** (hero, completion bar, info grid content, online dot) rather than CSS Module classes. Functional but inconsistent with the project's convention. Extract to module in a polish pass.
+
+- [ ] **"Today" and "This Sprint" buttons on Activity Feed and Leaderboard panels are decorative** — they render as plain styled buttons with no dropdown or click behavior. The original has the same: they open dropdown panels but the selections never change the displayed data. Preserved as decorative.
+
+- [ ] **Responsive breakpoints from the original not ported** — the original has `@media (max-width: 1280px)` (3-col KPI, 1-col bottom panels) and `@media (max-width: 900px)` / `(max-width: 640px)` (2-col/1-col card grid). Not implemented in this phase since the project is desktop-only per the design doc. Would need adding if a responsive pass is ever scoped.
