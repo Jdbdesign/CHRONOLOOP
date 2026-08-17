@@ -163,3 +163,15 @@ Each item: what, where it was noticed, why it was parked instead of fixed inline
 - [ ] **Export button shows toast sequence but produces no real file** — "Preparing report export…" then "Report exported successfully!" with no actual file download. Placeholder behavior.
 
 - [ ] **Chart tooltips use a single shared state at page level** — this means mousing quickly between charts could flash stale content briefly before the new content renders. Not a bug in practice with the current layout (charts are visually separated) but worth noting if charts are ever moved closer together.
+
+## From Phase 3.9 (Integrations page)
+
+- [ ] **Integrations page runs on static data with no real backend/OAuth** — connect/manage/disconnect/API key actions are UI-only mutations within the session (Zustand store, resets on refresh). No real OAuth flows, webhook delivery, or API key generation until a backend exists.
+
+- [ ] **Range/filter dropdowns on modals and panels are decorative** — Manage modal config changes show toasts but don't persist to any backend. Same established "decorative action" pattern as prior pages.
+
+- [ ] **Clipboard copy feature-detects `navigator.clipboard`** — if unavailable, shows a fallback toast ("Clipboard unavailable — copy the key manually"). Deliberate improvement over the original's unconditional call that would fail silently on non-secure contexts.
+
+- [ ] **Manage modal uses inline styles for tab content** rather than CSS Module classes — expedient for shipping but inconsistent with project convention. Consider extracting to a module in a polish pass.
+
+- [ ] **Activity panel uses `dangerouslySetInnerHTML`** for activity text containing `<strong>` tags — safe since the data is static/hardcoded mock data, but would need sanitization if ever wired to user-generated content.
