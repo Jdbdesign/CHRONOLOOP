@@ -215,3 +215,9 @@ Each item: what, where it was noticed, why it was parked instead of fixed inline
 - [x] **Detail panel focus-trap gap closed** — all 4 detail panels (Task, Project, Sprint, Team) now use `useInert` to make page content behind them non-tabbable when open. This pattern (`useInert<HTMLDivElement>(panelOpen)` on a wrapper div, panel rendered outside that wrapper) is now the established convention for any new overlay panel.
 
 - [ ] **Pattern note for future phases:** any new page that adds a detail panel or overlay should follow the established `useInert` pattern: (1) import `useInert` from `src/hooks/useInert.ts`, (2) read the panel's open state from its store, (3) wrap the page's scrollable content in `<div ref={contentRef}>`, (4) render the panel component as a sibling outside that wrapper. This ensures keyboard focus is automatically trapped in the panel when open.
+
+## Responsive Phase R.3 — notes
+
+- [ ] **Reports inline styles fully extracted to CSS Module** — `ReportsPage.tsx` no longer uses inline `gridTemplateColumns` styles. The new `ReportsPage.module.css` has `.chartRow2col`, `.chartRow3col`, `.tableRow2col` classes with responsive breakpoints. This is the correct pattern for any future page that needs responsive grid layouts — use CSS Module classes, not inline styles.
+
+- [ ] **Dashboard CalendarWidget relies on horizontal scroll at mobile** — the 19-column pill grid scrolls horizontally via `overflow-x: auto`. This works but isn't ideal UX on mobile (hidden content requires discovery). A future pass could consider a simplified 7-day or 5-day view for mobile, but that's a larger interaction change beyond R.3's scope.
