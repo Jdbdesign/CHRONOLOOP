@@ -204,8 +204,14 @@ Each item: what, where it was noticed, why it was parked instead of fixed inline
 
 - [ ] **Hamburger button has no aria-expanded attribute** — it should reflect `isDrawerOpen` state for screen readers: `aria-expanded={isDrawerOpen}`. Small accessibility gap.
 
-- [ ] **Sidebar drawer doesn't trap focus when open** — a screen reader user could tab past the drawer into the content behind it. Consider adding `inert` to the main content area when drawer is open, or a focus-trap. Same pattern as detail panels (already noted as a latent gap there too).
+- [x] **Sidebar drawer doesn't trap focus when open** — **FIXED in Phase R.2** via `useInert` hook. When the drawer is open, `<main>` gets the `inert` attribute, preventing keyboard/screen-reader focus from reaching content behind the overlay. Same pattern applied to all 4 detail panels (Tasks, Projects, Sprints, Team) — each page wraps its content in a `<div ref={contentRef}>` with `useInert(panelOpen)`. Future pages with overlay panels should follow this same pattern: wrap page content in a div with `useInert`, leave the panel component outside that wrapper.
 
 - [ ] **Mobile search icon uses `onClick` on the SVG element** — this works but the tap target is only the 14px icon, not the full 44px wrapper. Should move the click handler to the `.searchWrap` container div for a proper 44px touch target on mobile.
 
 - [ ] **ChevronDown on user avatar button renders at mobile** — the arrow indicator is unnecessary on mobile where there's no dropdown menu wired. Consider hiding it at <640px to save space.
+
+## Responsive Phase R.2 — notes
+
+- [x] **Detail panel focus-trap gap closed** — all 4 detail panels (Task, Project, Sprint, Team) now use `useInert` to make page content behind them non-tabbable when open. This pattern (`useInert<HTMLDivElement>(panelOpen)` on a wrapper div, panel rendered outside that wrapper) is now the established convention for any new overlay panel.
+
+- [ ] **Pattern note for future phases:** any new page that adds a detail panel or overlay should follow the established `useInert` pattern: (1) import `useInert` from `src/hooks/useInert.ts`, (2) read the panel's open state from its store, (3) wrap the page's scrollable content in `<div ref={contentRef}>`, (4) render the panel component as a sibling outside that wrapper. This ensures keyboard focus is automatically trapped in the panel when open.
